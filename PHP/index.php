@@ -120,7 +120,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
                 <li><a href="carrito2.php">Carrito</a></li>
             <?php endif; ?>
         </nav>
-   
+
+        <img src="https://edifica.com.pe/blog/wp-content/uploads/conoce-siete-electrodomesticos-imprescindibles-cocina-portada.jpg" width="900" height="350">
+
+        <div class="container">
+        <p class="left-align">
+            Bienvenido a nuestra tienda de electrodomésticos<br> su destino integral para todo lo relacionado con <br>
+            la tecnología del hogar. Desde los electrodomésticos <br>ás básicos hasta los más avanzados, estamos <br>
+            aquí para proporcionarle una experiencia  excepcional. <br><br>
+            ¿Quiénes Somos?<br><br>
+            Somos una tienda especializada en la venta de electrodomésticos<br> comprometidos con ofrecer productos de 
+            alta calidad, tecnología de<br> punta y un servicio al cliente insuperable. Nuestro objetivo es satisfacer <br>
+            todas sus necesidades domésticas con soluciones innovadoras y eficientes.
+            <br><br>
+            Productos a Ofrecer
+            <br><br>
+            Cocina<br>
+            Limpieza<br>
+            Climatización<br>
+            Entretenimiento<br>
+        </p>
+    </div>
+
+  
+
     <div id="container">
         <?php foreach ($productos as $producto) : ?>
             <div class="product-item">
@@ -186,6 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
             });
         });
     </script>
+    <br>
          <footer>
                <center><p>&copy; 2024 Derechos Reservados</p></center>
         </footer>

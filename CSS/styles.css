@@ -156,7 +156,6 @@ footer a:hover {
     color: #e0a800;
 }
 
-/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     #main-nav li {
         float: none;
@@ -168,3 +167,25 @@ footer a:hover {
         margin: 10px auto;
     }
 }
+
+/*imagen*/
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.left-align {
+    text-align: left;
+}
+
+
+
+
+
+
+
