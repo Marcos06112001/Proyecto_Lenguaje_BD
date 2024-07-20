@@ -112,13 +112,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
                 
             <?php elseif ($rol == 'cliente') : ?>
                 
+                <li><a href="productos.php">Productos</a></li>
                 <li><a href="promociones.php">Promociones</a></li>
                 <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                 <li><a href="reclamaciones.php">Reclamaciones</a></li>
+                <li><a href="perfil.php">Perfil</a></li>
                 <li><a href="carrito2.php">Carrito</a></li>
             <?php endif; ?>
         </nav>
-    </header>
+   
     <div id="container">
         <?php foreach ($productos as $producto) : ?>
             <div class="product-item">
@@ -184,5 +186,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
             });
         });
     </script>
+         <footer>
+               <center><p>&copy; 2024 Derechos Reservados</p></center>
+        </footer>
+    </header>
 </body>
 </html>
