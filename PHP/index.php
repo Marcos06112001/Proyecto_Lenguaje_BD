@@ -26,7 +26,7 @@ function obtenerProductos()
  
     Desconectar($conexion);
  
-    return $productos;
+    return $productos; // conexion
 }
  
 $productos = obtenerProductos();

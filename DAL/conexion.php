@@ -8,7 +8,7 @@ function Conecta()
     $user = "PROYECTO_LGBD";   //usuario de cada quien 
     $password = "12345"; //contraseña 
                       
-    // Cadena de conexión para Oracle
+    // Cadena de conexión para Oracles
     $dsn = "oci:dbname=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SID=$dbname)))";
  
     try {
