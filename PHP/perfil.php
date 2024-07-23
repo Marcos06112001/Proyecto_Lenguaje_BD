@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding-top: 20px;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .profile-header h1 {
+            margin: 0;
+        }
+        .profile-header p {
+            color: #666;
+        }
+        .profile-details {
+            margin-top: 20px;
+        }
+        .profile-details h2 {
+            margin-top: 0;
+        }
+</style>
 </head>
 <body>
-    <h1>Pelfil</h1>
-    <p>Paginax<p>
+<div class="profile-container">
+<div class="profile-header">
+<img src="https://t2.uc.ltmcdn.com/es/posts/5/1/8/como_saber_si_una_mujer_es_sincera_34815_600_square.jpg" alt="Foto de perfil">
+<div>
+<h1>Susana Hidalgo Vargas</h1>
+<p>@Susana</p>
+</div>
+</div>
+<div class="profile-details">
+<C><h2>Sobre mí</h2>
+<p>Soy una estudiante de derecho. Trabajo en el tribula de justicia andorriando y tengo 26 años</p>
+<h2>Dirección</h2>
+<p>25 sur, 25 norte centro villa del viejo. Recidencia 2, casa Azul de 2 pisos</p>
+<h2>Detalles de Contacto</h2>
+<p><strong>Email:</strong> SusanaHV@example.com</p>
+<p><strong>Teléfono:</strong> +123 456 7890</p>
+</div>
+</div>
+
 </body>
 </html>

@@ -184,6 +184,57 @@ body {
 }
 
 
+/*reparando*/
+#iniciar-sesion {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 3px;
+    cursor: pointer;
+    border-radius: 37px;
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+#iniciar-sesion:hover {
+    background-color: #45a049;
+}
+
+#mensaje-iniciar-sesion {
+    color: red;
+    font-style: italic;
+    font-size: 14px;
+    margin: revert
+}
+#cerrar-sesion {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 3px;
+    cursor: pointer;
+    border-radius: 37px;
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    color: white;
+    
+}
+
+#cerrar-sesion:hover {
+    background-color: red
+    ;
+}
 
 
 
