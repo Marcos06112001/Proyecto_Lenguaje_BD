@@ -89,7 +89,8 @@
  
         <!-- Checkout Button -->
 <div class="btn-checkout">
-<a href="#" class="btn btn-primary">Proceder al Pago</a>
+<li><a href="proceder_pago.php">Proceder al Pago</a></li>
+
 </div>
 </div>
 

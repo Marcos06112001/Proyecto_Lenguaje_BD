@@ -45,5 +45,8 @@
             </div>
         </div>
     </div>
+<body>
+<li><a href="historial_compras.php">Historial De Compras</a></li>
+</body>
 </body>
 </html>

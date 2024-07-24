@@ -32,6 +32,10 @@
             <label class="label-form" for="password_reg">Contraseña:</label>
             <input class="input-form" type="password" id="password_reg" name="password_reg" required>
             <input class="btn-form" type="submit" value="Crear usuario">
+            <br>
+            <br>
+            <li><a href="modifica.php">Modificar Datos</a></li>
+
         </form>
     </div>
 </body>
