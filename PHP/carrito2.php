@@ -1,84 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carrito de Compras</title>
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        padding-top: 20px;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    header {
-        background-color: #333;
-        color: #fff;
-        padding: 20px 0;
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-    }
-    header h1 {
-        margin: 0;
-        flex: 1;
-    }
-    .menu-btn {
-        background-color: #007bff;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .menu-btn:hover {
-        background-color: #0056b3;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-    }
-    .container {
-        max-width: 900px;
-    }
-    .cart-item {
-        border-bottom: 1px solid #e9ecef;
-        padding: 15px 0;
-        display: flex;
-        align-items: center;
-    }
-    .cart-item img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        margin-right: 15px;
-    }
-    .cart-item h5 {
-        margin: 0;
-    }
-    .cart-item p {
-        margin: 5px 0;
-    }
-    .cart-total {
-        text-align: right;
-        margin-top: 20px;
-        font-weight: bold;
-    }
-    .btn-checkout {
-        margin-top: 20px;
-        display: flex;
-        justify-content: flex-end;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/CSS/carrito.css">
 </head>
 <body>
 <header>
