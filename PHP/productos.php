@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="CSS/producto.css">
 </head>
 <body>
-    <header class="bg-dark text-white text-center py-3">
-        <h1>Productos Electrónicos</h1>
+    <header class="bg-dark text-white py-3 d-flex justify-content-between align-items-center">
+        <h1 class="mx-auto">Productos Electrónicos</h1>
+        <a href="index.php" class="btn btn-primary return-btn">Menú</a>
     </header>
     <div class="container mt-5">
         <div class="row">
@@ -45,8 +46,11 @@
             </div>
         </div>
     </div>
-<body>
-<li><a href="historial_compras.php">Historial De Compras</a></li>
-</body>
+    <div class="container mt-5 text-center">
+        <a href="historial_compras.php" class="btn btn-success historial-btn">Historial de Compras</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
