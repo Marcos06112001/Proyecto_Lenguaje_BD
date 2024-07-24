@@ -2,16 +2,16 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     color: #333;
+    background-color: #f8f9fa;
 }
 
 header {
-    background-color: #213d58;
-    color: white;
-    padding: 15px 20px;
+    background: linear-gradient(to right, #7f868d, #2c639e);
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -19,224 +19,128 @@ header {
 #top-header {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    margin-top: -40px;
+    padding: 0 20px;
 }
 
 #top-header a {
-    color: white;
-    margin-left: 20px;
+    color: #fff;
     text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s;
+    margin-left: 15px;
+    font-size: 14px;
+    transition: color 0.3s;
 }
 
 #top-header a:hover {
-    background-color: #495057;
+    color: #cce5ff;
 }
 
-#main-nav {
-    background-color: #343a40;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-#main-nav li {
-    float: left;
-    list-style: none;
-}
-
-#main-nav li a {
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    padding: 14px 20px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#main-nav li a:hover {
-    background-color: #495057;
-    color: white;
-}
-
-#container {
+nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px auto;
+    justify-content: center;
+    background: #343a40;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #495057;
+}
+
+header img {
+    width: 80%;
+    max-width: 800px; /* Tamaño máximo de la imagen */
+    height: auto;
+    border-bottom: 4px solid #fff; /* Borde inferior para un toque elegante */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    display: block;
+}
+
+.container {
+    padding: 30px;
     max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .product-item {
-    background-color: white;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 20px;
+    border-radius: 8px;
     padding: 20px;
-    text-align: center;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .product-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .product-item img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 15px;
 }
 
 .product-item p {
     margin: 10px 0;
 }
 
-#nombre-producto {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #343a40;
-}
-
-form.botones-form, #eliminarForm {
-    display: inline-block;
-    margin: 0 5px;
-}
-
-button, #agregar-producto {
-    background-color: #28a745;
+.product-item button {
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+    padding: 10px 15px;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
-button:hover, #agregar-producto:hover {
-    background-color: #218838;
-}
-
-#agregar-producto-form {
-    text-align: center;
-    margin: 20px;
-}
-
-#mensaje-iniciar-sesion {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
+.product-item button:hover {
+    background-color: #0056b3;
 }
 
 footer {
-    background-color: #343a40;
-    color: white;
-    padding: 10px 20px;
+    background-color: #8296aa;
+    color: #fff;
     text-align: center;
-    margin-top: 20px;
+    padding: 15px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
-footer a {
-    color: #ffc107;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-footer a:hover {
-    color: #e0a800;
-}
-
-@media (max-width: 768px) {
-    #main-nav li {
-        float: none;
-        text-align: center;
-    }
-
-    .product-item {
-        width: 90%;
-        margin: 10px auto;
-    }
-}
-
-/*imagen segunda*/
-body {
-    font-family: Arial, sans-serif;
-}
-
-.container {
-    display: flex;
-    justify-content: flex-start;
-    padding: 20px;
-}
-
-.left-align {
-    text-align: left;
-}
-
-
-/*reparando*/
-#iniciar-sesion {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 3px;
-    cursor: pointer;
-    border-radius: 37px;
-    position: fixed;
-    bottom: 10px;
-    right: 20px;
-}
-
-#iniciar-sesion:hover {
-    background-color: #45a049;
+#nombre-producto {
+    font-weight: bold;
+    font-size: 18px;
+    color: #0056b3;
 }
 
 #mensaje-iniciar-sesion {
-    color: red;
-    font-style: italic;
-    font-size: 14px;
-    margin: revert
+    color: #dc3545;
+    font-weight: bold;
 }
-#cerrar-sesion {
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 3px;
-    cursor: pointer;
-    border-radius: 37px;
-    position: fixed;
-    bottom: 10px;
-    right: 20px;
-    color: white;
-    
-}
-
-#cerrar-sesion:hover {
-    background-color: red
-    ;
-}
-
-
-
-
-

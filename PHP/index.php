@@ -81,9 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Electric</title>
     <link rel="stylesheet" href="../CSS/styles.css">
-</head>
+    </head>
 <body>
-    <header id="header">
+    <header>
         <h1>Tienda Electric</h1>
         <div id="top-header">
             <?php if (isset($_SESSION['rol'])) : ?>
@@ -92,97 +92,98 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
                 <a href="inicio_sesion.php" id="iniciar-sesion">Iniciar Sesión</a>
             <?php endif; ?>
         </div>
-        </div>
         <nav id="main-nav">
-            <?php if ($rol == 'administrador') : ?>
-                <li><a href="clientes.php">Clientes</a></li>
-                <li><a href="categorias.php">Categorías</a></li>
-                <li><a href="compras.php">Compras</a></li>
-                <li><a href="ventas.php">Ventas</a></li>
-                <li><a href="empleados.php">Empleados</a></li>
-                <li><a href="proveedores.php">Proveedores</a></li>
-                <li><a href="reabastecimiento.php">Reabastecimiento</a></li>
-                <li><a href="promociones.php">Promociones</a></li>
-                <li><a href="orden_del_dia.php">Orden del Dia</a></li>
-                <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
-                <li><a href="reclamaciones.php">Reclamaciones</a></li> 
-                
-            <?php elseif ($rol == 'cliente') : ?>
-                
-                <li><a href="productos.php">Productos</a></li>
-                <li><a href="promociones.php">Promociones</a></li>
-                <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
-                <li><a href="reclamaciones.php">Reclamaciones</a></li>
-                <li><a href="perfil.php">Perfil</a></li>
-                <li><a href="carrito2.php">Carrito</a></li>
-            <?php endif; ?>
-        </nav>
-
-        <img src="https://edifica.com.pe/blog/wp-content/uploads/conoce-siete-electrodomesticos-imprescindibles-cocina-portada.jpg" width="900" height="350">
-
-        <div class="container">
-        <p class="left-align">
-            Bienvenido a nuestra tienda de electrodomésticos<br> su destino integral para todo lo relacionado con <br>
-            la tecnología del hogar. Desde los electrodomésticos <br>ás básicos hasta los más avanzados, estamos <br>
-            aquí para proporcionarle una experiencia  excepcional. <br><br>
-            ¿Quiénes Somos?<br><br>
-            Somos una tienda especializada en la venta de electrodomésticos<br> comprometidos con ofrecer productos de 
-            alta calidad, tecnología de<br> punta y un servicio al cliente insuperable. Nuestro objetivo es satisfacer <br>
-            todas sus necesidades domésticas con soluciones innovadoras y eficientes.
-            <br><br>
-            Productos a Ofrecer
-            <br><br>
-            Cocina<br>
-            Limpieza<br>
-            Climatización<br>
-            Entretenimiento<br>
-        </p>
-    </div>
-
-  
-
-    <div id="container">
-        <?php foreach ($productos as $producto) : ?>
-            <div class="product-item">
-                <img src="<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_producto']; ?>">
-                <p id="nombre-producto"><strong><?php echo $producto['nombre_producto']; ?></strong></p>
-                <p><strong>Categoria:</strong><?php echo $producto['nombre_categoria']; ?></p>
-                <p><strong>Descripción:</strong> <?php echo $producto['descripcion_producto']; ?></p>
-                <p><strong>Precio:</strong> $<?php echo $producto['precio']; ?></p>
+            <ul>
                 <?php if ($rol == 'administrador') : ?>
-                    <form id="eliminarForm" method="post">
-                        <input type="hidden" name="producto_id" value="<?php echo $producto['id_producto']; ?>">
-                        <button class="eliminar-btn" data-id="<?php echo $producto['id_producto']; ?>">Eliminar</button>
-                    </form>
-                    <form action="editar_producto.php" method="get" class="botones-form">
-                        <input type="hidden" name="producto_id" value="<?php echo $producto['id_producto']; ?>">
-                        <button type="submit" id="editar-producto">Editar</button>
-                    </form>
-                <?php elseif (isset($_SESSION['rol'])) : ?>
-                    <?php if (isset($_SESSION['id_cliente'])) : ?>
-                        <form action="" method="post">
+                    <li><a href="clientes.php">Clientes</a></li>
+                    <li><a href="categorias.php">Categorías</a></li>
+                    <li><a href="compras.php">Compras</a></li>
+                    <li><a href="ventas.php">Ventas</a></li>
+                    <li><a href="empleados.php">Empleados</a></li>
+                    <li><a href="proveedores.php">Proveedores</a></li>
+                    <li><a href="reabastecimiento.php">Reabastecimiento</a></li>
+                    <li><a href="promociones.php">Promociones</a></li>
+                    <li><a href="orden_del_dia.php">Orden del Día</a></li>
+                    <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
+                    <li><a href="reclamaciones.php">Reclamaciones</a></li>
+                <?php elseif ($rol == 'cliente') : ?>
+                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="promociones.php">Promociones</a></li>
+                    <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
+                    <li><a href="reclamaciones.php">Reclamaciones</a></li>
+                    <li><a href="perfil.php">Perfil</a></li>
+                    <li><a href="carrito2.php">Carrito</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+        <img src="https://edifica.com.pe/blog/wp-content/uploads/conoce-siete-electrodomesticos-imprescindibles-cocina-portada.jpg" alt="Electrodomésticos" style="width: 100%; height: auto; border-bottom: 5px solid #007bff;">
+    </header>
+
+    <div class="container">
+        <p>
+            Bienvenido a nuestra tienda de electrodomésticos. Su destino integral para todo lo relacionado con la tecnología del hogar. Desde los electrodomésticos más básicos hasta los más avanzados, estamos aquí para proporcionarle una experiencia excepcional.
+        </p>
+        <h2>¿Quiénes Somos?</h2>
+        <p>
+            Somos una tienda especializada en la venta de electrodomésticos comprometidos con ofrecer productos de alta calidad, tecnología de punta y un servicio al cliente insuperable. Nuestro objetivo es satisfacer todas sus necesidades domésticas con soluciones innovadoras y eficientes.
+        </p>
+        <h2>Productos a Ofrecer</h2>
+        <ul>
+            <li>Cocina</li>
+            <li>Limpieza</li>
+            <li>Climatización</li>
+            <li>Entretenimiento</li>
+        </ul>
+
+        <div id="container">
+            <?php foreach ($productos as $producto) : ?>
+                <div class="product-item">
+                    <img src="<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre_producto']; ?>">
+                    <p id="nombre-producto"><strong><?php echo $producto['nombre_producto']; ?></strong></p>
+                    <p><strong>Categoría:</strong> <?php echo $producto['nombre_categoria']; ?></p>
+                    <p><strong>Descripción:</strong> <?php echo $producto['descripcion_producto']; ?></p>
+                    <p><strong>Precio:</strong> $<?php echo $producto['precio']; ?></p>
+                    <?php if ($rol == 'administrador') : ?>
+                        <form id="eliminarForm" method="post">
                             <input type="hidden" name="producto_id" value="<?php echo $producto['id_producto']; ?>">
-                            <button type="submit" name="agregar_carrito">Agregar al carrito</button>
+                            <button class="eliminar-btn" data-id="<?php echo $producto['id_producto']; ?>">Eliminar</button>
                         </form>
+                        <form action="editar_producto.php" method="get" class="botones-form">
+                            <input type="hidden" name="producto_id" value="<?php echo $producto['id_producto']; ?>">
+                            <button type="submit" id="editar-producto">Editar</button>
+                        </form>
+                    <?php elseif (isset($_SESSION['rol'])) : ?>
+                        <?php if (isset($_SESSION['id_cliente'])) : ?>
+                            <form action="" method="post">
+                                <input type="hidden" name="producto_id" value="<?php echo $producto['id_producto']; ?>">
+                                <button type="submit" name="agregar_carrito">Agregar al carrito</button>
+                            </form>
+                        <?php else : ?>
+                            <p id="mensaje-iniciar-sesion">Por favor, inicia sesión para agregar productos al carrito.</p>
+                        <?php endif; ?>
                     <?php else : ?>
                         <p id="mensaje-iniciar-sesion">Por favor, inicia sesión para agregar productos al carrito.</p>
                     <?php endif; ?>
-                <?php else : ?>
-                    <p id="mensaje-iniciar-sesion">Por favor, inicia sesión para agregar productos al carrito.</p>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if ($rol == 'administrador') : ?>
+            <form action="agregar_producto.php" method="get" id="agregar-producto-form">
+                <button type="submit" id="agregar-producto">Agregar Producto</button>
+            </form>
+        <?php endif; ?>
     </div>
-    <?php if ($rol == 'administrador') : ?>
-        <form action="agregar_producto.php" method="get" id="agregar-producto-form">
-        <button type="submit" id="agregar-producto">Agregar Producto</button>
-        </form>
-    <?php endif; ?>
+
+    <footer>
+        <p>&copy; 2024 Derechos Reservados</p>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $(".eliminar-btn").click(function(event) {
-                event.preventDefault(); 
+                event.preventDefault();
 
                 var producto_id = $(this).parent().find('input[name="producto_id"]').val();
 
@@ -195,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
                             producto_id: producto_id
                         },
                         success: function(response) {
-                            alert(response); 
+                            alert(response);
                             window.location.reload();
                         },
                         error: function(xhr, status, error) {
@@ -206,10 +207,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && 
             });
         });
     </script>
-    <br>
-         <footer>
-               <center><p>&copy; 2024 Derechos Reservados</p></center>
-        </footer>
-    </header>
 </body>
 </html>
