@@ -257,35 +257,6 @@ CREATE TABLE FIDE_REABASTECIMIENTO_STOCK_TB (
   CONSTRAINT FK_REABASTECIMIENTO_STOCK_PRODUCTOS FOREIGN KEY (V_id_producto) REFERENCES FIDE_PRODUCTOS_TB(V_id_producto),
   CONSTRAINT FK_REABASTECIMIENTO_STOCK_ESTADOS FOREIGN KEY (V_id_estado) REFERENCES FIDE_ESTADOS_TB(V_id_estado)
 );
- --CREADO POR MARIA Celeste SOLANO HIDALGO
---FECHA 20/07/2024
---INSERT #1
---INSERTS DE LAS TABLAS 
---INSERTS DE LAS TABLAS FIDE_CATEGORIAS_TB
-INSERT INTO FIDE_CATEGORIAS_TB (V_nombre_categoria) VALUES ('Electr?nica');
-INSERT INTO FIDE_CATEGORIAS_TB (V_nombre_categoria) VALUES ('Electrodom?sticos');
-INSERT INTO FIDE_CATEGORIAS_TB (V_nombre_categoria) VALUES ('Muebles');
-
- --CREADO POR MARIA Celeste SOLANO HIDALGO
---FECHA 20/07/2024
---INSERT #2
---INSERTS DE LAS TABLAS FIDE_Descripcion_TB (solo estas 3 opciones van a existir)
-INSERT INTO FIDE_DESCRIPCION_TB (V_descripcion) VALUES ('Producto defectuaso');
-INSERT INTO FIDE_DESCRIPCION_TB (V_descripcion) VALUES ('Entrega tard?a');
-INSERT INTO FIDE_DESCRIPCION_TB (V_descripcion) VALUES ('Facturaci?n incorrecta');
-
- --CREADO POR MARIA Celeste SOLANO HIDALGO
---FECHA 20/07/2024
---INSERT #3
---INSERTS DE LAS TABLAS FIDE_Estado_TB (solo estas 2 opciones van a existir)
-INSERT INTO FIDE_ESTADOS_TB (V_descripcion) VALUES ('Activo');
-INSERT INTO FIDE_ESTADOS_TB (V_descripcion) VALUES ('Inactivo');
-
- --CREADO POR MARIA Celeste SOLANO HIDALGO
---FECHA 20/07/2024
---INSERT #4
---INSERTS DE LAS TABLAS FIDE_Motivos_TB (solo estas 3 categorias van a existir) producto, facturaci?n y entrega 
-INSERT INTO FIDE_MOTIVOS_TB (V_id_reclamacion, V_id_descripcion, V_id_activo, V_categoria, V_fecha) VALUES ('');
 
 --SELECTS 
 SELECT * FROM FIDE_CATEGORIAS_TB;
