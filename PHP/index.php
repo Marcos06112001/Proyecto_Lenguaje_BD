@@ -67,7 +67,8 @@ function obtenerProductos()
                     <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
                     <li><a href="perfil.php">Perfil</a></li>
-                    <li><a href="carrito2.php">Carrito</a></li>
+                    <li><a href="carrito.php">Carrito</a></li>
+                    <li><a href="descripcion.php">Descripcion</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
