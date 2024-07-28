@@ -1,3 +1,30 @@
+<?php
+include '../DAL/conexion.php';
+
+// Establecer la conexión
+try {
+    $conexion = Conecta();
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+    exit();
+}
+
+// Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_V
+$query_select_resenas = 'SELECT * FROM FIDE_PRODUCTOS_RESENAS_SI_ID_V';
+$stmt_select_resenas = $conexion->prepare($query_select_resenas);
+
+try {
+    // Ejecutar la consulta
+    $stmt_select_resenas->execute();
+} catch (PDOException $e) {
+    echo "Error al ejecutar la consulta: " . $e->getMessage();
+    exit();
+}
+
+// Desconectar
+Desconectar($conexion);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,42 +32,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reseñas de Productos Electrónicos</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/CSS/reseña.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 1rem;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            color: #333;
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .product {
+            display: flex;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product h2 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+        .review {
+            font-style: italic;
+            color: #555;
+        }
+        .no-data {
+            text-align: center;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Reseñas de Productos Electrónicos</h1>
-        <a href="index.php" class="return-btn">Menú</a>
-    </header>
-    <div class="container">
-        <div class="product">
-            <img src="https://res.cloudinary.com/sharp-consumer-eu/image/fetch/w_1100,f_auto,q_auto/https://s3.infra.brandquad.io/accounts-media/SHRP/DAM/origin/a898c7d2-8f27-11ea-a21e-c276f464bfe6.jpg" alt="Televisor">
-            <div>
-                <h2>Televisor 4K Ultra HD</h2>
-                <p class="price">$999.99</p>
-                <p>El televisor 4K Ultra HD ofrece una calidad de imagen impresionante con colores vivos y un contraste increíble.</p>
-                <p class="review">"La mejor calidad de imagen que he visto. Perfecto para ver películas y jugar videojuegos." - Juan P.</p>
-            </div>
-        </div>
-        <div class="product">
-            <img src="https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone-13-Pro_Colors_09142021_big.jpg.large.jpg" alt="iPhone">
-            <div>
-                <h2>iPhone 13 Pro</h2>
-                <p class="price">$1199.99</p>
-                <p>El iPhone 13 Pro viene con una cámara avanzada, una pantalla Super Retina XDR y un rendimiento ultra rápido.</p>
-                <p class="review">"El iPhone 13 Pro es increíble. La cámara es espectacular y el rendimiento es muy rápido." - María G.</p>
-            </div>
-        </div>
-        <div class="product">
-            <img src="https://cdn.bitlysdowssl-aws.com/wp-content/uploads/2020/01/Microondas-inteligente-Foto-Europa-Press.jpg" alt="Microondas">
-            <div>
-                <h2>Microondas Inteligente</h2>
-                <p class="price">$199.99</p>
-                <p>El microondas inteligente ofrece funciones avanzadas y un diseño elegante para tu cocina moderna.</p>
-                <p class="review">"Este microondas es muy fácil de usar y tiene muchas funciones útiles. ¡Me encanta!" - Carlos R.</p>
-            </div>
-        </div>
-    </div>
-    
+
+<header>
+    <h1>Reseñas de Productos Electrónicos</h1>
+    <a href="index.php" class="return-btn">Menú</a>
+</header>
+
+<div class="container">
+    <h2>Reseñas de Productos</h2>
+    <?php
+// Mostrar los datos en la tabla
+    echo '<table border="1">';
+    echo '<tr><th>Nombre del producto</th><th>Calificación</th><th>Reseña</th><th>Fecha Realizada</th><th>Nombre del usuario</th></tr>';
+ 
+while ($row = $stmt_select_resenas->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>';
+    foreach ($row as $key => $value) {
+        echo '<td>' . htmlspecialchars($value) . '</td>';
+    }
+    echo '</tr>';
+}
+echo '</table>';
+ 
+// Desconectar
+Desconectar($conexion);
+?>
+</div>
+
 </body>
 </html>
+

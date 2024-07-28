@@ -1,61 +1,120 @@
+<?php
+include '../DAL/conexion.php';
+
+// Establecer la conexión
+try {
+    $conexion = Conecta();
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+    exit();
+}
+
+// Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_V
+$query_select_carrito = 'SELECT * FROM FIDE_PRODUCTOS_CARRITO_RESIVO_V';
+$stmt_select_carrito = $conexion->prepare($query_select_carrito);
+
+try {
+    // Ejecutar la consulta
+    $stmt_select_carrito->execute();
+} catch (PDOException $e) {
+    echo "Error al ejecutar la consulta: " . $e->getMessage();
+    exit();
+}
+
+// Desconectar
+Desconectar($conexion);
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/CSS/carrito.css">
+    <title>Reseñas de Productos Electrónicos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 1rem;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            color: #333;
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .product {
+            display: flex;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product h2 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+        .review {
+            font-style: italic;
+            color: #555;
+        }
+        .no-data {
+            text-align: center;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
+
 <header>
-    <h1>Carrito de Compras</h1>
-    <a href="index.php" class="menu-btn">Menú</a>
+    <h1>Compras Existentes</h1>
+    <a href="index.php" class="return-btn">Menú</a>
 </header>
 
 <div class="container">
-    <div class="cart-item">
-        <img src="https://images.ecestaticos.com/AUq-yYTh8MSgZ2S6dh5Ndcx14dE=/0x0:640x359/1440x810/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F031%2F004%2F40f%2F03100440fc8b8912dc9cee7af389963a.jpg" alt="Producto 1">
-        <div>
-            <h5>Producto 1</h5>
-            <p>Descripción breve del producto.</p>
-            <p><strong>Precio:</strong> $19.99</p>
-            <p><strong>Cantidad:</strong> 2</p>
-        </div>
-    </div>
-
-    <div class="cart-item">
-        <img src="https://www.apple.com/v/iphone/home/bv/images/meta/iphone__ky2k6x5u6vue_og.png" alt="Producto 2">
-        <div>
-            <h5>Producto 2</h5>
-            <p>Descripción breve del producto.</p>
-            <p><strong>Precio:</strong> $29.99</p>
-            <p><strong>Cantidad:</strong> 1</p>
-        </div>
-    </div>
-
-    <div class="cart-item">
-        <img src="https://www.verdugotienda.com/media/catalog/product/h/o/horno-microondas-telstar-0.7cp-tmd007530md-silver-183778.jpg?optimize=medium&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700" alt="Producto 3">
-        <div>
-            <h5>Producto 3</h5>
-            <p>Descripción breve del producto.</p>
-            <p><strong>Precio:</strong> $9.99</p>
-            <p><strong>Cantidad:</strong> 3</p>
-        </div>
-    </div>
-
-    <div class="cart-total">
-        <p><strong>Total:</strong> $99.95</p>
-    </div>
-
-    <div class="btn-checkout">
-        <a href="proceder_pago.php" class="btn btn-primary">Proceder al Pago</a>
-    </div>
+    <h2>Compras de Usuarios</h2>
+    <?php
+// Mostrar los datos en la tabla
+    echo '<table border="1">';
+    echo '<tr><th>Nombre del usuario</th><th>Producto</th><th>Cantidad comprada</th><th>Precio</th><th>Total</th><th>Estado</th></tr>';
+ 
+while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>';
+    foreach ($row as $key => $value) {
+        echo '<td>' . htmlspecialchars($value) . '</td>';
+    }
+    echo '</tr>';
+}
+echo '</table>';
+ 
+// Desconectar
+Desconectar($conexion);
+?>
 </div>
 
 </body>
 </html>
+

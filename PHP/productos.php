@@ -26,14 +26,14 @@ function obtenerProductos($id_categoria = null) {
     $conexion = Conecta();
     
     if ($id_categoria) {
-        $sql = "SELECT V_id_producto, V_id_categoria, V_id_estado, V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
+        $sql = "SELECT  V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
                 FROM FIDE_PRODUCTOS_TB 
                 WHERE V_id_categoria = :id_categoria";
         
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
     } else {
-        $sql = "SELECT V_id_producto, V_id_categoria, V_id_estado, V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
+        $sql = "SELECT  V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
                 FROM FIDE_PRODUCTOS_TB";
         
         $stmt = $conexion->prepare($sql);
@@ -98,9 +98,6 @@ $productos = obtenerProductos($id_categoria);
                         <table class="products-table">
                             <thead>
                                 <tr>
-                                    <th>ID Producto</th>
-                                    <th>ID Categoría</th>
-                                    <th>ID Estado</th>
                                     <th>Nombre Producto</th>
                                     <th>Descripción Producto</th>
                                     <th>Precio</th>

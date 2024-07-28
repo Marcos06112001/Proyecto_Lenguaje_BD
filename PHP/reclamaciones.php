@@ -1,3 +1,30 @@
+<?php
+include '../DAL/conexion.php'; // Conexión
+
+function obtenerCategorias() {
+    $conexion = Conecta(); // Obtiene la conexión a la base de datos
+
+    try {
+        // Prepara la sentencia SQL para seleccionar todas las categorías
+        $sql = "SELECT V_CATEGORIA FROM FIDE_MOTIVOS_TB";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute();
+
+        // Obtiene todos los resultados
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $resultados = [];
+        $error = "Error al obtener las categorías: " . $e->getMessage();
+    } finally {
+        Desconectar($conexion); // Desconecta la base de datos
+    }
+
+    return $resultados ?? [];
+}
+
+$categorias = obtenerCategorias();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,26 +55,27 @@
                     <input type="email" id="email" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="order-id" class="form-label">ID de Pedido</label>
-                    <input type="text" id="order-id" class="form-control" required>
-                </div>
-                <div class="mb-3">
                     <label for="issue-type" class="form-label">Tipo de Reclamo</label>
                     <select id="issue-type" class="form-select" required>
                         <option value="" disabled selected>Seleccione un tipo</option>
-                        <option value="producto-dañado">Producto Dañado</option>
-                        <option value="pedido-incompleto">Pedido Incompleto</option>
-                        <option value="error-en-factura">Error en la Factura</option>
-                        <option value="otro">Otro</option>
+                            <?php
+                                if (isset($categorias) && !empty($categorias)) {
+                                  foreach ($categorias as $categoria) {
+                                    if (isset($categoria['V_CATEGORIA'])) {
+                                      echo "<option value='" . htmlspecialchars($categoria['V_CATEGORIA']) . "'>" . htmlspecialchars($categoria['V_CATEGORIA']) . "</option>";
+                                    } else {
+                                      echo "<option value=''>Error en datos de categoría</option>";
+                                     }
+                                     }
+                                 } else {
+                                        echo "<option value=''>No hay categorías disponibles</option>";
+                                 }
+                             ?>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Descripción del Problema</label>
                     <textarea id="description" class="form-control" rows="4" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="attachment" class="form-label">Adjuntar Archivos (opcional)</label>
-                    <input type="file" id="attachment" class="form-control">
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Enviar Reclamo</button>
@@ -60,3 +88,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-7t0D7Gv2IKK5zQb6mD4ztDA7VxXq64fU66g4E6cGepV6Vm4tQ1Sgjv2Qh0ggxVoS" crossorigin="anonymous"></script>
 </body>
 </html>
+

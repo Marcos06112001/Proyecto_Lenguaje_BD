@@ -6,7 +6,7 @@ function obtenerDatos() {
 
     try {
         // Prepara la sentencia SQL para seleccionar todos los registros
-        $sql = "SELECT V_ID_DESCRIPCION, V_DESCRIPCION FROM FIDE_DESCRIPCION_TB";
+        $sql = "SELECT  V_DESCRIPCION FROM FIDE_DESCRIPCION_TB";
         $stmt = $conexion->prepare($sql);
         $stmt->execute();
 
@@ -44,7 +44,7 @@ $data = obtenerDatos();
             <table>
                 <thead>
                     <tr>
-                        <th>ID Descripción</th>
+                       
                         <th>Descripción</th>
                     </tr>
                 </thead>
@@ -52,7 +52,7 @@ $data = obtenerDatos();
                     <?php if (isset($data) && !empty($data)): ?>
                         <?php foreach ($data as $fila): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($fila['V_ID_DESCRIPCION']); ?></td>
+                              
                                 <td><?php echo htmlspecialchars($fila['V_DESCRIPCION']); ?></td>
                             </tr>
                         <?php endforeach; ?>
