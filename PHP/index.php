@@ -12,9 +12,9 @@ if (isset($_SESSION['rol'])) {
 function obtenerProductos()
 {
     $conexion = Conecta();
-    $consulta = "SELECT FIDE_PRODUCTOS_TB.*, FIDE_CATEGORIAS_TB.V_nombre_categoria
-                 FROM FIDE_PRODUCTOS_TB
-                 INNER JOIN FIDE_CATEGORIAS_TB
+    $consulta = "SELECT FIDE_PRODUCTOS_TB.*, FIDE_CATEGORIAS_TB.V_nombre_categoria 
+                 FROM FIDE_PRODUCTOS_TB 
+                 INNER JOIN FIDE_CATEGORIAS_TB 
                  ON FIDE_PRODUCTOS_TB.V_id_categoria = FIDE_CATEGORIAS_TB.V_id_categoria";
     try {
         $stmt = $conexion->query($consulta);
@@ -26,7 +26,52 @@ function obtenerProductos()
  
     Desconectar($conexion);
  
-    return $productos; // conexion
+    return $productos;
+}
+ 
+$productos = obtenerProductos();
+ 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_carrito']) && isset($_SESSION['id_cliente'])) {
+    $producto_id = $_POST['producto_id'];
+    $cliente_id = $_SESSION['id_cliente'];
+ 
+    $conexion = Conecta();
+ 
+    try {
+        // Consulta del producto
+        $consulta_producto = "SELECT * FROM FIDE_PRODUCTOS_TB WHERE V_id_producto = :V_id_producto";
+        $stmt_producto = $conexion->prepare($consulta_producto);
+        $stmt_producto->bindParam(':producto_id', $producto_id, PDO::PARAM_INT);
+        $stmt_producto->execute();
+ 
+        if ($stmt_producto->rowCount() > 0) {
+            $producto = $stmt_producto->fetch(PDO::FETCH_ASSOC);
+            $precio_unitario = $producto['precio'];
+ 
+            $subtotal = $precio_unitario;
+ 
+            // Inserción en el carrito
+            $consulta_carrito = "INSERT INTO FIDE_CARRITO_TB (V_id_cliente, V_id_producto, V_cantidad, V_precio_unitario, V_subtotal) 
+                                 VALUES (:V_id_cliente, :V_id_producto, 1, :V_precio_unitario, :V_subtotal)";
+            $stmt_carrito = $conexion->prepare($consulta_carrito);
+            $stmt_carrito->bindParam(':V_id_cliente', $cliente_id, PDO::PARAM_INT);
+            $stmt_carrito->bindParam(':V_id_producto', $producto_id, PDO::PARAM_INT);
+            $stmt_carrito->bindParam(':V_precio_unitario', $precio_unitario, PDO::PARAM_STR);
+            $stmt_carrito->bindParam(':V_subtotal', $subtotal, PDO::PARAM_STR);
+ 
+            if ($stmt_carrito->execute()) {
+                $mensaje = "El producto se agregó al carrito correctamente.";
+            } else {
+                $error = "Error al agregar el producto al carrito.";
+            }
+        } else {
+            $error = "Error: No se encontró el producto en la base de datos.";
+        }
+    } catch (PDOException $e) {
+        $error = "Error en la operación de la base de datos: " . $e->getMessage();
+    }
+ 
+    Desconectar($conexion);
 }
 ?>
 <!DOCTYPE html>
@@ -61,6 +106,7 @@ function obtenerProductos()
                     <li><a href="orden_del_dia.php">Orden del Día</a></li>
                     <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
+                    
                 <?php elseif ($rol == 'cliente') : ?>
                     <li><a href="productos.php">Productos</a></li>
                     <li><a href="promociones.php">Promociones</a></li>
