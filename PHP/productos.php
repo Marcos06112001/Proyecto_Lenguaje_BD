@@ -26,14 +26,14 @@ function obtenerProductos($id_categoria = null) {
     $conexion = Conecta();
     
     if ($id_categoria) {
-        $sql = "SELECT  V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
+        $sql = "SELECT V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN 
                 FROM FIDE_PRODUCTOS_TB 
-                WHERE V_id_categoria = :id_categoria";
+                WHERE V_ID_CATEGORIA = :id_categoria";
         
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
     } else {
-        $sql = "SELECT  V_nombre_producto, V_descripcion_producto, V_precio, V_imagen 
+        $sql = "SELECT V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN 
                 FROM FIDE_PRODUCTOS_TB";
         
         $stmt = $conexion->prepare($sql);
@@ -62,20 +62,21 @@ $productos = obtenerProductos($id_categoria);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar Categoría</title>
+    <title>Productos</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/CSS/producto.css">
+    <link rel="stylesheet" href="/CSS/productos.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <h1>Selecciona una Categoría</h1>
+            <h1>Productos</h1>
+            <a href="index.php" class="button">Menú</a>
         </header>
         <main>
             <form action="productos.php" method="GET" class="category-form">
                 <div class="select-container">
-                    <select name="id_categoria" id="categoriaSelect" required>
-                        <option value="" disabled selected>Seleccione una categoría</option>
+                    <select name="id_categoria" id="categoriaSelect" onchange="this.form.submit()">
+                        <option value="">Todas las categorías</option>
                         <?php if (!empty($categorias)): ?>
                             <?php foreach ($categorias as $categoria): ?>
                                 <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" 
@@ -88,37 +89,27 @@ $productos = obtenerProductos($id_categoria);
                         <?php endif; ?>
                     </select>
                 </div>
-                <button type="submit" class="submit-btn">Ver Productos</button>
             </form>
 
-            <?php if ($id_categoria !== null): ?>
-                <section class="products-section">
-                    <h2>Productos en la Categoría Seleccionada</h2>
-                    <?php if (!empty($productos)): ?>
-                        <table class="products-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre Producto</th>
-                                    <th>Descripción Producto</th>
-                                    <th>Precio</th>
-                                    <th>Imagen</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($productos as $producto): ?>
-                                    <tr>
-                                        <?php foreach ($producto as $clave => $valor): ?>
-                                            <td><?php echo htmlspecialchars($valor); ?></td>
-                                        <?php endforeach; ?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php else: ?>
-                        <p>No se encontraron productos para esta categoría.</p>
-                    <?php endif; ?>
-                </section>
-            <?php endif; ?>
+            <section class="products-section">
+                <h2>Productos</h2>
+                <?php if (!empty($productos)): ?>
+                    <div class="products-grid">
+                        <?php foreach ($productos as $producto): ?>
+                            <div class="product-card">
+                                <img src="<?php echo htmlspecialchars($producto['V_IMAGEN'] ?? 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Imagen del producto'); ?>">
+                                <div class="card-content">
+                                    <h3><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Nombre del producto'); ?></h3>
+                                    <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO'] ?? 'Descripción del producto'); ?></p>
+                                    <div class="price"><?php echo htmlspecialchars($producto['V_PRECIO'] ?? '0.00'); ?> $</div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p>No se encontraron productos para esta categoría.</p>
+                <?php endif; ?>
+            </section>
         </main>
     </div>
 </body>
