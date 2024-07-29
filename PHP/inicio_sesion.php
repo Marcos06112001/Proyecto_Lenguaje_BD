@@ -1,3 +1,43 @@
+<?php
+session_start();
+include '../DAL/conexion.php'; 
+
+$error_message = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $conexion = Conecta();
+
+    
+    $sql = "SELECT V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_PASS FROM FIDE_CLIENTES_TB WHERE V_EMAIL = :email";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        
+        if ($password === $user['V_PASS']) {
+            
+            $_SESSION['user_id'] = $user['V_ID_CLIENTE'];
+            $_SESSION['user_name'] = $user['V_NOMBRE_CLIENTE'];
+            
+            header("Location: index.php");
+            exit();
+        } else {
+            $error_message = "Correo electrónico o contraseña incorrectos";
+        }
+    } else {
+        $error_message = "Correo electrónico o contraseña incorrectos";
+    }
+
+    Desconectar($conexion);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,12 +54,15 @@
     <div id="login-register-container">
         <div class="form-container">
             <h2 id="login-title">Iniciar sesión</h2>
-            <form id="login-form" action="login.php" method="post">
+            <form id="login-form" action="inicio_sesion.php" method="post">
                 <label class="label-form" for="email">Correo electrónico:</label>
                 <input class="input-form" type="email" id="email" name="email" required>
                 <label class="label-form" for="password">Contraseña:</label>
                 <input class="input-form" type="password" id="password" name="password" required>
                 <input class="btn-form" type="submit" value="Iniciar sesión">
+                <?php if ($error_message) { ?>
+                    <p style="color: red;"><?php echo $error_message; ?></p>
+                <?php } ?>
             </form>
         </div>
 
