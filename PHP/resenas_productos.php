@@ -62,6 +62,7 @@ Desconectar($conexion);
         }
         .product {
             display: flex;
+            flex-direction: column;
             margin-bottom: 2rem;
             border: 1px solid #ddd;
             border-radius: 0.5rem;
@@ -97,24 +98,17 @@ Desconectar($conexion);
 <div class="container">
     <h2>Reseñas de Productos</h2>
     <?php
-// Mostrar los datos en la tabla
-    echo '<table border="1">';
-    echo '<tr><th>Nombre del producto</th><th>Calificación</th><th>Reseña</th><th>Fecha Realizada</th><th>Nombre del usuario</th></tr>';
- 
-while ($row = $stmt_select_resenas->fetch(PDO::FETCH_ASSOC)) {
-    echo '<tr>';
-    foreach ($row as $key => $value) {
-        echo '<td>' . htmlspecialchars($value) . '</td>';
+    while ($row = $stmt_select_resenas->fetch(PDO::FETCH_ASSOC)) {
+        echo '<div class="product">';
+        echo '<h2>' . htmlspecialchars($row['V_NOMBRE_PRODUCTO']) . '</h2>';
+        echo '<p class="price">Calificación: ' . htmlspecialchars($row['V_CALIFICACION']) . '</p>';
+        echo '<p class="review">' . htmlspecialchars($row['V_COMENTARIO']) . '</p>';
+        echo '<p>Fecha Realizada: ' . htmlspecialchars($row['V_FECHA']) . '</p>';
+        echo '<p>Nombre del usuario: ' . htmlspecialchars($row['NOMBRE_CLIENTE']) . '</p>';
+        echo '</div>';
     }
-    echo '</tr>';
-}
-echo '</table>';
- 
-// Desconectar
-Desconectar($conexion);
-?>
+    ?>
 </div>
 
 </body>
 </html>
-
