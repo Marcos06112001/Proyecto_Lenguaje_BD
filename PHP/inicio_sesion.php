@@ -10,28 +10,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conexion = Conecta();
 
-    
-    $sql = "SELECT V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_PASS FROM FIDE_CLIENTES_TB WHERE V_EMAIL = :email";
+    $sql = "SELECT V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_PASS, V_ROL FROM FIDE_CLIENTES_TB WHERE V_EMAIL = :email";
     $stmt = $conexion->prepare($sql);
     $stmt->bindParam(':email', $email);
-    $stmt->execute();
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user) {
-        
-        if ($password === $user['V_PASS']) {
-            
-            $_SESSION['user_id'] = $user['V_ID_CLIENTE'];
-            $_SESSION['user_name'] = $user['V_NOMBRE_CLIENTE'];
-            
-            header("Location: index.php");
-            exit();
+        if ($user) {
+            if ($password === $user['V_PASS']) {
+                $_SESSION['user_id'] = $user['V_ID_CLIENTE'];
+                $_SESSION['user_name'] = $user['V_NOMBRE_CLIENTE'];
+                $_SESSION['rol'] = $user['V_ROL'];
+
+                header("Location: index.php");
+                exit();
+            } else {
+                $error_message = "Correo electrónico o contraseña incorrectos";
+            }
         } else {
             $error_message = "Correo electrónico o contraseña incorrectos";
         }
-    } else {
-        $error_message = "Correo electrónico o contraseña incorrectos";
+    } catch (PDOException $e) {
+        echo "Error al ejecutar la consulta: " . $e->getMessage();
     }
 
     Desconectar($conexion);
