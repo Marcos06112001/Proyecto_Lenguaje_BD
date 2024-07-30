@@ -13,6 +13,7 @@ $id_proveedor = isset($_POST['id_proveedor']) ? $_POST['id_proveedor'] : null;
 
 $nombre_proveedor = '';
 
+//LLAMADO DE UNA FUNCION 
 if ($id_proveedor !== null) {
     $query_select_proveedor = 'SELECT FIDE_PROVEEDORES_SELECT_FN(:id_proveedor) AS nombre_proveedor FROM dual';
     $stmt_select_proveedor = $conexion->prepare($query_select_proveedor);

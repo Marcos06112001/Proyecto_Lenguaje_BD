@@ -433,7 +433,33 @@ END;
 -- Para seleccionar el ID del proveedor con un nombre específico
 SELECT FIDE_PROVEEDORES_SELECT_BY_NAME_FN('Proveedor XYZ') AS id_proveedor FROM dual;
 
+--CREADO POR Nicole Hidalgo
+--FECHA 29/07/2024
+--Función #16
+CREATE OR REPLACE TYPE cliente_info_t AS OBJECT (
+    nombre_cliente   VARCHAR2(255),
+    apellido_cliente VARCHAR2(255),
+    email            VARCHAR2(255),
+    telefono         VARCHAR2(20),
+    direccion        CLOB,
+    imagen           VARCHAR2(255)
+);
 
+CREATE OR REPLACE FUNCTION FIDE_CLIENTE_TB_OBTENER_INFO_FN(
+    P_cliente_id IN INT
+) RETURN cliente_info_t IS
+    V_cliente_info cliente_info_t;
+BEGIN
+    SELECT cliente_info_t(V_NOMBRE_CLIENTE, V_APELLIDO_CLIENTE, V_EMAIL, V_TELEFONO, V_DIRECCION, V_IMAGEN)
+    INTO V_cliente_info
+    FROM FIDE_CLIENTES_TB
+    WHERE V_ID_CLIENTE = P_cliente_id;
+
+    RETURN V_cliente_info;
+END;
+
+
+SELECT FIDE_CLIENTE_TB_OBTENER_INFO_FN(1) FROM DUAL;
 
 
 

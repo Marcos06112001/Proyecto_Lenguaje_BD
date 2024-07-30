@@ -190,3 +190,109 @@ FROM
   JOIN FIDE_CLIENTES_TB C ON R.v_id_cliente = C.v_id_cliente;
   
 SELECT * FROM FIDE_PRODUCTOS_RESEÑAS_V;
+
+
+-- CREADO POR Nicole HIDALGO
+-- FECHA 27/07/2024
+-- Vista #11
+-- Esta vista muestra las promociones activas si  id.
+CREATE OR REPLACE VIEW FIDE_PROMOCIONES_ACTIVAS_SIN_ID_V AS
+SELECT 
+  PE.v_nombre_promocion, 
+  PE.v_descripcion_promocion, 
+  PE.v_fecha_inicio, 
+  PE.v_fecha_fin, 
+  PE.v_descuento
+FROM 
+  FIDE_PROMOCIONES_TB PE
+  JOIN FIDE_ESTADOS_TB EST ON Pe.v_id_estado = EST.v_id_estado
+WHERE 
+  EST.v_descripcion = 'Activo';
+  
+SELECT * FROM FIDE_PROMOCIONES_ACTIVAS_SIN_ID_V;
+
+-- CREADO POR Nicole HIDALGO
+-- FECHA 27/07/2024
+-- Vista #12
+-- Esta vista muestra las reseñas activas sin  id.
+CREATE OR REPLACE VIEW FIDE_PRODUCTOS_RESENAS_SI_ID_V AS
+SELECT 
+  P.v_nombre_producto, 
+  R.v_calificacion, 
+  R.v_comentario, 
+  R.v_fecha, 
+  C.v_nombre_cliente || ' ' || C.v_apellido_cliente AS nombre_cliente
+FROM 
+  FIDE_RESENAS_PRODUCTO_TB R
+  JOIN FIDE_PRODUCTOS_TB P ON R.v_id_producto = P.v_id_producto
+  JOIN FIDE_CLIENTES_TB C ON R.v_id_cliente = C.v_id_cliente;
+  
+SELECT * FROM FIDE_PRODUCTOS_RESENAS_SI_ID_V;
+
+--CREADO POR Nicole HIDALGO
+--FECHA 27/07/2024
+--Vista #13
+--Esta vista muestra las reseñas activas sin  id.
+CREATE OR REPLACE VIEW FIDE_PRODUCTOS_CARRITO_RESIVO_V AS
+SELECT 
+  CL.v_nombre_cliente || ' ' || CL.v_apellido_cliente AS nombre_cliente, 
+  P.v_nombre_producto, 
+  C.v_cantidad, 
+  C.v_precio_unitario, 
+  C.v_subtotal, 
+  ES.v_descripcion AS estado
+FROM 
+  FIDE_CARRITO_TB C
+  JOIN FIDE_CLIENTES_TB CL ON C.v_id_cliente = CL.v_id_cliente
+  JOIN FIDE_PRODUCTOS_TB P ON C.v_id_producto = P.v_id_producto
+  JOIN FIDE_ESTADOS_TB ES ON C.v_id_estado = ES.v_id_estado;
+  
+SELECT * FROM FIDE_PRODUCTOS_CARRITO_RESIVO_V;
+
+--CREADO POR Nicole HIDALGO
+--FECHA 30/07/2024
+--Vista #14
+--Esta vista muestra los detalles de venta
+CREATE OR REPLACE VIEW FIDE_DETALLES_PROMOCIONES_V AS
+SELECT 
+  P.v_nombre_promocion, 
+  P.v_descripcion_promocion, 
+  P.v_fecha_inicio, 
+  P.v_fecha_fin, 
+  P.v_descuento, 
+  ES.v_descripcion AS estado
+FROM FIDE_PROMOCIONES_TB P
+  JOIN FIDE_ESTADOS_TB ES ON P.v_id_estado = ES.v_id_estado;
+ 
+SELECT * FROM FIDE_DETALLES_PROMOCIONES_V;
+
+--CREADO POR Nicole HIDALGO
+--FECHA 30/07/2024
+--Vista #15
+CREATE OR REPLACE VIEW FIDE_SELECT_CATEGORIAS_V AS
+SELECT 
+  P.V_NOMBRE_CATEGORIA,
+  P.V_ID_CATEGORIA
+FROM FIDE_CATEGORIAS_TB P;
+
+SELECT * FROM FIDE_SELECT_CATEGORIAS_V;
+
+--CREADO POR Nicole HIDALGO
+--FECHA 30/07/2024
+--Vista #16
+-- Esta vista muestra los detalles de los empleados.
+CREATE OR REPLACE VIEW FIDE_DETALLES_EMPLEADOS_V AS
+SELECT 
+  v_id_empleado, 
+  v_nombre_empleado, 
+  v_apellido_empleado, 
+  v_email, 
+  v_telefono, 
+  v_direccion, 
+  V_imagen
+FROM 
+  FIDE_EMPLEADOS_TB;
+  
+SELECT * FROM FIDE_DETALLES_EMPLEADOS_V;
+
+

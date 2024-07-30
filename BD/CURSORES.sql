@@ -251,7 +251,15 @@ CREATE OR REPLACE PROCEDURE SELECCIONAR_REABASTECIMIENTO_STOCK_SP(
   p_cursor OUT SYS_REFCURSOR
 ) AS
 BEGIN
-  OPEN p_cursor FOR SELECT * FROM FIDE_REABASTECIMIENTO_STOCK_TB;
+  OPEN p_cursor FOR 
+  SELECT s.v_id_reabastecimiento,
+         p.v_nombre_producto AS NOMBRE_PRODUCTO,
+         c.v_nombre_categoria AS NOMBRE_CATEGORIA
+  FROM FIDE_REABASTECIMIENTO_STOCK_TB S
+  JOIN 
+      FIDE_PRODUCTOS_TB p ON s.v_id_producto = p.v_id_producto
+    JOIN 
+      FIDE_CATEGORIAS_TB c ON p.v_id_categoria = c.v_id_categoria;
 END;
 
 VAR MY_CURSOR REFCURSOR;
