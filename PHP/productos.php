@@ -1,5 +1,6 @@
 <?php
 include '../DAL/conexion.php';
+session_start(); // Inicia la sesión para acceder a la variable $_SESSION
 
 // Obtiene las categorías para el formulario de selección
 function obtenerCategorias() {
@@ -55,6 +56,9 @@ function obtenerProductos($id_categoria = null) {
 $categorias = obtenerCategorias();
 $id_categoria = isset($_GET['id_categoria']) ? (int)$_GET['id_categoria'] : null;
 $productos = obtenerProductos($id_categoria);
+
+// Verifica si el usuario es administrador
+$is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
 ?>
 
 <!DOCTYPE html>
@@ -66,136 +70,149 @@ $productos = obtenerProductos($id_categoria);
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/productos.css">
     <style>
-    
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+        .header {
+            background-color: #04022d;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            position: relative;
+        }
 
-.header {
-    background-color: #04022d;
-    color: #fff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    position: relative;
-}
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-align: center; 
+            flex: 1; 
+        }
 
-.header h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-align: center; 
-    flex: 1; 
-}
+        .header .button {
+            position: absolute;
+            right: 20px;
+            top: 50%; 
+            transform: translateY(-50%); 
+        }
 
-.header .button {
-    position: absolute;
-    right: 20px;
-    top: 50%; 
-    transform: translateY(-50%); 
-}
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
 
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #007bff;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
+        .button:hover {
+            background-color: #0056b3;
+        }
 
-.button:hover {
-    background-color: #0056b3;
-}
+        .add-product-btn {
+            display: <?php echo $is_admin ? 'inline-block' : 'none'; ?>;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
 
-.category-form {
-    margin-bottom: 20px;
-}
+        .add-product-btn:hover {
+            background-color: #218838;
+        }
 
-.select-container {
-    display: flex;
-    justify-content: center;
-}
+        .category-form {
+            margin-bottom: 20px;
+        }
 
-select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-}
+        .select-container {
+            display: flex;
+            justify-content: center;
+        }
 
-select:focus {
-    border-color: #aaa;
-    outline: none;
-}
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+        }
 
-.products-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        select:focus {
+            border-color: #aaa;
+            outline: none;
+        }
 
-.products-section h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-}
+        .products-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.products-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
+        .products-section h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
 
-.product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: calc(25% - 20px); 
-    box-sizing: border-box;
-}
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-.product-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: calc(25% - 20px); 
+            box-sizing: border-box;
+        }
 
-.card-content {
-    padding: 10px;
-}
+        .product-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-.card-content h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-}
+        .card-content {
+            padding: 10px;
+        }
 
-.card-content p {
-    margin: 0 0 10px;
-    font-size: 1rem;
-}
+        .card-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
 
-.price {
-    font-size: 1.1rem;
-    font-weight: bold;
-}
+        .card-content p {
+            margin: 0 0 10px;
+            font-size: 1rem;
+        }
 
+        .price {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -203,6 +220,9 @@ select:focus {
         <header class="header">
             <h1>Productos</h1>
             <a href="index.php" class="button">Menú</a>
+            <?php if ($is_admin): ?>
+                <a href="agregar_producto.php" class="add-product-btn">Agregar Producto</a>
+            <?php endif; ?>
         </header>
         <main>
             <form action="productos.php" method="GET" class="category-form">

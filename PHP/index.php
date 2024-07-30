@@ -41,28 +41,31 @@ $productos = obtenerProductos();
         <h1>Tienda Electric</h1>
         <div id="top-header">
             <?php if (isset($_SESSION['user_id'])) : ?>
-                
                 <a href="logout.php" id="cerrar-sesion">Cerrar Sesión</a>
             <?php else : ?>
-               
                 <a href="inicio_sesion.php" id="iniciar-sesion">Iniciar Sesión</a>
             <?php endif; ?>
         </div>
         <nav id="main-nav">
             <ul>
                 <?php if ($rol == 'administrador') : ?>
-                    <li><a href="clientes_ADM.php">Clientes</a></li>
-                    <li><a href="categorias_ADM.php">Categorías</a></li>
-                    <li><a href="compras_ADM.php">Compras</a></li>
-                    <li><a href="ventas_ADM.php">Ventas</a></li>
-                    <li><a href="empleados_ADM.php">Empleados</a></li>
-                    <li><a href="proveedores_ADM.php">Proveedores</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Gestión</a>
+                        <div class="dropdown-content">
+                            <a href="clientes_ADM.php">Clientes</a>
+                            <a href="categorias_ADM.php">Categorías</a>
+                            <a href="compras_ADM.php">Compras</a>
+                            <a href="ventas_ADM.php">Ventas</a>
+                            <a href="empleados_ADM.php">Empleados</a>
+                            <a href="proveedores_ADM.php">Proveedores</a>
+                        </div>
+                    </li>
                     <li><a href="reabastecimiento_ADM.php">Reabastecimiento</a></li>
                     <li><a href="promociones_ADM.php">Promociones</a></li>
                     <li><a href="orden_del_dia.php">Orden del Día</a></li>
                     <li><a href="resenas_productos_ADM.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones_ADM.php">Reclamaciones</a></li>
-
+                    <li><a href="productos.php">Productos</a></li>
                 <?php elseif ($rol == 'cliente') : ?>
                     <li><a href="productos.php">Productos</a></li>
                     <li><a href="promociones.php">Promociones</a></li> 
