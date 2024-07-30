@@ -5,7 +5,7 @@ include '../DAL/conexion.php';
 function obtenerCategorias() {
     $conexion = Conecta();
     
-    $sql = "SELECT V_ID_CATEGORIA, V_NOMBRE_CATEGORIA FROM FIDE_CATEGORIAS_TB";
+    $sql = "SELECT * FROM FIDE_SELECT_CATEGORIAS_V";
     
     try {
         $stmt = $conexion->prepare($sql);
@@ -21,40 +21,7 @@ function obtenerCategorias() {
     return $categorias;
 }
 
-// Obtiene los productos basados en la categoría seleccionada
-function obtenerProductos($id_categoria = null) {
-    $conexion = Conecta();
-    
-    if ($id_categoria) {
-        $sql = "SELECT V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN 
-                FROM FIDE_PRODUCTOS_TB 
-                WHERE V_ID_CATEGORIA = :id_categoria";
-        
-        $stmt = $conexion->prepare($sql);
-        $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
-    } else {
-        $sql = "SELECT V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN 
-                FROM FIDE_PRODUCTOS_TB";
-        
-        $stmt = $conexion->prepare($sql);
-    }
-    
-    try {
-        $stmt->execute();
-        $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "Error al obtener productos: " . $e->getMessage();
-        $productos = [];
-    }
-    
-    Desconectar($conexion);
-    
-    return $productos;
-}
-
 $categorias = obtenerCategorias();
-$id_categoria = isset($_GET['id_categoria']) ? (int)$_GET['id_categoria'] : null;
-$productos = obtenerProductos($id_categoria);
 ?>
 
 <!DOCTYPE html>
@@ -66,182 +33,107 @@ $productos = obtenerProductos($id_categoria);
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/productos.css">
     <style>
-    
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+        .header {
+            background-color: #04022d;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
 
-.header {
-    background-color: #04022d;
-    color: #fff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    position: relative;
-}
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-align: center;
+            flex: 1;
+        }
 
-.header h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-align: center; 
-    flex: 1; 
-}
+        .header .button {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-.header .button {
-    position: absolute;
-    right: 20px;
-    top: 50%; 
-    transform: translateY(-50%); 
-}
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
 
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #007bff;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
+        .button:hover {
+            background-color: #0056b3;
+        }
 
-.button:hover {
-    background-color: #0056b3;
-}
+        .categories-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-.category-form {
-    margin-bottom: 20px;
-}
+        .category-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: calc(25% - 20px);
+            box-sizing: border-box;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
 
-.select-container {
-    display: flex;
-    justify-content: center;
-}
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
 
-select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-select:focus {
-    border-color: #aaa;
-    outline: none;
-}
-
-.products-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.products-section h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-}
-
-.products-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: calc(25% - 20px); 
-    box-sizing: border-box;
-}
-
-.product-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.card-content {
-    padding: 10px;
-}
-
-.card-content h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-}
-
-.card-content p {
-    margin: 0 0 10px;
-    font-size: 1rem;
-}
-
-.price {
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
+        .category-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <h1>Productos</h1>
+            <h1>Categorias</h1>
             <a href="index.php" class="button">Menú</a>
         </header>
         <main>
-            <form action="productos.php" method="GET" class="category-form">
-                <div class="select-container">
-                    <select name="id_categoria" id="categoriaSelect" onchange="this.form.submit()">
-                        <option value="">Todas las categorías</option>
-                        <?php if (!empty($categorias)): ?>
-                            <?php foreach ($categorias as $categoria): ?>
-                                <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" 
-                                        <?php echo ($id_categoria == $categoria['V_ID_CATEGORIA']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <option value="">No se encontraron categorías</option>
-                        <?php endif; ?>
-                    </select>
-                </div>
-            </form>
-
-            <section class="products-section">
-                <h2>Productos</h2>
-                <?php if (!empty($productos)): ?>
-                    <div class="products-grid">
-                        <?php foreach ($productos as $producto): ?>
-                            <div class="product-card">
-                                <img src="<?php echo htmlspecialchars($producto['V_IMAGEN'] ?? 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Imagen del producto'); ?>">
-                                <div class="card-content">
-                                    <h3><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Nombre del producto'); ?></h3>
-                                    <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO'] ?? 'Descripción del producto'); ?></p>
-                                    <div class="price"><?php echo htmlspecialchars($producto['V_PRECIO'] ?? '0.00'); ?> $</div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+            <div class="categories-grid">
+                <?php if (!empty($categorias)): ?>
+                    <?php foreach ($categorias as $categoria): ?>
+                        <div class="category-card">
+                            <h3><?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?></h3>
+                            <a href="productos.php?id_categoria=<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" class="button">Ver Productos</a>
+                        </div>
+                    <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No se encontraron productos para esta categoría.</p>
+                    <p>No se encontraron categorías.</p>
                 <?php endif; ?>
-            </section>
+            </div>
         </main>
     </div>
 </body>

@@ -70,7 +70,6 @@ $productos = obtenerProductos();
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
                     <li><a href="perfil.php">Perfil</a></li>
                     <li><a href="carrito.php">Carrito</a></li>
-                    <li><a href="descripcion.php">Descripción</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
