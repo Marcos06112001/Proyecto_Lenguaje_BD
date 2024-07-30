@@ -1,114 +1,157 @@
-<?php
-include '../DAL/conexion.php';
-
-// Establecer la conexión
-try {
-    $conexion = Conecta();
-} catch (PDOException $e) {
-    echo "Error de conexión: " . $e->getMessage();
-    exit();
-}
-
-// Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_V
-$query_select_resenas = 'SELECT * FROM FIDE_PRODUCTOS_RESENAS_SI_ID_V';
-$stmt_select_resenas = $conexion->prepare($query_select_resenas);
-
-try {
-    // Ejecutar la consulta
-    $stmt_select_resenas->execute();
-} catch (PDOException $e) {
-    echo "Error al ejecutar la consulta: " . $e->getMessage();
-    exit();
-}
-
-// Desconectar
-Desconectar($conexion);
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reseñas de Productos Electrónicos</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Reseñas de Productos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 1rem;
-        }
-        header {
-            background-color: #ffffff;
-            padding: 1rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
             margin: 0;
-            color: #333;
-        }
-        .return-btn {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9rem;
+            padding: 0;
+            background-color: #f0f0f0;
         }
         .container {
-            max-width: 1200px;
-            margin: auto;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
-        .product {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 2rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 28px;
+            color: #444;
         }
-        .product h2 {
-            margin: 0 0 0.5rem;
-            color: #333;
+        .review-form {
+            margin-bottom: 40px;
         }
-        .price {
-            font-weight: bold;
-            color: #333;
+        .review-form input, .review-form textarea, .review-form select, .review-form button {
+            width: calc(100% - 20px);
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .review-form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .review-form button:hover {
+            background-color: #218838;
         }
         .review {
-            font-style: italic;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+        .review:last-child {
+            border-bottom: none;
+        }
+        .review-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .rating {
+            color: #ffa500;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .review-content {
+            font-size: 16px;
+            margin-bottom: 10px;
             color: #555;
         }
-        .no-data {
-            text-align: center;
-            color: #888;
+        .review-date, .review-user {
+            font-size: 14px;
+            color: #777;
+        }
+        .review-user {
+            text-align: right;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">Reseñas de Productos</div>
+        <div class="review-form">
+            <h2>Ingrese su reseña</h2>
+            <form id="reviewForm">
+                <input type="text" id="product" name="product" placeholder="Nombre del producto" required>
+                <select id="rating" name="rating" required>
+                    <option value="" disabled selected>Calificación</option>
+                    <option value="5">5 ★★★★★</option>
+                    <option value="4">4 ★★★★☆</option>
+                    <option value="3">3 ★★★☆☆</option>
+                    <option value="2">2 ★★☆☆☆</option>
+                    <option value="1">1 ★☆☆☆☆</option>
+                </select>
+                <textarea id="content" name="content" placeholder="Escriba su reseña" rows="4" required></textarea>
+                <input type="date" id="date" name="date" required>
+                <input type="text" id="username" name="username" placeholder="Nombre del usuario" required>
+                <button type="submit">Enviar Reseña</button>
+            </form>
+        </div>
+        <div id="reviews">
+            <div class="review">
+                <div class="review-title">Smartphone</div>
+                <div class="rating">Calificación: 5 ★★★★★</div>
+                <div class="review-content">Excelente portátil, muy rápido y de gran calidad.</div>
+                <div class="review-date">Fecha Realizada: 10-JUL-24</div>
+                <div class="review-user">Nombre del usuario: Juan Pérez</div>
+            </div>
+        </div>
+    </div>
 
-<header>
-    <h1>Reseñas de Productos Electrónicos</h1>
-    <a href="index.php" class="return-btn">Menú</a>
-</header>
+    <script>
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-<div class="container">
-    <h2>Reseñas de Productos</h2>
-    <?php
-    while ($row = $stmt_select_resenas->fetch(PDO::FETCH_ASSOC)) {
-        echo '<div class="product">';
-        echo '<h2>' . htmlspecialchars($row['V_NOMBRE_PRODUCTO']) . '</h2>';
-        echo '<p class="price">Calificación: ' . htmlspecialchars($row['V_CALIFICACION']) . '</p>';
-        echo '<p class="review">' . htmlspecialchars($row['V_COMENTARIO']) . '</p>';
-        echo '<p>Fecha Realizada: ' . htmlspecialchars($row['V_FECHA']) . '</p>';
-        echo '<p>Nombre del usuario: ' . htmlspecialchars($row['NOMBRE_CLIENTE']) . '</p>';
-        echo '</div>';
-    }
-    ?>
-</div>
+            var product = document.getElementById('product').value;
+            var rating = document.getElementById('rating').value;
+            var content = document.getElementById('content').value;
+            var date = document.getElementById('date').value;
+            var username = document.getElementById('username').value;
 
+            var reviewContainer = document.getElementById('reviews');
+            var newReview = document.createElement('div');
+            newReview.classList.add('review');
+
+            var reviewTitle = document.createElement('div');
+            reviewTitle.classList.add('review-title');
+            reviewTitle.textContent = product;
+
+            var reviewRating = document.createElement('div');
+            reviewRating.classList.add('rating');
+            reviewRating.textContent = 'Calificación: ' + rating + ' ' + '★'.repeat(rating) + '☆'.repeat(5 - rating);
+
+            var reviewContent = document.createElement('div');
+            reviewContent.classList.add('review-content');
+            reviewContent.textContent = content;
+
+            var reviewDate = document.createElement('div');
+            reviewDate.classList.add('review-date');
+            reviewDate.textContent = 'Fecha Realizada: ' + date;
+
+            var reviewUser = document.createElement('div');
+            reviewUser.classList.add('review-user');
+            reviewUser.textContent = 'Nombre del usuario: ' + username;
+
+            newReview.appendChild(reviewTitle);
+            newReview.appendChild(reviewRating);
+            newReview.appendChild(reviewContent);
+            newReview.appendChild(reviewDate);
+            newReview.appendChild(reviewUser);
+
+            reviewContainer.appendChild(newReview);
+
+            document.getElementById('reviewForm').reset();
+        });
+    </script>
 </body>
 </html>
