@@ -9,7 +9,7 @@ try {
     exit();
 }
 
-// Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_V
+// Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_Va
 $query_select_carrito = 'SELECT * FROM FIDE_PRODUCTOS_CARRITO_RESIVO_V';
 $stmt_select_carrito = $conexion->prepare($query_select_carrito);
 
@@ -30,7 +30,7 @@ Desconectar($conexion);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reseñas de Productos Electrónicos</title>
+    <title>Carrito de Compras</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -60,61 +60,60 @@ Desconectar($conexion);
             max-width: 1200px;
             margin: auto;
         }
-        .product {
-            display: flex;
-            margin-bottom: 2rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
+        .table-container {
             background-color: #ffffff;
+            padding: 1rem;
+            border-radius: 0.5rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .product h2 {
-            margin: 0 0 0.5rem;
-            color: #333;
-        }
-        .price {
-            font-weight: bold;
-            color: #333;
-        }
-        .review {
-            font-style: italic;
-            color: #555;
+        .table {
+            margin-bottom: 0;
         }
         .no-data {
             text-align: center;
             color: #888;
+            padding: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Compras Existentes</h1>
+    <h1>Compras Realizadas</h1>
     <a href="index.php" class="return-btn">Menú</a>
 </header>
 
 <div class="container">
-    <h2>Compras de Usuarios</h2>
-    <?php
-// Mostrar los datos en la tabla
-    echo '<table border="1">';
-    echo '<tr><th>Nombre del usuario</th><th>Producto</th><th>Cantidad comprada</th><th>Precio</th><th>Total</th><th>Estado</th></tr>';
- 
-while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
-    echo '<tr>';
-    foreach ($row as $key => $value) {
-        echo '<td>' . htmlspecialchars($value) . '</td>';
-    }
-    echo '</tr>';
-}
-echo '</table>';
- 
-// Desconectar
-Desconectar($conexion);
-?>
+    <center><h4>Si deseas seguir comprando puedes hacerlo. Aproveche las promociones, las promociones no te esperan</h4><center>
+    <div class="table-container">
+        <?php
+        if ($stmt_select_carrito->rowCount() > 0) {
+            echo '<table class="table table-striped">';
+            echo '<thead class="thead-dark">';
+            echo '<tr><th>Nombre del usuario</th><th>Producto</th><th>Cantidad comprada</th><th>Precio</th><th>Total</th><th>Estado</th></tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
+                echo '<tr>';
+                foreach ($row as $key => $value) {
+                    echo '<td>' . htmlspecialchars($value) . '</td>';
+                }
+                echo '</tr>';
+            }
+            
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo '<div class="no-data">No hay datos disponibles</div>';
+        }
+        ?>
+    </div>
 </div>
 
 </body>
 </html>
-

@@ -51,22 +51,21 @@ $productos = obtenerProductos();
         <nav id="main-nav">
             <ul>
                 <?php if ($rol == 'administrador') : ?>
-                    
-                    <li><a href="clientes.php">Clientes</a></li>
-                    <li><a href="categorias.php">Categorías</a></li>
-                    <li><a href="compras.php">Compras</a></li>
-                    <li><a href="ventas.php">Ventas</a></li>
-                    <li><a href="empleados.php">Empleados</a></li>
-                    <li><a href="proveedores.php">Proveedores</a></li>
-                    <li><a href="reabastecimiento.php">Reabastecimiento</a></li>
-                    <li><a href="promociones.php">Promociones</a></li>
+                    <li><a href="clientes_ADM.php">Clientes</a></li>
+                    <li><a href="categorias_ADM.php">Categorías</a></li>
+                    <li><a href="compras_ADM.php">Compras</a></li>
+                    <li><a href="ventas_ADM.php">Ventas</a></li>
+                    <li><a href="empleados_ADM.php">Empleados</a></li>
+                    <li><a href="proveedores_ADM.php">Proveedores</a></li>
+                    <li><a href="reabastecimiento_ADM.php">Reabastecimiento</a></li>
+                    <li><a href="promociones_ADM.php">Promociones</a></li>
                     <li><a href="orden_del_dia.php">Orden del Día</a></li>
-                    <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
-                    <li><a href="reclamaciones.php">Reclamaciones</a></li>
+                    <li><a href="resenas_productos_ADM.php">Reseñas de Productos</a></li>
+                    <li><a href="reclamaciones_ADM.php">Reclamaciones</a></li>
+
                 <?php elseif ($rol == 'cliente') : ?>
-                    
                     <li><a href="productos.php">Productos</a></li>
-                    <li><a href="promociones.php">Promociones</a></li>
+                    <li><a href="promociones.php">Promociones</a></li> 
                     <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
                     <li><a href="perfil.php">Perfil</a></li>
