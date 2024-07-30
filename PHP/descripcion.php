@@ -33,11 +33,98 @@ $data = obtenerDatos();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos de Descripción</title>
     <link rel="stylesheet" href="/CSS/descripciones.css">
+    <style>
+        /* Reset básico para el diseño */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general del cuerpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* Fondo claro */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+}
+
+/* Estilo del encabezado */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.full-width-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: 28px;
+    color: #1e88e5; /* Azul brillante */
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    background-color: #1e88e5; /* Azul brillante */
+    color: #ffffff;
+}
+
+th, td {
+    border: 1px solid #ddd; /* Gris claro */
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f8ff; /* Azul muy claro */
+}
+
+tr:hover {
+    background-color: #e3f2fd; /* Azul más claro */
+}
+
+.no-data {
+    text-align: center;
+    color: #ff5722; /* Naranja */
+    font-style: italic;
+    padding: 15px;
+}
+
+    </style>
     </head>
 <body>
     <div class="container">
         <header>
-            <img src="path/to/your/image.jpg" alt="Descripción de la Imagen" class="full-width-image">
+            <img src="https://www.cenor.es/storage/img/C00001_F0000002133_tienda_de_electrodomesticos_cenor_en_noia_en_calle_chile_1.jpg" alt="Descripción de la Imagen" class="full-width-image">
             <h1>Datos de Descripción</h1>
         </header>
         <main>
@@ -45,7 +132,7 @@ $data = obtenerDatos();
                 <thead>
                     <tr>
                        
-                        <th>Descripción</th>
+                        <Center><th>Descripción</th> <Center>
                     </tr>
                 </thead>
                 <tbody>
