@@ -1,3 +1,4 @@
+
 <?php
 include '../DAL/conexion.php';
 
@@ -10,7 +11,7 @@ try {
 }
 
 // Preparar la consulta para la vista FIDE_DETALLES_REABASTECIMIENTO_V
-$query_select_reabastecimiento = 'SELECT * FROM FIDE_DETALLES_REABASTECIMIENTO_V';
+$query_select_reabastecimiento = 'SELECT * FROM FIDE_DETALLES_RECLAMACIONES_V';
 $stmt_select_reabastecimiento = $conexion->prepare($query_select_reabastecimiento);
 
 try {
@@ -82,13 +83,13 @@ try {
 </head>
 <body>
     <div class="container">
-        <h1>Detalles de Reabastecimiento</h1>
+        <h1>Reclamaciones Existentes</h1>
         <!-- Tabla para mostrar detalles de reabastecimiento -->
-        <h2>Detalles de Reabastecimiento Existentes</h2>
+        <h2>Reclamaciones</h2>
         <?php
         // Mostrar los datos en la tabla
         echo '<table>';
-        echo '<tr><th>ID Reabastecimiento</th><th>Nombre Producto</th><th>Cantidad</th><th>Fecha</th><th>Proceso</th><th>Estado</th></tr>';
+        echo '<tr><th>ID del reclamo</th><th>Nombre</th><th>Fecha</th><th>Estado</th></tr>';
 
         while ($row = $stmt_select_reabastecimiento->fetch(PDO::FETCH_ASSOC)) {
             echo '<tr>';

@@ -21,7 +21,6 @@ try {
     exit();
 }
  
-
 ?>
  
 <!DOCTYPE html>
