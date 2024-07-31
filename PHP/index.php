@@ -65,7 +65,7 @@ $productos = obtenerProductos();
                     <li><a href="orden_del_dia.php">Orden del Día</a></li>
                     <li><a href="resenas_productos_ADM.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones_ADM.php">Reclamaciones</a></li>
-                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="productos_ADM.php">Productos</a></li>
                 <?php elseif ($rol == 'cliente') : ?>
                     <li><a href="productos.php">Productos</a></li>
                     <li><a href="promociones.php">Promociones</a></li> 

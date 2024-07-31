@@ -220,6 +220,9 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
         <header class="header">
             <h1>Productos</h1>
             <a href="index.php" class="button">Menú</a>
+            <?php if ($is_admin): ?>
+                <a href="agregar_producto_ADM.php" class="add-product-btn">Agregar Producto</a>
+            <?php endif; ?>
         </header>
         <main>
             <form action="productos.php" method="GET" class="category-form">

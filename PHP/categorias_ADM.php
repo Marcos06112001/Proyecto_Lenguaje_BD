@@ -21,6 +21,30 @@ function obtenerCategorias() {
     return $categorias;
 }
 
+// Actualiza el nombre de la categoría
+function actualizarNombreCategoria($id_categoria, $nuevo_nombre) {
+    $conexion = Conecta();
+    
+    $sql = "BEGIN FIDE_CATEGORIAS_ACTUALIZAR_NOMBRE_SP(:id_categoria, :nuevo_nombre); END;";
+    
+    try {
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
+        $stmt->bindParam(':nuevo_nombre', $nuevo_nombre, PDO::PARAM_STR);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "Error al actualizar la categoría: " . $e->getMessage();
+    }
+    
+    Desconectar($conexion);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_categoria = $_POST['id_categoria'];
+    $nuevo_nombre = $_POST['nuevo_nombre'];
+    actualizarNombreCategoria($id_categoria, $nuevo_nombre);
+}
+
 $categorias = obtenerCategorias();
 ?>
 
@@ -113,6 +137,32 @@ $categorias = obtenerCategorias();
             margin: 0 0 10px;
             font-size: 1.2rem;
         }
+
+        .edit-form {
+            margin-top: 20px;
+        }
+
+        .edit-form input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .edit-form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -133,6 +183,15 @@ $categorias = obtenerCategorias();
                 <?php else: ?>
                     <p>No se encontraron categorías.</p>
                 <?php endif; ?>
+            </div>
+            <div class="edit-form">
+                <form action="" method="POST">
+                    <label for="id_categoria">ID Categoría:</label>
+                    <input type="text" name="id_categoria" id="id_categoria" required>
+                    <label for="nuevo_nombre">Nuevo Nombre:</label>
+                    <input type="text" name="nuevo_nombre" id="nuevo_nombre" required>
+                    <input type="submit" value="Actualizar Nombre">
+                </form>
             </div>
         </main>
     </div>

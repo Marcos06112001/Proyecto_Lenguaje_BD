@@ -1,5 +1,6 @@
 --Para visualizar los comentarios 
 SET SERVEROUTPUT ON;
+--SELECT * FROM FIDE_PRODUCTOS_TB;
 --Procedientos 
 --CREADO POR Marcos Solis Morales
 --FECHA 24/07/2024
@@ -55,12 +56,10 @@ EXCEPTION
   WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
-/
- 
+
 BEGIN
-  FIDE_PRODUCTOS_ACTUALIZAR_PRECIO_SP(4, 99);
+  FIDE_PRODUCTOS_ACTUALIZAR_PRECIO_SP(4, 92);
 END;
-/
 
 --CREADO POR Marcos Solis Morales
 --FECHA 24/07/2024
@@ -836,3 +835,113 @@ BEGIN
     FIDE_PROMOCIONES_CONSULTAR_SP(P_id_promocion => 1); -- Reemplaza '1' con el ID de la promoción que deseas consultar
 END;
 
+--CREADO POR Nicole Hidalgo Hidalgo
+--FECHA 30/07/2024
+--procedimiento almacenado #26
+--Consulta del reabastecimiento
+CREATE OR REPLACE PROCEDURE FIDE_REABASTECIMIENTO_CONSULTAR_SP (
+    P_id_reabastecimiento IN INT
+) AS
+    V_fecha FIDE_REABASTECIMIENTO_STOCK_TB.V_fecha%TYPE;
+    V_cantidad FIDE_REABASTECIMIENTO_STOCK_TB.V_cantidad%TYPE;
+    V_id_producto FIDE_REABASTECIMIENTO_STOCK_TB.V_id_producto%TYPE;
+    V_id_estado FIDE_REABASTECIMIENTO_STOCK_TB.V_id_estado%TYPE;
+    V_estado FIDE_REABASTECIMIENTO_STOCK_TB.V_estado%TYPE;
+BEGIN
+    -- Seleccionar la información del reabastecimiento
+    SELECT V_fecha, V_cantidad, V_id_producto, V_id_estado, V_estado
+    INTO V_fecha, V_cantidad, V_id_producto, V_id_estado, V_estado
+    FROM FIDE_REABASTECIMIENTO_STOCK_TB
+    WHERE V_id_reabastecimiento = P_id_reabastecimiento;
+
+    -- Mostrar la información del reabastecimiento
+    DBMS_OUTPUT.PUT_LINE('ID Reabastecimiento: ' || P_id_reabastecimiento);
+    DBMS_OUTPUT.PUT_LINE('Fecha: ' || V_fecha);
+    DBMS_OUTPUT.PUT_LINE('Cantidad: ' || V_cantidad);
+    DBMS_OUTPUT.PUT_LINE('ID Producto: ' || V_id_producto);
+    DBMS_OUTPUT.PUT_LINE('ID Estado: ' || V_id_estado);
+    DBMS_OUTPUT.PUT_LINE('Estado: ' || V_estado);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Error: El reabastecimiento con el ID especificado no existe.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error al consultar reabastecimiento: ' || SQLERRM);
+END;
+
+BEGIN
+    FIDE_REABASTECIMIENTO_CONSULTAR_SP(P_id_reabastecimiento => 6); -- Reemplaza '6' con el ID del reabastecimiento que deseas consultar
+END;
+
+--CREADO POR Nicole Hidalgo Hidalgo
+--FECHA 31/07/2024
+--procedimiento almacenado #27
+--Ingresar nuevos productos
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP (
+    P_id_cliente IN FIDE_CLIENTES_TB.V_id_cliente%TYPE,
+    V_nombre_cliente OUT FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
+    V_apellido_cliente OUT FIDE_CLIENTES_TB.V_apellido_cliente%TYPE,
+    V_email OUT FIDE_CLIENTES_TB.V_email%TYPE,
+    V_telefono OUT FIDE_CLIENTES_TB.V_telefono%TYPE,
+    V_imagen OUT FIDE_CLIENTES_TB.V_imagen%TYPE
+) AS
+BEGIN
+    SELECT V_nombre_cliente,
+           V_apellido_cliente,
+           V_email,
+           V_telefono,
+           V_imagen
+    INTO   V_nombre_cliente,
+           V_apellido_cliente,
+           V_email,
+           V_telefono,
+           V_imagen
+    FROM   FIDE_CLIENTES_TB
+    WHERE  V_id_cliente = P_id_cliente;
+END;
+
+
+BEGIN
+    FIDE_AGREGAR_PRODUCTO_SP(
+        p_id_producto => 47,         
+        p_id_categoria => 1,        
+        p_id_estado    => 1,       
+        p_nombre_producto => 'Portatil 2024',  
+        p_descripcion_producto => 'Un Portatil 2024 de última generación con gran cámara y batería de larga duración.', 
+        p_precio => 49,  
+        p_imagen  => 'https://s.alicdn.com/@sc04/kf/H38ed09b3c9dd470e8354108c2cee69afF.jpg_720x720q50.jpg'  
+    );
+END;
+
+
+--CREADO POR Nicole Hidalgo Hidalgo
+--FECHA 31/07/2024
+--procedimiento almacenado #28
+--Selecciona perfil
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP (
+    P_id_cliente IN FIDE_CLIENTES_TB.V_id_cliente%TYPE,
+    V_nombre_cliente OUT FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
+    V_apellido_cliente OUT FIDE_CLIENTES_TB.V_apellido_cliente%TYPE,
+    V_email OUT FIDE_CLIENTES_TB.V_email%TYPE,
+    V_telefono OUT FIDE_CLIENTES_TB.V_telefono%TYPE,
+    V_imagen OUT FIDE_CLIENTES_TB.V_imagen%TYPE
+) AS
+BEGIN
+    SELECT V_nombre_cliente,
+           V_apellido_cliente,
+           V_email,
+           V_telefono,
+           V_imagen
+    INTO   V_nombre_cliente,
+           V_apellido_cliente,
+           V_email,
+           V_telefono,
+           V_imagen
+    FROM   FIDE_CLIENTES_TB
+    WHERE  V_id_cliente = P_id_cliente;
+END;
+
+
+
+BEGIN
+    FIDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
+END;

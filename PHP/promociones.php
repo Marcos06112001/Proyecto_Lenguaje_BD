@@ -117,6 +117,8 @@ try {
  
 <!-- Tabla para mostrar promociones activas -->
 <center><h2>Promociones Existentes</h2><center>
+
+<a href="index.php" class="button">Menú</a>
 <?php
 // Mostrar los datos en la tabla
 echo '<table border="1">';

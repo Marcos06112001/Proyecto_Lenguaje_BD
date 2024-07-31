@@ -9,16 +9,38 @@ try {
     exit();
 }
 
-// Preparar la consulta para la vista de FIDE_DETALLES_CLIENTES_V
-$query_select_clientes = 'SELECT * FROM FIDE_DETALLES_CLIENTES_V';
-$stmt_select_clientes = $conexion->prepare($query_select_clientes);
+// Obtener el ID del cliente desde la URL
+$id_cliente = isset($_GET['id_cliente']) ? intval($_GET['id_cliente']) : 0;
+
+// Si no se proporciona un ID válido, redirigir a la página de clientes
+if ($id_cliente <= 0) {
+    header('Location: clientes.php');
+    exit();
+}
+
+// Obtener la información del cliente
+$query_cliente = 'SELECT * FROM FIDE_DETALLES_CLIENTES_V WHERE V_ID_CLIENTE = :id_cliente';
+$stmt_cliente = $conexion->prepare($query_cliente);
+$stmt_cliente->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
 
 try {
-    // Ejecutar la consulta
-    $stmt_select_clientes->execute();
+    $stmt_cliente->execute();
+    $cliente = $stmt_cliente->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Error al ejecutar la consulta: " . $e->getMessage();
     exit();
+}
+
+// Si el cliente no se encuentra, redirigir a la página de clientes
+if (!$cliente) {
+    header('Location: clientes.php');
+    exit();
+}
+
+// Convertir el CLOB a cadena
+$direccion = '';
+if (isset($cliente['V_DIRECCION']) && is_resource($cliente['V_DIRECCION'])) {
+    $direccion = stream_get_contents($cliente['V_DIRECCION']);
 }
 
 // Actualiza la información del cliente
@@ -39,6 +61,7 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
         $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
         $stmt->execute();
+        echo "Cliente actualizado correctamente.";
     } catch (PDOException $e) {
         echo "Error al actualizar el cliente: " . $e->getMessage();
     }
@@ -47,7 +70,6 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_cliente = $_POST['id_cliente'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $email = $_POST['email'];
@@ -57,6 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rol = $_POST['rol'];
     $pass = $_POST['pass'];
     actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass);
+    // Redirigir de vuelta a la página de clientes después de actualizar
+    header('Location: clientes_ADM.php');
+    exit();
 }
 ?>
 
@@ -65,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
+    <title>Editar Cliente</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -92,33 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 0.9rem;
         }
         .container {
-            max-width: 1200px;
+            max-width: 600px;
             margin: auto;
-        }
-        .product {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 2rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .product h3 {
-            margin: 0 0 0.5rem;
-            color: #333;
-        }
-        .product img {
-            max-width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid #3498db;
-            object-fit: cover;
-            margin-bottom: 1rem;
-        }
-        .edit-form {
-            margin-top: 20px;
         }
         .edit-form input[type="text"],
         .edit-form input[type="email"],
@@ -147,30 +147,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
-    <h1>Clientes</h1>
-    <a href="index.php" class="return-btn">Menú</a>
+    <h1>Editar Cliente</h1>
+    <a href="clientes_ADM.php" class="return-btn">Volver</a>
 </header>
 
 <div class="container">
-    <?php
-    while ($row = $stmt_select_clientes->fetch(PDO::FETCH_ASSOC)) {
-        echo '<div class="product">';
-        echo '<h3>' . htmlspecialchars($row['V_NOMBRE_CLIENTE']) .' ' . htmlspecialchars($row['V_APELLIDO_CLIENTE']) . '</h3>'; 
-        echo '<p>Correo electrónico: ' . htmlspecialchars($row['V_EMAIL']) . '</p>';
-        echo '<p>Número telefónico: ' . htmlspecialchars($row['V_TELEFONO']) . '</p>';
-        echo '<p>Dirección: ' . htmlspecialchars(stream_get_contents($row['V_DIRECCION'])) . '</p>';
-
-        // Mostrar la imagen usando el formato solicitado
-        $imagen = htmlspecialchars($row['V_IMAGEN'] ?? 'placeholder.jpg');
-        $nombre_cliente = htmlspecialchars($row['V_NOMBRE_CLIENTE'] ?? 'Imagen del cliente');
-        echo '<img src="' . $imagen . '" alt="' . $nombre_cliente . '">';
-
-        echo '<a href="edit_cliente_ADM.php?id_cliente=' . htmlspecialchars($row['V_ID_CLIENTE']) . '" class="btn btn-primary">Editar</a>';
-        echo '</div>';
-    }
-    ?>
-
-    
+    <div class="edit-form">
+        <form action="" method="POST">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($cliente['V_NOMBRE_CLIENTE'] ?? ''); ?>" required>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido" value="<?php echo htmlspecialchars($cliente['V_APELLIDO_CLIENTE'] ?? ''); ?>" required>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($cliente['V_EMAIL'] ?? ''); ?>" required>
+            <label for="telefono">Número telefónico:</label>
+            <input type="tel" name="telefono" id="telefono" value="<?php echo htmlspecialchars($cliente['V_TELEFONO'] ?? ''); ?>" required>
+            <label for="direccion">Dirección:</label>
+            <textarea name="direccion" id="direccion" required><?php echo htmlspecialchars($direccion ?? ''); ?></textarea>
+            <label for="imagen">Imagen:</label>
+            <input type="text" name="imagen" id="imagen" value="<?php echo htmlspecialchars($cliente['V_IMAGEN'] ?? ''); ?>" required>
+            <label for="rol">Rol:</label>
+            <input type="text" name="rol" id="rol" value="<?php echo htmlspecialchars($cliente['V_ROL'] ?? ''); ?>" required>
+            <label for="pass">Contraseña:</label>
+            <input type="text" name="pass" id="pass" value="<?php echo htmlspecialchars($cliente['V_PASS'] ?? ''); ?>" required>
+            <input type="submit" value="Actualizar Cliente">
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
