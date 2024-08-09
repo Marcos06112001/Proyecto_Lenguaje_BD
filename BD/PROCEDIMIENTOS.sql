@@ -940,8 +940,47 @@ BEGIN
     WHERE  V_id_cliente = P_id_cliente;
 END;
 
-
-
 BEGIN
     FIDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
+END;
+
+--CREADO POR Nicole Hidalgo Hidalgo
+--FECHA 8/08/2024
+--procedimiento almacenado #29
+--agregar reseñas de productos
+CREATE OR REPLACE PROCEDURE FIDE_INSERTAR_RESENA_SP (
+  p_v_nombre_producto IN FIDE_PRODUCTOS_TB.V_nombre_producto%TYPE,
+  p_v_nombre_cliente IN FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
+  p_v_calificacion IN FIDE_RESENAS_PRODUCTO_TB.V_calificacion%TYPE,
+  p_v_comentario IN FIDE_RESENAS_PRODUCTO_TB.V_comentario%TYPE,
+  p_v_fecha IN VARCHAR2
+) AS
+  v_id_producto FIDE_PRODUCTOS_TB.V_id_producto%TYPE;
+  v_id_cliente FIDE_CLIENTES_TB.V_id_cliente%TYPE;
+BEGIN
+  -- Obtener el ID del producto basado en el nombre del producto
+  BEGIN
+    SELECT V_id_producto INTO v_id_producto
+    FROM FIDE_PRODUCTOS_TB
+    WHERE V_nombre_producto = p_v_nombre_producto;
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      RAISE_APPLICATION_ERROR(-20001, 'Producto no encontrado: ' || p_v_nombre_producto);
+  END;
+
+  -- Obtener el ID del cliente basado en el nombre del cliente
+  BEGIN
+    SELECT V_id_cliente INTO v_id_cliente
+    FROM FIDE_CLIENTES_TB
+    WHERE V_nombre_cliente = p_v_nombre_cliente;
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      RAISE_APPLICATION_ERROR(-20002, 'Cliente no encontrado: ' || p_v_nombre_cliente);
+  END;
+
+  -- Insertar la reseña en la tabla FIDE_RESENAS_PRODUCTO_TB
+  INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+  VALUES (FIDE_RESENAS_SEQ.NEXTVAL, v_id_producto, v_id_cliente, p_v_calificacion, p_v_comentario, TO_DATE(p_v_fecha, 'YYYY-MM-DD'));
+
+  COMMIT;
 END;

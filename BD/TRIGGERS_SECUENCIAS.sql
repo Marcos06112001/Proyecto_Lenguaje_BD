@@ -135,3 +135,11 @@ END;
 /
 -- Para generar un código único para V_id_venta
 SELECT FIDE_VENTA_GENERAR_CODIGO_FN AS ID_VENTA FROM dual;
+
+--CREADO POR Nicole Hidalgo Hidalgo
+--FECHA 08/08/2024
+--Secuencia #6
+-- Secuencia para generar valores únicos para FIDE_RESENAS_SEQ
+CREATE SEQUENCE FIDE_RESENAS_SEQ
+START WITH 1
+INCREMENT BY 1;
