@@ -228,7 +228,7 @@ UPDATE FIDE_CLIENTES_TB
 SET V_imagen = 'https://i.pinimg.com/236x/06/5f/06/065f06bab28c6e1bd6e4ee4d0250c88c.jpg'
 WHERE V_id_cliente = 10;
 
---Agregación de imagenes a la tabla de Empleado
+---------------------------------------------Empleados-------------------------------------------------------------------------------------------------------------------------
 UPDATE FIDE_EMPLEADOS_TB
 SET V_imagen = 'https://i.pinimg.com/236x/78/27/a3/7827a32650edfc7eb0cf9398aa7b9ffe.jpg'
 WHERE V_id_empleado = 1;
@@ -272,5 +272,47 @@ WHERE V_id_empleado = 10;
 UPDATE FIDE_EMPLEADOS_TB
 SET V_imagen = 'https://cdn.pixabay.com/photo/2016/11/07/17/03/beautiful-women-1806280_1280.jpg'
 WHERE V_id_empleado = 11;
+
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://th.bing.com/th/id/OIP.DMDfV6N9jhYjyQCLGLlH5QAAAA?rs=1&pid=ImgDetMain'
+WHERE V_id_cliente = 1;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://th.bing.com/th/id/OIP.5SROW2jUgtcvoT6DE2bx8gAAAA?rs=1&pid=ImgDetMain'
+WHERE V_id_cliente = 2;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://profile-images.xing.com/images/606e184a828a568108732708c5350f02-1/steven-brenner.1024x1024.jpg'
+WHERE V_id_cliente = 3;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://remaxmillennium.ca/wp-content/uploads/2023/07/nishita.png'
+WHERE V_id_cliente = 4;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://www.drphilipmiller.com/wp-content/uploads/2020/12/non-surgical-treatments-new-york-plastic-surgery-450x450.jpg'
+WHERE V_id_cliente = 5;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://th.bing.com/th/id/OIP.NJkTMvYA1dsvMoRzHun-kAAAAA?w=334&h=483&rs=1&pid=ImgDetMain'
+WHERE V_id_cliente = 6;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://douglasandgrahame.com/wp-content/uploads/2024/02/douglas-img1.jpg'
+WHERE V_id_cliente = 7;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://th.bing.com/th/id/OIP.dU_gvSiMYCmGq7_tY3CjmwHaKX?w=1772&h=2480&rs=1&pid=ImgDetMain'
+WHERE V_id_cliente = 8;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://th.bing.com/th/id/OIP.zE4anp6UiZm37jvrc6yXRQHaJ3?w=743&h=990&rs=1&pid=ImgDetMain'
+WHERE V_id_cliente = 9;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://www.robinsonbradshaw.com/assets/images-t1703887290/917.png'
+WHERE V_id_cliente = 10;
+
 
 COMMIT;

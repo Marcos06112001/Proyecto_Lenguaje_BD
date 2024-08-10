@@ -97,7 +97,7 @@ $productos = obtenerProductos();
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
                     <li><a href="carrito.php">Carrito</a></li>
                 <?php endif; ?>
-                <!-- Botón de perfil al final del menú -->
+               
                 <li id="perfil-menu-item">
             <a href="perfil.php" id="perfil-boton">
                 <?php if (!empty($_SESSION['imagen'])): ?>
