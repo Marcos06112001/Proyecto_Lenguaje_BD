@@ -30,9 +30,11 @@ SELECT
   v_email, 
   v_telefono, 
   v_direccion, 
+  v_imagen,    
   v_rol
 FROM 
   FIDE_CLIENTES_TB;
+
 
 SELECT * FROM FIDE_DETALLES_CLIENTES_V;
 

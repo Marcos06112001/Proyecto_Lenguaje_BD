@@ -204,3 +204,47 @@ nav ul li a:hover {
 .dropdown:hover .dropbtn {
     background-color: #007bff;
 }
+
+/* Estilos para el contenedor del perfil */
+#user-profile {
+    margin-left: auto; /* Empuja el botón de perfil a la derecha */
+    display: flex;
+    align-items: center;
+}
+
+#perfil-boton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #343a40; /* Color azul */
+    color: white;
+    padding: 0px;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    margin-left: 20px; /* Espacio entre el botón y el contenido adyacente */
+}
+
+#perfil-boton:hover {
+    background-color: #343a40; /* Color azul oscuro */
+    color: #e9ecef; /* Color de texto claro */
+}
+
+.user-image {
+    width: 48px;
+    height: 46px;
+    border-radius: 50%; /* Imagen circular */
+    object-fit: cover; /* Mantiene las proporciones y recorta si es necesario */
+    margin-bottom: 5px;
+}
+
+.user-name {
+    font-size: 12px; /* Tamaño del texto del nombre */
+    color: white; /* Color del texto del nombre */
+}
+
