@@ -1,20 +1,27 @@
 <?php
+session_start();
 include '../DAL/conexion.php';
 
-// Función para obtener información del cliente
+if (!isset($_SESSION['user_id'])) {
+    header("Location: inicio_sesion.php");
+    exit();
+}
+
+
 function obtenerCliente($cliente_id) {
     $conexion = Conecta();
     
     $sql = "SELECT V_nombre_cliente, V_apellido_cliente, V_email, V_telefono, V_direccion, V_imagen, V_rol, V_pass
             FROM FIDE_CLIENTES_TB
             WHERE V_id_cliente = :cliente_id";
+
     
     try {
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
         $stmt->execute();
         
-        // Extraer los datos del cliente
+        
         $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
         
     } catch (PDOException $e) {
@@ -27,8 +34,8 @@ function obtenerCliente($cliente_id) {
     return $cliente;
 }
 
-// ID del cliente que deseas consultar (puede ser obtenido de la sesión o de la URL)
-$cliente_id = isset($_GET['id_cliente']) ? (int)$_GET['id_cliente'] : 1; // Cambia el ID según sea necesario
+
+$cliente_id = $_SESSION['user_id'];
 $cliente = obtenerCliente($cliente_id);
 ?>
 
@@ -42,118 +49,117 @@ $cliente = obtenerCliente($cliente_id);
     <link rel="stylesheet" href="/CSS/perfiles.css">
     <style>
         /* Reset básico */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-}
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
 
-.return-btn {
-    background-color: #0056b3;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
+        .return-btn {
+            background-color: #0056b3;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
 
-.return-btn:hover {
-    background-color: #003d80;
-    transform: translateY(-2px);
-}
+        .return-btn:hover {
+            background-color: #003d80;
+            transform: translateY(-2px);
+        }
 
-.profile-container {
-    max-width: 800px;
-    margin: auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.profile-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.profile-img {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    margin-right: 20px;
-    border: 4px solid #007bff;
-}
+        .profile-img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 4px solid #007bff;
+        }
 
-.profile-header h1 {
-    margin-bottom: 10px;
-    font-size: 1.75rem;
-}
+        .profile-header h1 {
+            margin-bottom: 10px;
+            font-size: 1.75rem;
+        }
 
-.profile-header p {
-    color: #6c757d;
-}
+        .profile-header p {
+            color: #6c757d;
+        }
 
-.profile-details {
-    margin-top: 20px;
-}
+        .profile-details {
+            margin-top: 20px;
+        }
 
-.profile-details h2 {
-    font-size: 1.25rem;
-    margin-bottom: 15px;
-    color: #343a40;
-}
+        .profile-details h2 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
 
-.profile-form {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .profile-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.profile-form .form-label {
-    font-weight: bold;
-    color: #495057;
-}
+        .profile-form .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
 
-.profile-form .form-control {
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-}
+        .profile-form .form-control {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
 
-.profile-form .form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
-}
-
+        .profile-form .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
     </style> 
 </head>
 <body>

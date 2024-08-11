@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conexion = Conecta();
 
-    $sql = "SELECT V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_PASS, V_ROL FROM FIDE_CLIENTES_TB WHERE V_EMAIL = :email";
+    $sql = "SELECT V_ID_CLIENTE, V_NOMBRE_CLIENTE, V_PASS, V_ROL, V_iMAGEN FROM FIDE_CLIENTES_TB WHERE V_EMAIL = :email";
     $stmt = $conexion->prepare($sql);
     $stmt->bindParam(':email', $email);
 
@@ -23,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $user['V_ID_CLIENTE'];
                 $_SESSION['user_name'] = $user['V_NOMBRE_CLIENTE'];
                 $_SESSION['rol'] = $user['V_ROL'];
+                $_SESSION['id_cliente'] = $user['V_ID_CLIENTE'];
+                $_SESSION['imagen'] = $user['V_IMAGEN'];
 
                 header("Location: index.php");
                 exit();

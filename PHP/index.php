@@ -2,8 +2,8 @@
 session_start();
 include '../DAL/conexion.php'; 
 
-$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'cliente';
 
+$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'cliente';
 
 function obtenerProductos()
 {
@@ -26,7 +26,31 @@ function obtenerProductos()
 }
 
 
+
+function obtenerCliente($cliente_id) {
+    $conexion = Conecta();
+    
+    $sql = "SELECT V_nombre_cliente, V_apellido_cliente, V_email, V_telefono, V_direccion, V_imagen, V_rol, V_pass
+            FROM FIDE_CLIENTES_TB
+            WHERE V_id_cliente = :cliente_id";
+    
+    try {
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener cliente: " . $e->getMessage();
+        $cliente = [];
+    }
+    
+    Desconectar($conexion);
+    
+    return $cliente;
+}
+
 $productos = obtenerProductos();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -71,9 +95,24 @@ $productos = obtenerProductos();
                     <li><a href="promociones.php">Promociones</a></li> 
                     <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
-                    <li><a href="perfil.php">Perfil</a></li>
                     <li><a href="carrito.php">Carrito</a></li>
                 <?php endif; ?>
+               
+                <li id="perfil-menu-item">
+            <a href="perfil.php" id="perfil-boton">
+                <?php if (!empty($_SESSION['imagen'])): ?>
+                    
+                    <img src="<?php echo htmlspecialchars($_SESSION['imagen']); ?>" alt="Perfil" class="user-image">
+
+                <?php else: ?>
+                    <img src="../images/default-profile.jpg" alt="Perfil" class="user-image">
+                    
+                <?php endif; ?>
+                <span class="user-name"><?php echo isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : ''; ?></span>
+            </a>
+</div>
+
+                </li>
             </ul>
         </nav>
         <img src="https://edifica.com.pe/blog/wp-content/uploads/conoce-siete-electrodomesticos-imprescindibles-cocina-portada.jpg" alt="Electrodomésticos" style="width: 100%; height: auto; border-bottom: 5px solid #007bff;">
