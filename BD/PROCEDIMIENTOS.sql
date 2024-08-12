@@ -638,32 +638,55 @@ END;
 --FECHA 26/07/2024
 --procedimiento almacenado #20
 -- Insertar Reclamación
-CREATE OR REPLACE PROCEDURE FIDE_RECLAMACIONES_INSERTAR_SP (
-    P_id_reclamacion IN INT,
-    P_id_cliente IN INT,
-    P_fecha IN DATE,
-    P_id_estado IN INT
+CREATE OR REPLACE PROCEDURE FIDE_RECLAMACIONES_MOTIVO_INSERTAR_SP (
+    p_v_nombre_cliente IN FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
+    P_categoria IN FIDE_MOTIVOS_TB.V_categoria%TYPE,
+    P_descripcion IN FIDE_DESCRIPCION_TB.V_descripcion%TYPE,
+    P_fecha IN FIDE_RECLAMACIONES_TB.V_fecha%TYPE
 ) AS
+    P_id_cliente FIDE_CLIENTES_TB.V_id_cliente%TYPE;
+    P_id_motivos FIDE_MOTIVOS_TB.V_id_motivos%TYPE;
+    P_id_descripcion FIDE_DESCRIPCION_TB.V_id_descripcion%TYPE;
 BEGIN
-    -- Insertar una nueva reclamación
-    INSERT INTO FIDE_RECLAMACIONES_TB (v_id_reclamacion, v_id_cliente,v_fecha, v_id_estado)
-    VALUES (P_id_reclamacion, P_id_cliente, P_fecha, P_id_estado);
+    -- Obtener el ID del cliente
+    BEGIN
+        SELECT V_id_cliente INTO P_id_cliente
+        FROM FIDE_CLIENTES_TB
+        WHERE V_nombre_cliente = p_v_nombre_cliente;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Cliente no encontrado: ' || p_v_nombre_cliente);
+    END;
 
-    DBMS_OUTPUT.PUT_LINE('Reclamación insertada con ID: ' || P_id_reclamacion);
-EXCEPTION
-    WHEN DUP_VAL_ON_INDEX THEN
-        DBMS_OUTPUT.PUT_LINE('Error: La reclamación con el ID especificado ya existe.');
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error al insertar reclamación: ' || SQLERRM);
-END;
+    -- Insertar o recuperar el ID de la categoría en FIDE_MOTIVOS_TB
+    BEGIN
+        INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_categoria)
+        VALUES (FIDE_MOTIVOS_SEQ.NEXTVAL, P_categoria)
+        RETURNING V_id_motivos INTO P_id_motivos;
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            SELECT V_id_motivos INTO P_id_motivos
+            FROM FIDE_MOTIVOS_TB
+            WHERE V_categoria = P_categoria;
+    END;
 
-BEGIN
-    FIDE_RECLAMACIONES_INSERTAR_SP(
-        P_id_reclamacion => 1,
-        P_id_cliente => 1,
-        P_fecha => SYSDATE,
-        P_id_estado => 1
-    );
+    -- Insertar o recuperar el ID de la descripción en FIDE_DESCRIPCION_TB
+    BEGIN
+        INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
+        VALUES (FIDE_DESCRIPCION_SEQ.NEXTVAL, P_descripcion)
+        RETURNING V_id_descripcion INTO P_id_descripcion;
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            SELECT V_id_descripcion INTO P_id_descripcion
+            FROM FIDE_DESCRIPCION_TB
+            WHERE V_descripcion = P_descripcion;
+    END;
+
+    -- Insertar la reclamación en la tabla FIDE_RECLAMACIONES_TB
+    INSERT INTO FIDE_RECLAMACIONES_TB (V_id_reclamacion, V_id_cliente, V_fecha)
+    VALUES (FIDE_RECLAMACIONES_SEQ.NEXTVAL, P_id_cliente , P_fecha);
+
+    COMMIT;
 END;
 
 --CREADO POR Nicole Hidalgo Hidalgo

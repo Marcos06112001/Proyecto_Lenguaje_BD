@@ -23,6 +23,28 @@ function obtenerCategorias() {
 }
 
 $categorias = obtenerCategorias();
+
+function obtenerMotivo() {
+    $conexion = Conecta(); 
+
+    try {
+        $sql = "SELECT V_DESCRIPCION FROM FIDE_DESCRIPCION_TB";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute();
+
+        // Obtiene todos los resultados
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $resultados = [];
+        $error = "Error al obtener las categorías: " . $e->getMessage();
+    } finally {
+        Desconectar($conexion); // Desconecta la base de datos
+    }
+
+    return $resultados ?? [];
+}
+
+$motivos = obtenerMotivo();
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +58,7 @@ $categorias = obtenerCategorias();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/reclamo.css">
     <style>
-        body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -130,42 +152,62 @@ footer {
     <div class="container mt-5">
         <div class="reclamos-container p-4 bg-white shadow rounded">
             <h2 class="fs-4 mb-4">Formulario de Reclamo</h2>
-            <form>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nombre Completo</label>
-                    <input type="text" id="name" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" id="email" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="issue-type" class="form-label">Tipo de Reclamo</label>
-                    <select id="issue-type" class="form-select" required>
-                        <option value="" disabled selected>Seleccione un tipo</option>
-                            <?php
-                                if (isset($categorias) && !empty($categorias)) {
-                                  foreach ($categorias as $categoria) {
-                                    if (isset($categoria['V_CATEGORIA'])) {
-                                      echo "<option value='" . htmlspecialchars($categoria['V_CATEGORIA']) . "'>" . htmlspecialchars($categoria['V_CATEGORIA']) . "</option>";
-                                    } else {
-                                      echo "<option value=''>Error en datos de categoría</option>";
-                                     }
-                                     }
-                                 } else {
-                                        echo "<option value=''>No hay categorías disponibles</option>";
-                                 }
-                             ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Descripción del Problema</label>
-                    <textarea id="description" class="form-control" rows="4" required></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Enviar Reclamo</button>
-                </div>
-            </form>
+            <form method="POST" action="procesar_reclamo.php">
+    <div class="mb-3">
+        <label for="name" class="form-label">Nombre del usuario</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="issue-type" class="form-label">Tipo de Reclamo</label>
+        <select id="issue-type" name="categoria" class="form-select" required>
+            <option value="" disabled selected>Seleccione un tipo</option>
+            <?php
+            if (isset($categorias) && !empty($categorias)) {
+                foreach ($categorias as $categoria) {
+                    if (isset($categoria['V_CATEGORIA'])) {
+                        echo "<option value='" . htmlspecialchars($categoria['V_CATEGORIA']) . "'>" . htmlspecialchars($categoria['V_CATEGORIA']) . "</option>";
+                    } else {
+                        echo "<option value=''>Error en datos de categoría</option>";
+                    }
+                }
+            } else {
+                echo "<option value=''>No hay categorías disponibles</option>";
+            }
+            ?>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <select id="description" name="descripcion" class="form-select" required>
+            <option value="" disabled selected>Seleccione un tipo</option>
+            <?php
+            if (isset($motivos) && !empty($motivos)) {
+                foreach ($motivos as $motivo) {
+                    if (isset($motivo['V_DESCRIPCION'])) {
+                        echo "<option value='" . htmlspecialchars($motivo['V_DESCRIPCION']) . "'>" . htmlspecialchars($motivo['V_DESCRIPCION']) . "</option>";
+                    } else {
+                        echo "<option value=''>Error en datos de motivo</option>";
+                    }
+                }
+            } else {
+                echo "<option value=''>No hay motivos disponibles</option>";
+            }
+            ?>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Fecha</label>
+        <input type="date" id="date" name="fecha" required>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Enviar Reclamo</button>
+    </div>
+</form>
+
         </div>
     </div>
 
