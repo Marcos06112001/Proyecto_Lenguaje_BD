@@ -4,8 +4,8 @@ function Conecta()
 {
     $host = "localhost";  //el hostname de tu servidor Oracle
     $port = "1521";       //puerto de Oracle, por defecto es 1521
-    $dbname = "XE";       //nombre de la base de datos
-    $user = "PROYECTO_LMARCOS";   //usuario de cada quien 
+    $dbname = "ORCL";       //nombre de la base de datos
+    $user = "PROYECTO_LCELES";   //usuario de cada quien 
     $password = "12345"; //contraseña 
                       
     // Cadena de conexión para Oracles
