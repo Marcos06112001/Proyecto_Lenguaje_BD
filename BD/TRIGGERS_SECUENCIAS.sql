@@ -240,3 +240,32 @@ START WITH 1
 INCREMENT BY 1;
 
 
+--CREADO POR Maria Celeste Solano Hidalgo
+--FECHA 13/08/2024
+-- Trigger ·#7
+-- Trigger para actualizar datos de clientes
+CREATE OR REPLACE TRIGGER FIDE_CLIENTES_UPDATE_TRG
+BEFORE UPDATE ON FIDE_CLIENTES_TB
+FOR EACH ROW
+BEGIN
+    :NEW.V_LAST_UPDATE_BY := USER;
+    :NEW.V_LAST_UPDATE_DATE := SYSDATE;
+END;
+
+//
+
+
+--CREADO POR Maria Celeste Solano Hidalgo
+--FECHA 13/08/2024
+-- Trigger ·#7
+-- Trigger para establecer datos de creación de clientes
+CREATE OR REPLACE TRIGGER FIDE_CLIENTES_CREACION_TRG
+BEFORE INSERT ON FIDE_CLIENTES_TB
+FOR EACH ROW
+BEGIN
+    :NEW.V_CREATED_BY := USER;
+    :NEW.V_CREATION_DATE := SYSDATE;
+END;
+
+
+

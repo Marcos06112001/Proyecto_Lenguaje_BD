@@ -1007,3 +1007,44 @@ BEGIN
 
   COMMIT;
 END;
+
+
+--CREADO POR Maria Celeste Solano Hidalgo
+--FECHA 13/08/2024
+-- Procedimiento almacenado para insertar nuevos clientes
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_INSERTAR_SP (
+    P_nombre_cliente IN FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
+    P_apellido_cliente IN FIDE_CLIENTES_TB.V_apellido_cliente%TYPE,
+    P_email IN FIDE_CLIENTES_TB.V_email%TYPE,
+    P_telefono IN FIDE_CLIENTES_TB.V_telefono%TYPE,
+    P_direccion IN FIDE_CLIENTES_TB.V_direccion%TYPE,
+    P_imagen IN FIDE_CLIENTES_TB.V_imagen%TYPE,
+    P_rol IN FIDE_CLIENTES_TB.V_rol%TYPE,
+    P_pass IN FIDE_CLIENTES_TB.V_pass%TYPE
+) AS
+BEGIN
+    INSERT INTO FIDE_CLIENTES_TB (
+        V_id_cliente,
+        V_nombre_cliente,
+        V_apellido_cliente,
+        V_email,
+        V_telefono,
+        V_direccion,
+        V_imagen,
+        V_rol,
+        V_pass
+    ) VALUES (
+        FIDE_CLIENTES_SEQ.NEXTVAL, 
+        P_nombre_cliente,
+        P_apellido_cliente,
+        P_email,
+        P_telefono,
+        P_direccion,
+        P_imagen,
+        P_rol,
+        P_pass
+    );
+    
+    COMMIT;
+END;
+/
