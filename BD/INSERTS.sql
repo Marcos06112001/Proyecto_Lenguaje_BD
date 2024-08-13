@@ -445,3 +445,230 @@ VALUES (5, 'Información de seguridad y precauciones');
  
 INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
 VALUES (6, 'Datos de contacto para soporte técnico');
+ 
+INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
+VALUES (7, 'Resumen de beneficios del producto');
+ 
+INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
+VALUES (8, 'Comparación con productos similares');
+ 
+INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
+VALUES (9, 'Opiniones de clientes y valoraciones');
+ 
+INSERT INTO FIDE_DESCRIPCION_TB (V_id_descripcion, V_descripcion)
+VALUES (10, 'Detalles sobre la instalación del producto');
+
+--CREADO POR Anderson Espinoza Ulate 
+--FECHA 25/07/2024
+--INSERT #12
+--INSERT DE LA TABLA  FIDE_MOTIVOS_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_MOTIVOS_TB
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (1, 1, 1, 1, 'Producto Defectuoso', TO_DATE('2024-07-20', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (2, 2, 2, 2, 'Envío Retrasado', TO_DATE('2024-07-21', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (3, 3, 3, 1, 'Error en la Factura', TO_DATE('2024-07-22', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (4, 4, 4, 2, 'Falta de Accesorios', TO_DATE('2024-07-23', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (5, 5, 5, 1, 'Producto Incorrecto', TO_DATE('2024-07-24', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (6, 6, 6, 2, 'Defecto en el Material', TO_DATE('2024-07-25', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (7, 7, 7, 1, 'Problema con la Garantía', TO_DATE('2024-07-26', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (8, 8, 8, 2, 'Mal Funcionamiento', TO_DATE('2024-07-27', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (9, 9, 9, 1, 'No Cumple con la Descripción', TO_DATE('2024-07-28', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_MOTIVOS_TB (V_id_motivos, V_id_reclamacion, V_id_descripcion, V_id_estado, V_categoria, V_fecha)
+VALUES (10, 10, 10, 2, 'Servicio al Cliente Insuficiente', TO_DATE('2024-07-29', 'YYYY-MM-DD'));
+
+--CREADO POR Anderson Espinoza Ulate 
+--FECHA 25/07/2024
+--INSERT #13
+--INSERT DE LA TABLA FIDE_PROMOCIONES_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_PROMOCIONES_TB
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (1, 1, 'Descuento de Verano', 'Descuento del 15% en todos los productos', TO_DATE('2024-07-01', 'YYYY-MM-DD'), TO_DATE('2024-08-31', 'YYYY-MM-DD'), 15.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (2, 2, 'Promoción de Invierno', 'Descuento del 20% en electrodomésticos', TO_DATE('2024-11-01', 'YYYY-MM-DD'), TO_DATE('2024-12-31', 'YYYY-MM-DD'), 20.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (3, 1, 'Black Friday', 'Descuento del 25% en productos seleccionados', TO_DATE('2024-11-29', 'YYYY-MM-DD'), TO_DATE('2024-11-29', 'YYYY-MM-DD'), 25.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (4, 2, 'Cyber Monday', 'Descuento del 30% en tecnología', TO_DATE('2024-12-02', 'YYYY-MM-DD'), TO_DATE('2024-12-02', 'YYYY-MM-DD'), 30.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (5, 1, 'Oferta de Navidad', 'Descuento del 10% en todos los productos', TO_DATE('2024-12-20', 'YYYY-MM-DD'), TO_DATE('2024-12-26', 'YYYY-MM-DD'), 10.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (6, 2, 'Año Nuevo', 'Descuento del 5% en compras superiores a $500', TO_DATE('2024-12-27', 'YYYY-MM-DD'), TO_DATE('2025-01-05', 'YYYY-MM-DD'), 5.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (7, 1, 'Semana de Aniversario', 'Descuento del 40% en productos de temporada', TO_DATE('2024-08-01', 'YYYY-MM-DD'), TO_DATE('2024-08-07', 'YYYY-MM-DD'), 40.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (8, 2, 'Descuento por Compra en Línea', 'Descuento del 10% en compras online', TO_DATE('2024-09-01', 'YYYY-MM-DD'), TO_DATE('2024-09-30', 'YYYY-MM-DD'), 10.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (9, 1, 'Descuento de Fin de Temporada', 'Descuento del 15% en productos de temporada pasada', TO_DATE('2024-06-01', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'), 15.00);
+ 
+INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+VALUES (10, 2, 'Ofertas de Otoño', 'Descuento del 20% en todos los electrodomésticos', TO_DATE('2024-10-01', 'YYYY-MM-DD'), TO_DATE('2024-10-31', 'YYYY-MM-DD'), 20.00);
+
+--CREADO POR MARIA Celeste SOLANO HIDALGO
+--FECHA 25/07/2024
+--INSERT #14
+--INSERT DE LA TABLA FIDE_RESENAS_PRODUCTO_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_RESENAS_PRODUCTO_TB
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (1, 1, 1, 5, 'Excelente portátil, muy rápido y de gran calidad.', TO_DATE('2024-07-10', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (2, 2, 2, 4, 'Muy buen rendimiento, pero el precio es alto.', TO_DATE('2024-07-11', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (3, 3, 3, 3, 'Cumple su función, pero esperaba mejor calidad.', TO_DATE('2024-07-12', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (4, 4, 4, 5, 'Excelente cocina, fácil de usar y eficiente.', TO_DATE('2024-07-13', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (5, 5, 5, 2, 'No funciona correctamente, muy decepcionado.', TO_DATE('2024-07-14', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (6, 6, 6, 4, 'Buen microondas, pero el manual de usuario no es claro.', TO_DATE('2024-07-15', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (7, 7, 7, 5, 'Muy eficiente y silencioso, recomendado.', TO_DATE('2024-07-16', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (8, 8, 8, 3, 'A veces no limpia bien, pero en general está bien.', TO_DATE('2024-07-17', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (9, 9, 9, 4, 'Buena campana extractora, aunque el diseño podría mejorar.', TO_DATE('2024-07-18', 'YYYY-MM-DD'));
+ 
+INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
+VALUES (10, 10, 10, 5, 'Excelente ventilador, funciona perfectamente y es silencioso.', TO_DATE('2024-07-19', 'YYYY-MM-DD'));
+
+--CREADO POR MARIA Celeste SOLANO HIDALGO
+--FECHA 25/07/2024
+--INSERT #15
+--INSERT DE LA TABLA FIDE_COMPRAS_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_COMPRAS_TB
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (1, 1, 1, 'Compra de 50 portátiles Dell XPS 13', TO_DATE('2024-07-10', 'YYYY-MM-DD'), 49999.50);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (2, 2, 2, 'Compra de 30 portátiles MacBook Air', TO_DATE('2024-07-11', 'YYYY-MM-DD'), 32999.70);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (3, 3, 1, 'Compra de 20 cocinas Samsung', TO_DATE('2024-07-12', 'YYYY-MM-DD'), 13999.80);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (4, 4, 2, 'Compra de 15 cocinas LG', TO_DATE('2024-07-13', 'YYYY-MM-DD'), 11249.85);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (5, 5, 1, 'Compra de 25 microondas Panasonic', TO_DATE('2024-07-14', 'YYYY-MM-DD'), 4999.75);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (6, 6, 2, 'Compra de 10 microondas LG', TO_DATE('2024-07-15', 'YYYY-MM-DD'), 2299.90);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (7, 7, 1, 'Compra de 5 lavavajillas Bosch', TO_DATE('2024-07-16', 'YYYY-MM-DD'), 2999.95);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (8, 8, 2, 'Compra de 8 lavavajillas Whirlpool', TO_DATE('2024-07-17', 'YYYY-MM-DD'), 4399.92);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (9, 9, 1, 'Compra de 12 campanas extractoras Teka', TO_DATE('2024-07-18', 'YYYY-MM-DD'), 3599.88);
+ 
+INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+VALUES (10, 10, 2, 'Compra de 7 campanas extractoras Bosch', TO_DATE('2024-07-19', 'YYYY-MM-DD'), 2449.93);
+
+--CREADO POR MARIA Celeste SOLANO HIDALGO
+--FECHA 25/07/2024
+--INSERT #16
+--INSERT DE LA TABLA FIDE_ORDEN_DEL_DIA_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_ORDEN_DEL_DIA_TB
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (1, 1, 1, 'Reunión de Proyecto', 'Reunión para discutir avances del proyecto', TO_DATE('2024-07-25', 'YYYY-MM-DD'), TO_DATE('2024-07-25', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (2, 2, 2, 'Capacitación', 'Capacitación sobre nuevas tecnologías', TO_DATE('2024-07-26', 'YYYY-MM-DD'), TO_DATE('2024-07-26', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (3, 3, 1, 'Revisión de Presupuesto', 'Revisión trimestral del presupuesto', TO_DATE('2024-07-27', 'YYYY-MM-DD'), TO_DATE('2024-07-27', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (4, 4, 3, 'Entrevista con Proveedores', 'Entrevista con proveedores potenciales', TO_DATE('2024-07-28', 'YYYY-MM-DD'), TO_DATE('2024-07-28', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (5, 5, 2, 'Presentación de Resultados', 'Presentación de resultados del último trimestre', TO_DATE('2024-07-29', 'YYYY-MM-DD'), TO_DATE('2024-07-29', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (6, 6, 1, 'Planificación Estratégica', 'Planificación estratégica para el próximo año', TO_DATE('2024-07-30', 'YYYY-MM-DD'), TO_DATE('2024-07-30', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (7, 7, 3, 'Revisión de Proyectos', 'Revisión de estado de los proyectos actuales', TO_DATE('2024-07-31', 'YYYY-MM-DD'), TO_DATE('2024-07-31', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (8, 8, 2, 'Evaluación de Desempeño', 'Evaluación de desempeño del personal', TO_DATE('2024-08-01', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (9, 9, 1, 'Plan de Marketing', 'Desarrollo del plan de marketing para el próximo trimestre', TO_DATE('2024-08-02', 'YYYY-MM-DD'), TO_DATE('2024-08-02', 'YYYY-MM-DD'));
+
+INSERT INTO FIDE_ORDEN_DEL_DIA_TB (V_id_evento, V_id_empleado, V_id_estado, V_titulo, V_descripcion, V_fecha_inicio, V_fecha_fin)
+VALUES (10, 10, 3, 'Revisión de Contratos', 'Revisión y firma de nuevos contratos', TO_DATE('2024-08-03', 'YYYY-MM-DD'), TO_DATE('2024-08-03', 'YYYY-MM-DD'));
+
+--CREADO POR MARIA Celeste SOLANO HIDALGO
+--FECHA 25/07/2024
+--INSERT #17
+--INSERT DE LA TABLA  FIDE_REABASTECIMIENTO_STOCK_TB
+--SE INSERTAN DATOS A LA TABLA  FIDE_REABASTECIMIENTO_STOCK_TB
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (1, 1, 1, 100, TO_DATE('2024-07-25', 'YYYY-MM-DD'), 'Reabastecido');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (2, 2, 2, 200, TO_DATE('2024-07-26', 'YYYY-MM-DD'), 'En proceso');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (3, 3, 1, 150, TO_DATE('2024-07-27', 'YYYY-MM-DD'), 'Completado');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (4, 4, 3, 250, TO_DATE('2024-07-28', 'YYYY-MM-DD'), 'Reabastecido');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (5, 5, 2, 180, TO_DATE('2024-07-29', 'YYYY-MM-DD'), 'En proceso');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (6, 6, 1, 300, TO_DATE('2024-07-30', 'YYYY-MM-DD'), 'Completado');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (7, 7, 3, 220, TO_DATE('2024-07-31', 'YYYY-MM-DD'), 'Reabastecido');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (8, 8, 2, 160, TO_DATE('2024-08-01', 'YYYY-MM-DD'), 'En proceso');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (9, 9, 1, 90, TO_DATE('2024-08-02', 'YYYY-MM-DD'), 'Completado');
+
+INSERT INTO FIDE_REABASTECIMIENTO_STOCK_TB (V_id_reabastecimiento, V_id_producto, V_id_estado, V_cantidad, V_fecha, V_estado)
+VALUES (10, 10, 3, 270, TO_DATE('2024-08-03', 'YYYY-MM-DD'), 'Reabastecido');
+
+
+
+
+

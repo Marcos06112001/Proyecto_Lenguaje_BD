@@ -82,7 +82,7 @@
         <a href="index.php" class="button">Menú</a>
         <div class="review-form">
             <h2>Ingrese su reseña</h2>
-            <form id="reviewForm">
+            <form id="reviewForm" method="POST" action="procesar_reseña.php">
                 <input type="text" id="product" name="product" placeholder="Nombre del producto" required>
                 <select id="rating" name="rating" required>
                     <option value="" disabled selected>Calificación</option>
@@ -99,59 +99,8 @@
             </form>
         </div>
         <div id="reviews">
-            <div class="review">
-                <div class="review-title">Smartphone</div>
-                <div class="rating">Calificación: 5 ★★★★★</div>
-                <div class="review-content">Excelente portátil, muy rápido y de gran calidad.</div>
-                <div class="review-date">Fecha Realizada: 10-JUL-24</div>
-                <div class="review-user">Nombre del usuario: Juan Pérez</div>
-            </div>
+            <!-- Aquí se mostrarán las reseñas existentes -->
         </div>
     </div>
-    <script>
-        document.getElementById('reviewForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var product = document.getElementById('product').value;
-            var rating = document.getElementById('rating').value;
-            var content = document.getElementById('content').value;
-            var date = document.getElementById('date').value;
-            var username = document.getElementById('username').value;
-
-            var reviewContainer = document.getElementById('reviews');
-            var newReview = document.createElement('div');
-            newReview.classList.add('review');
-
-            var reviewTitle = document.createElement('div');
-            reviewTitle.classList.add('review-title');
-            reviewTitle.textContent = product;
-
-            var reviewRating = document.createElement('div');
-            reviewRating.classList.add('rating');
-            reviewRating.textContent = 'Calificación: ' + rating + ' ' + '★'.repeat(rating) + '☆'.repeat(5 - rating);
-
-            var reviewContent = document.createElement('div');
-            reviewContent.classList.add('review-content');
-            reviewContent.textContent = content;
-
-            var reviewDate = document.createElement('div');
-            reviewDate.classList.add('review-date');
-            reviewDate.textContent = 'Fecha Realizada: ' + date;
-
-            var reviewUser = document.createElement('div');
-            reviewUser.classList.add('review-user');
-            reviewUser.textContent = 'Nombre del usuario: ' + username;
-
-            newReview.appendChild(reviewTitle);
-            newReview.appendChild(reviewRating);
-            newReview.appendChild(reviewContent);
-            newReview.appendChild(reviewDate);
-            newReview.appendChild(reviewUser);
-
-            reviewContainer.appendChild(newReview);
-
-            document.getElementById('reviewForm').reset();
-        });
-    </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
---Agregación de imagenes a la tabla de productos
+--------------------------------------- productos -----------------------------------------------------
 UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.YxR2s2V__rXXt5YRwf6oDAHaFx?rs=1&pid=ImgDetMain'
 WHERE V_id_producto = 1;
@@ -79,7 +79,6 @@ UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.8X2YC7YTRCQlsK9xnLTDVQHaHa?rs=1&pid=ImgDetMain'
 WHERE V_id_producto = 20;
 
-
 UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.zyCG1sixIb1mLTgKNPdHpwHaLH?rs=1&pid=ImgDetMain'
 WHERE V_id_producto = 21;
@@ -134,7 +133,6 @@ UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://images-na.ssl-images-amazon.com/images/I/81E0cBuC3OL._AC_SL1500_.jpg'
 WHERE V_id_producto = 33;
 
-
 UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.VCHX6Dzg2SO8vyLddPZFngHaHa?w=600&h=600&rs=1&pid=ImgDetMain'
 WHERE V_id_producto = 34;
@@ -187,7 +185,7 @@ UPDATE FIDE_PRODUCTOS_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.rnwSoysZIxx6-7SPWK6vugHaIa?rs=11=ImgDetMain'
 WHERE V_id_producto = 46;
 
---Agregación de imagenes a la tabla de Clientes
+-------------------------------------------- Clientes -----------------------------------------------------
 UPDATE FIDE_CLIENTES_TB
 SET V_imagen = 'https://media.revistagq.com/photos/606b3183a359af169e483dcb/16:9/w_2560%2Cc_limit/estar-guapo.jpeg'
 WHERE V_id_cliente = 1;
@@ -228,6 +226,46 @@ UPDATE FIDE_CLIENTES_TB
 SET V_imagen = 'https://i.pinimg.com/236x/06/5f/06/065f06bab28c6e1bd6e4ee4d0250c88c.jpg'
 WHERE V_id_cliente = 10;
 
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://t2.uc.ltmcdn.com/es/posts/6/5/8/por_que_los_hombres_tienen_barba_31856_600_square.jpg'
+WHERE V_id_cliente = 11;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://www.eleconomista.com.mx/__export/1678414747964/sites/eleconomista/img/2023/03/09/mujeres_alta_direccixn.jpg_1902800913.jpg'
+WHERE V_id_cliente = 12;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://www.hticlinic.com/wp-content/uploads/2023/03/emotions-people-concept-headshot-handsome-thoughtful-man-smiling-satisfied-touching-beard.jpg'
+WHERE V_id_cliente = 13;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://www.rtve.es/css/rtve.2021.noticias/mujeres-TE_S30MQEC/i/file/loujain-al-hathloul_arabia-saudi.jpg'
+WHERE V_id_cliente = 14;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://i.pinimg.com/originals/07/4a/5c/074a5cf6e0fab7d8632efb2e36b31def.jpg'
+WHERE V_id_cliente = 15;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://img.freepik.com/fotos-premium/imagenes-mujeres-hermosas_939109-30.jpg'
+WHERE V_id_cliente = 16;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = '
+https://thebeautyconcept.com/magazine/wp-content/uploads/2024/01/estilo-hombre-2024.jpg'
+WHERE V_id_cliente = 17;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://i.pinimg.com/474x/9e/1e/57/9e1e573127ea34f7e0891538146f3424.jpg'
+WHERE V_id_cliente = 18;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://i.pinimg.com/736x/5a/a2/74/5aa274f7dd353d79110879ff99d3ddeb.jpg'
+WHERE V_id_cliente = 19;
+
+UPDATE FIDE_CLIENTES_TB
+SET V_imagen = 'https://i.pinimg.com/236x/15/d7/a3/15d7a39c2e1b1214ba5275b17bd9f7cd.jpg'
+WHERE V_id_cliente = 20;
 ---------------------------------------------Empleados-------------------------------------------------------------------------------------------------------------------------
 UPDATE FIDE_EMPLEADOS_TB
 SET V_imagen = 'https://i.pinimg.com/236x/78/27/a3/7827a32650edfc7eb0cf9398aa7b9ffe.jpg'
@@ -272,7 +310,6 @@ WHERE V_id_empleado = 10;
 UPDATE FIDE_EMPLEADOS_TB
 SET V_imagen = 'https://cdn.pixabay.com/photo/2016/11/07/17/03/beautiful-women-1806280_1280.jpg'
 WHERE V_id_empleado = 11;
-
 
 UPDATE FIDE_CLIENTES_TB
 SET V_imagen = 'https://th.bing.com/th/id/OIP.DMDfV6N9jhYjyQCLGLlH5QAAAA?rs=1&pid=ImgDetMain'
