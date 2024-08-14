@@ -42,6 +42,78 @@ Desconectar($conexion);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Cliente</title>
     <link rel="stylesheet" href="../CSS/perfil.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .return-btn {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: white;
+            color: #007BFF;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        #perfil-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+            object-fit: cover;
+            border: 4px solid #007BFF;
+        }
+        .profile-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .profile-header p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -61,7 +133,7 @@ Desconectar($conexion);
             </div>
         </div>
         <?php if ($error_message) { ?>
-            <p style="color: red;"><?php echo $error_message; ?></p>
+            <p class="error-message"><?php echo $error_message; ?></p>
         <?php } ?>
     </div>
 </body>
