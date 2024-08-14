@@ -36,7 +36,7 @@ Desconectar($conexion);
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            padding: 1rem;
+            padding: 2rem;
         }
         header {
             background-color: #ffffff;
@@ -85,6 +85,23 @@ Desconectar($conexion);
             text-align: center;
             color: #888;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
@@ -95,26 +112,27 @@ Desconectar($conexion);
 </header>
 
 <div class="container">
-    <h2>Compras de Usuarios</h2>
+    <center><h2>Compras de Usuarios</h2></center>
     <?php
-// Mostrar los datos en la tabla
-    echo '<table border="1">';
+    // Mostrar los datos en la tabla
+    echo '<table>';
     echo '<tr><th>Nombre del usuario</th><th>Producto</th><th>Cantidad comprada</th><th>Precio</th><th>Total</th><th>Estado</th></tr>';
  
-while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
-    echo '<tr>';
-    foreach ($row as $key => $value) {
-        echo '<td>' . htmlspecialchars($value) . '</td>';
+    while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
+        echo '<tr>';
+        foreach ($row as $key => $value) {
+            echo '<td>' . htmlspecialchars($value) . '</td>';
+        }
+        echo '</tr>';
     }
-    echo '</tr>';
-}
-echo '</table>';
+    echo '</table>';
  
-// Desconectar
-Desconectar($conexion);
-?>
+    // Desconectar
+    Desconectar($conexion);
+    ?>
 </div>
 
 </body>
 </html>
+
 

@@ -119,7 +119,7 @@ $estados = $stmt_select_estados->fetchAll(PDO::FETCH_ASSOC);
 <body>
  
 <center><h1>Promociones Del Momento</h1><center>
- 
+<a href="index.php" class="return-btn">Menú</a>
 <!-- Tabla para mostrar promociones activas -->
 <center><h2>Promociones Existentes</h2><center>
 <?php

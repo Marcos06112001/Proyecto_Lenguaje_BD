@@ -25,10 +25,7 @@ if ($id_evento !== null) {
         // Obtener el resultado
         $resultado = $stmt_select_evento->fetch(PDO::FETCH_ASSOC);
 
-        // Depuración: Verificar el contenido de $resultado
-        echo "<pre>";
-        print_r($resultado);
-        echo "</pre>";
+   
 
         if ($resultado) {
             $descripcion_evento = $resultado['DESCRIPCION_EVENTO']; // Ajuste aquí
@@ -111,6 +108,7 @@ if ($id_evento !== null) {
             <form action="orden_del_dia.php" method="POST">
                 <input type="number" id="id_evento" name="id_evento" placeholder="Ingrese ID del Evento" required>
                 <button type="submit">Buscar Evento</button>
+                <a href="index.php" class="return-btn">Menú</a>
             </form>
         </div>
         <div class="result-container">

@@ -83,7 +83,7 @@ try {
 <body>
     <div class="container">
         <h1>Detalles de Reabastecimiento</h1>
-        <!-- Tabla para mostrar detalles de reabastecimiento -->
+        <a href="index.php" class="return-btn">Menú</a>
         <h2>Detalles de Reabastecimiento Existentes</h2>
         <?php
         // Mostrar los datos en la tabla

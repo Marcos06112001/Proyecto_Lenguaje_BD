@@ -84,12 +84,13 @@ try {
 <body>
     <div class="container">
         <h1>Reclamaciones Existentes</h1>
+        <a href="index.php" class="return-btn">Menú</a>
         <!-- Tabla para mostrar detalles de reabastecimiento -->
         <h2>Reclamaciones</h2>
         <?php
         // Mostrar los datos en la tabla
         echo '<table>';
-        echo '<tr><th>ID del reclamo</th><th>Nombre</th><th>Fecha</th><th>Estado</th></tr>';
+        echo '<tr><th>ID del reclamo</th><th>Nombre</th><th>Fecha</th></tr>';
 
         while ($row = $stmt_select_reabastecimiento->fetch(PDO::FETCH_ASSOC)) {
             echo '<tr>';

@@ -213,6 +213,24 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
             font-size: 1.1rem;
             font-weight: bold;
         }
+        .button-container {
+        text-align: center; 
+        margin-top: 20px; 
+    }
+
+    .button-container a {
+        display: inline-block; 
+        margin: 5px;  
+        padding: 10px 20px; 
+        text-decoration: none; 
+        color: white; 
+        background-color: blue; 
+        border-radius: 5px; 
+    }
+
+    .button-container .add-product-btn {
+        background-color: green; 
+    }
     </style>
 </head>
 <body>
@@ -220,11 +238,20 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
         <header class="header">
             <h1>Productos</h1>
             <a href="index.php" class="button">Menú</a>
-            <?php if ($is_admin): ?>
-                <a href="agregar_producto_ADM.php" class="add-product-btn">Agregar Producto</a>
-            <?php endif; ?>
         </header>
         <main>
+            <br>
+            <div class="button-container">
+                <?php if ($is_admin): ?>
+                  <a href="agregar_producto_ADM.php" class="add-product-btn">Agregar Producto</a>
+              <?php endif; ?>
+
+             <?php if ($is_admin): ?>
+                <a href="modificar_producto_ADM.php" class="button">Modificar producto</a>
+              <?php endif; ?>
+            </div>
+            <br>
+            
             <form action="productos.php" method="GET" class="category-form">
                 <div class="select-container">
                     <select name="id_categoria" id="categoriaSelect" onchange="this.form.submit()">
@@ -256,13 +283,16 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
                                     <div class="price"><?php echo htmlspecialchars($producto['V_PRECIO'] ?? '0.00'); ?> $</div>
                                 </div>
                             </div>
+                            
                         <?php endforeach; ?>
                     </div>
                 <?php else: ?>
                     <p>No se encontraron productos para esta categoría.</p>
                 <?php endif; ?>
             </section>
+           
         </main>
+       
     </div>
 </body>
 </html>

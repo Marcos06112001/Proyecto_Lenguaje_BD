@@ -105,6 +105,7 @@ if ($id_proveedor !== null) {
             <form action="proveedores_ADM.php" method="POST">
                 <input type="number" id="id_proveedor" name="id_proveedor" placeholder="Ingrese ID del Proveedor" required>
                 <button type="submit">Buscar Proveedor</button>
+                <a href="index.php" class="return-btn">Menú</a>
             </form>
         </div>
         <div class="result-container">
