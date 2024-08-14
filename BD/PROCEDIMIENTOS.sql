@@ -940,28 +940,22 @@ END;
 --FECHA 31/07/2024
 --procedimiento almacenado #28
 --Selecciona perfil
-CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP (
-    P_id_cliente IN FIDE_CLIENTES_TB.V_id_cliente%TYPE,
-    V_nombre_cliente OUT FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
-    V_apellido_cliente OUT FIDE_CLIENTES_TB.V_apellido_cliente%TYPE,
-    V_email OUT FIDE_CLIENTES_TB.V_email%TYPE,
-    V_telefono OUT FIDE_CLIENTES_TB.V_telefono%TYPE,
-    V_imagen OUT FIDE_CLIENTES_TB.V_imagen%TYPE
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP(
+    p_cliente_id IN NUMBER,
+    p_nombre_cliente OUT VARCHAR2,
+    p_apellido_cliente OUT VARCHAR2,
+    p_email OUT VARCHAR2,
+    p_telefono OUT VARCHAR2,
+    p_imagen OUT VARCHAR2
 ) AS
 BEGIN
-    SELECT V_nombre_cliente,
-           V_apellido_cliente,
-           V_email,
-           V_telefono,
-           V_imagen
-    INTO   V_nombre_cliente,
-           V_apellido_cliente,
-           V_email,
-           V_telefono,
-           V_imagen
-    FROM   FIDE_CLIENTES_TB
-    WHERE  V_id_cliente = P_id_cliente;
+    SELECT V_nombre_cliente, V_apellido_cliente, V_email, V_telefono, V_imagen
+    INTO p_nombre_cliente, p_apellido_cliente, p_email, p_telefono, p_imagen
+    FROM FIDE_CLIENTES_TB
+    WHERE V_id_cliente = p_cliente_id;
 END;
+/
+
 
 BEGIN
     FIDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);

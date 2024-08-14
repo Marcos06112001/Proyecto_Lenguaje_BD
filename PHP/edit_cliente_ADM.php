@@ -1,3 +1,4 @@
+
 <?php
 include '../DAL/conexion.php';
 
@@ -43,10 +44,8 @@ if (isset($cliente['V_DIRECCION']) && is_resource($cliente['V_DIRECCION'])) {
     $direccion = stream_get_contents($cliente['V_DIRECCION']);
 }
 
-// Actualiza la información del cliente
-function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass) {
-    $conexion = Conecta();
-    
+// Actualizar la información del cliente
+function actualizarCliente($conexion, $id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass) {
     $sql = "BEGIN FIDE_CLIENTES_ACTUALIZAR_SP(:id_cliente, :nombre, :apellido, :email, :telefono, :direccion, :imagen, :rol, :pass); END;";
     
     try {
@@ -56,7 +55,7 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
         $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
-        $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $direccion, PDO::PARAM_LOB);
         $stmt->bindParam(':imagen', $imagen, PDO::PARAM_STR);
         $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
@@ -65,8 +64,6 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
     } catch (PDOException $e) {
         echo "Error al actualizar el cliente: " . $e->getMessage();
     }
-    
-    Desconectar($conexion);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -78,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imagen = $_POST['imagen'];
     $rol = $_POST['rol'];
     $pass = $_POST['pass'];
-    actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass);
+    actualizarCliente($conexion, $id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass);
     // Redirigir de vuelta a la página de clientes después de actualizar
     header('Location: clientes_ADM.php');
     exit();
@@ -123,7 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .edit-form input[type="text"],
         .edit-form input[type="email"],
         .edit-form input[type="tel"],
-        .edit-form textarea {
+        .edit-form textarea,
+        .edit-form select {
             padding: 10px;
             width: calc(100% - 22px);
             margin-bottom: 10px;
@@ -167,7 +165,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="imagen">Imagen:</label>
             <input type="text" name="imagen" id="imagen" value="<?php echo htmlspecialchars($cliente['V_IMAGEN'] ?? ''); ?>" required>
             <label for="rol">Rol:</label>
-            <input type="text" name="rol" id="rol" value="<?php echo htmlspecialchars($cliente['V_ROL'] ?? ''); ?>" required>
+            <select name="rol" id="rol" required>
+                <option value="Administrador" <?php echo ($cliente['V_ROL'] == 'Administrador') ? 'selected' : ''; ?>>Administrador</option>
+                <option value="Cliente" <?php echo ($cliente['V_ROL'] == 'Cliente') ? 'selected' : ''; ?>>Cliente</option>
+            </select>
             <label for="pass">Contraseña:</label>
             <input type="text" name="pass" id="pass" value="<?php echo htmlspecialchars($cliente['V_PASS'] ?? ''); ?>" required>
             <input type="submit" value="Actualizar Cliente">

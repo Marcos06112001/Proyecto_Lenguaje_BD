@@ -7,29 +7,29 @@ $success_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['register'])) {
-        // Procesar el formulario de registro
+        
         $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : '';
         $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : '';
         $email = isset($_POST['email_reg']) ? $_POST['email_reg'] : '';
         $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : '';
         $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : '';
-        $imagen = isset($_POST['imagen']) ? $_POST['imagen'] : ''; // Opcional
+        $imagen = isset($_POST['imagen']) ? $_POST['imagen'] : ''; 
         $password = isset($_POST['password_reg']) ? $_POST['password_reg'] : '';
 
         $conexion = Conecta();
 
-        // Llamar al procedimiento almacenado
+       
         $sql = 'BEGIN FIDE_CLIENTES_INSERTAR_SP(:nombre_cliente, :apellido_cliente, :email, :telefono, :direccion, :imagen, :rol, :pass); END;';
         $stmt = $conexion->prepare($sql);
 
-        // Enlazar los parámetros con los valores del formulario
+        
         $stmt->bindParam(':nombre_cliente', $nombre);
         $stmt->bindParam(':apellido_cliente', $apellido);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':telefono', $telefono);
         $stmt->bindParam(':direccion', $direccion);
         $stmt->bindParam(':imagen', $imagen);
-        $rol = 'Cliente'; // Asignar rol como Cliente automáticamente
+        $rol = 'Cliente'; 
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':pass', $password);
 
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         Desconectar($conexion);
     } else {
-        // Procesar el formulario de inicio de sesión
+        
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         $password = isset($_POST['password']) ? $_POST['password'] : '';
 
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php } ?>
             </form>
         </div>
-        <!-- Formulario de registro -->
+      
         <div class="form-container">
             <h2 id="register-title">Registrarse</h2>
             <form id="register-form" action="inicio_sesion.php" method="post">
