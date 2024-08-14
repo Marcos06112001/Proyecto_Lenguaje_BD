@@ -940,25 +940,23 @@ END;
 --FECHA 31/07/2024
 --procedimiento almacenado #28
 --Selecciona perfil
-CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP(
-    p_cliente_id IN NUMBER,
-    p_nombre_cliente OUT VARCHAR2,
-    p_apellido_cliente OUT VARCHAR2,
+CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_SELECCIONAR_SP (
+    p_user_id IN NUMBER,
+    p_nombre OUT VARCHAR2,
+    p_apellido OUT VARCHAR2,
     p_email OUT VARCHAR2,
     p_telefono OUT VARCHAR2,
+    p_direccion OUT VARCHAR2,
     p_imagen OUT VARCHAR2
-) AS
+)
+AS
 BEGIN
-    SELECT V_nombre_cliente, V_apellido_cliente, V_email, V_telefono, V_imagen
-    INTO p_nombre_cliente, p_apellido_cliente, p_email, p_telefono, p_imagen
+    SELECT V_NOMBRE_CLIENTE, V_APELLIDO_CLIENTE, V_EMAIL, V_TELEFONO, V_DIRECCION, V_IMAGEN
+    INTO p_nombre, p_apellido, p_email, p_telefono, p_direccion, p_imagen
     FROM FIDE_CLIENTES_TB
-    WHERE V_id_cliente = p_cliente_id;
+    WHERE V_ID_CLIENTE = p_user_id;
 END;
-/
-
-
-BEGIN
-    FIDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
+IDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
 END;
 
 --CREADO POR Nicole Hidalgo Hidalgo
