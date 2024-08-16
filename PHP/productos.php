@@ -294,10 +294,6 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
                     <p>No se encontraron productos.</p>
                 <?php endif; ?>
             </section>
-
-            <?php if ($is_admin): ?>
-                <a href="agregar_producto.php" class="add-product-btn">Agregar Nuevo Producto</a>
-            <?php endif; ?>
         </main>
     </div>
 </body>
