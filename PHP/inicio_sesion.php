@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':telefono', $telefono);
         $stmt->bindParam(':direccion', $direccion);
         $stmt->bindParam(':imagen', $imagen);
-        $rol = 'Cliente'; 
+        $rol = 'cliente'; 
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':pass', $password);
 

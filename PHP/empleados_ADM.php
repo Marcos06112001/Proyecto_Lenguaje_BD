@@ -20,6 +20,53 @@ try {
     echo "Error al ejecutar la consulta: " . $e->getMessage();
     exit();
 }
+
+// Actualiza la información del cliente
+function actualizarEmpleado($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass) {
+    $conexion = Conecta();
+    
+    $sql = "BEGIN FIDE_CLIENTES_ACTUALIZAR_SP(:id_cliente, :nombre, :apellido, :email, :telefono, :direccion, :imagen, :rol, :pass); END;";
+    
+    try {
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':apellido', $apellido, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+        $stmt->bindParam(':imagen', $imagen, PDO::PARAM_STR);
+        $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
+        $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "Error al actualizar el cliente: " . $e->getMessage();
+    }
+    
+    Desconectar($conexion);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_cliente = $_POST['id_cliente'];
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $email = $_POST['email'];
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccion'];
+    $imagen = $_POST['imagen'];
+    $rol = $_POST['rol'];
+    $pass = $_POST['pass'];
+    actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass);
+}
+
+
+
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
