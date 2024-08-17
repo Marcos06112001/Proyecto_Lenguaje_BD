@@ -147,16 +147,15 @@ tr:hover {
 </head>
 <body>
  
-<center><h1>Promociones Del Momento</h1><center>
+<center> <h1><a href="index.php" style="text-decoration: none; color: #000000;">Promociones Del Momento</a></h1><center>
  
 <!-- Tabla para mostrar promociones activas -->
 <center><h2>Promociones Existentes</h2><center>
 
-<a href="index.php" class="button">Menú</a>
 <?php
 // Mostrar los datos en la tabla
 echo '<table border="1">';
-echo '<tr><th>Nombre Promoción</th><th>Descripción</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Descuento</th></tr>';
+echo '<tr><th>Nombre Promoción</th><th>Descripción</th><th>Fecha Inicio</th><th>Fecha Final</th><th>Descuento</th></tr>';
  
 while ($row = $stmt_select_promociones->fetch(PDO::FETCH_ASSOC)) {
     echo '<tr>';

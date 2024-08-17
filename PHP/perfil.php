@@ -48,6 +48,9 @@ Desconectar($conexion);
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            background-image: url('https://media.istockphoto.com/id/1063881858/es/vector/fondo-de-vector-multicolor-borrosa-tonos-suaves-de-gradiente-de-blanco-turquesa-azul-p%C3%BArpura.jpg?s=612x612&w=0&k=20&c=q20MkIWL6M9VQo8Rhxm33AmvbhpYTKU1udiXh__iuzE='); /* Aquí se coloca la imagen de fondo */
+            background-size: cover;
+            background-position: center;
         }
         header {
             background-color: #007BFF;
@@ -80,6 +83,7 @@ Desconectar($conexion);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente para la tarjeta */
         }
         .profile-header {
             display: flex;

@@ -78,8 +78,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">Reseñas de Productos</div>
-        <a href="index.php" class="button">Menú</a>
+    <center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Reseñas De Productos</a></h1><center>
         <div class="review-form">
             <h2>Ingrese su reseña</h2>
             <form id="reviewForm" method="POST" action="procesar_reseña.php">

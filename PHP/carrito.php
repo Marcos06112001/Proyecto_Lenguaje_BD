@@ -192,7 +192,7 @@ $carrito = obtenerCarrito();
 <body>
     <div class="container">
         <header class="header">
-            <h1>Carrito de Compras</h1>
+        <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Carrito De Compras</a></h1>
             <a href="productos.php" class="button">Volver a Productos</a>
         </header>
         <main>

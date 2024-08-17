@@ -324,15 +324,18 @@ END;
 --procedimiento almacenado #10
 -- Insertar Categoría
 CREATE OR REPLACE PROCEDURE FIDE_CATEGORIAS_INSERTAR_SP (
-    P_id_categoria IN INT,
     P_nombre_categoria IN VARCHAR2
 ) AS
+    V_id_categoria INT; -- Variable para almacenar el valor de la secuencia
 BEGIN
-    -- Insertar una nueva categoría
-    INSERT INTO FIDE_CATEGORIAS_TB (V_id_categoria, V_nombre_categoria)
-    VALUES (P_id_categoria, P_nombre_categoria);
+    -- Obtener el siguiente valor de la secuencia
+    SELECT FIDE_CATEGORIAS_SEQ.NEXTVAL INTO V_id_categoria FROM dual;
 
-    DBMS_OUTPUT.PUT_LINE('Categoría insertada: ' || P_nombre_categoria);
+    -- Insertar una nueva categoría con el ID generado por la secuencia
+    INSERT INTO FIDE_CATEGORIAS_TB (V_id_categoria, V_nombre_categoria)
+    VALUES (V_id_categoria, P_nombre_categoria);
+
+    DBMS_OUTPUT.PUT_LINE('Categoría insertada: ' || P_nombre_categoria || ' con ID: ' || V_id_categoria);
 EXCEPTION
     WHEN DUP_VAL_ON_INDEX THEN
         DBMS_OUTPUT.PUT_LINE('Error: La categoría con el ID especificado ya existe.');
@@ -342,8 +345,7 @@ END;
 
 BEGIN
     FIDE_CATEGORIAS_INSERTAR_SP(
-        P_id_categoria => 1, 
-        P_nombre_categoria => 'Electronics' -- Reemplaza con el nombre de la categoría deseada
+        P_nombre_categoria => 'Electrónica'
     );
 END;
 
@@ -602,20 +604,25 @@ END;
 --FECHA 24/07/2024
 --procedimiento almacenado #19
 -- Insertar Promoción
+-- Procedimiento modificado para usar la secuencia
 CREATE OR REPLACE PROCEDURE FIDE_PROMOCIONES_INSERTAR_SP (
-    P_id_promocion IN INT,
+    P_id_estado IN INT,
     P_nombre_promocion IN VARCHAR2,
     P_descripcion_promocion IN VARCHAR2,
     P_fecha_inicio IN DATE,
     P_fecha_fin IN DATE,
     P_descuento IN NUMBER
 ) AS
+    V_id_promocion INT; -- Variable para almacenar el valor de la secuencia
 BEGIN
-    -- Insertar una nueva promoción
-    INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
-    VALUES (P_id_promocion, P_nombre_promocion, P_descripcion_promocion, P_fecha_inicio, P_fecha_fin, P_descuento);
+    -- Obtener el siguiente valor de la secuencia
+    SELECT FIDE_PROMOCIONES_SEQ.NEXTVAL INTO V_id_promocion FROM dual;
 
-    DBMS_OUTPUT.PUT_LINE('Promoción insertada: ' || P_nombre_promocion);
+    -- Insertar una nueva promoción con el ID generado por la secuencia
+    INSERT INTO FIDE_PROMOCIONES_TB (V_id_promocion, V_id_estado, V_nombre_promocion, V_descripcion_promocion, V_fecha_inicio, V_fecha_fin, V_descuento)
+    VALUES (V_id_promocion, P_id_estado, P_nombre_promocion, P_descripcion_promocion, P_fecha_inicio, P_fecha_fin, P_descuento);
+
+    DBMS_OUTPUT.PUT_LINE('Promoción insertada: ' || P_nombre_promocion || ' con ID: ' || V_id_promocion);
 EXCEPTION
     WHEN DUP_VAL_ON_INDEX THEN
         DBMS_OUTPUT.PUT_LINE('Error: La promoción con el ID especificado ya existe.');
@@ -625,12 +632,12 @@ END;
 
 BEGIN
     FIDE_PROMOCIONES_INSERTAR_SP(
-        P_id_promocion => 1, 
-        P_nombre_promocion => 'Descuento Verano', 
-        P_descripcion_promocion => '20% de descuento en todos los productos',
-        P_fecha_inicio => DATE '2024-07-01', 
-        P_fecha_fin => DATE '2024-07-31', 
-        P_descuento => 20
+        P_id_estado => 1, 
+        P_nombre_promocion => 'Descuento Veloz', 
+        P_descripcion_promocion => '50% de descuento en todos los de casa',
+        P_fecha_inicio => DATE '2024-08-17', 
+        P_fecha_fin => DATE '2024-12-11', 
+        P_descuento => 10
     );
 END;
 
@@ -688,6 +695,7 @@ BEGIN
 
     COMMIT;
 END;
+
 
 --CREADO POR Nicole Hidalgo Hidalgo
 --FECHA 26/07/2024
@@ -956,7 +964,8 @@ BEGIN
     FROM FIDE_CLIENTES_TB
     WHERE V_ID_CLIENTE = p_user_id;
 END;
-IDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
+BEGIN
+FIDE_CLIENTES_SELECCIONAR_SP(P_id_cliente => 1);
 END;
 
 --CREADO POR Nicole Hidalgo Hidalgo
@@ -983,7 +992,7 @@ BEGIN
       RAISE_APPLICATION_ERROR(-20001, 'Producto no encontrado: ' || p_v_nombre_producto);
   END;
 
-  -- Obtener el ID del cliente basado en el nombre del cliente
+  -- Obtene el ID del cliente basado en el nombre del cliente
   BEGIN
     SELECT V_id_cliente INTO v_id_cliente
     FROM FIDE_CLIENTES_TB
@@ -993,53 +1002,11 @@ BEGIN
       RAISE_APPLICATION_ERROR(-20002, 'Cliente no encontrado: ' || p_v_nombre_cliente);
   END;
 
-  -- Insertar la reseña en la tabla FIDE_RESENAS_PRODUCTO_TB
+  -- Inserta la reseña en la tabla FIDE_RESENAS_PRODUCTO_TB
   INSERT INTO FIDE_RESENAS_PRODUCTO_TB (V_id_resena_producto, V_id_producto, V_id_cliente, V_calificacion, V_comentario, V_fecha)
   VALUES (FIDE_RESENAS_SEQ.NEXTVAL, v_id_producto, v_id_cliente, p_v_calificacion, p_v_comentario, TO_DATE(p_v_fecha, 'YYYY-MM-DD'));
-
   COMMIT;
 END;
-
-
---CREADO POR Maria Celeste Solano Hidalgo
---FECHA 13/08/2024
--- Procedimiento almacenado para insertar nuevos clientes
-CREATE OR REPLACE PROCEDURE FIDE_CLIENTES_INSERTAR_SP (
-    P_nombre_cliente IN FIDE_CLIENTES_TB.V_nombre_cliente%TYPE,
-    P_apellido_cliente IN FIDE_CLIENTES_TB.V_apellido_cliente%TYPE,
-    P_email IN FIDE_CLIENTES_TB.V_email%TYPE,
-    P_telefono IN FIDE_CLIENTES_TB.V_telefono%TYPE,
-    P_direccion IN FIDE_CLIENTES_TB.V_direccion%TYPE,
-    P_imagen IN FIDE_CLIENTES_TB.V_imagen%TYPE,
-    P_rol IN FIDE_CLIENTES_TB.V_rol%TYPE,
-    P_pass IN FIDE_CLIENTES_TB.V_pass%TYPE
-) AS
-BEGIN
-    INSERT INTO FIDE_CLIENTES_TB (
-        V_id_cliente,
-        V_nombre_cliente,
-        V_apellido_cliente,
-        V_email,
-        V_telefono,
-        V_direccion,
-        V_imagen,
-        V_rol,
-        V_pass
-    ) VALUES (
-        FIDE_CLIENTES_SEQ.NEXTVAL, 
-        P_nombre_cliente,
-        P_apellido_cliente,
-        P_email,
-        P_telefono,
-        P_direccion,
-        P_imagen,
-        P_rol,
-        P_pass
-    );
-    
-    COMMIT;
-END;
-/
 
 --CREADO POR Nicole Hidalgo 
 --FECHA 16/08/2024
@@ -1133,6 +1100,9 @@ BEGIN
         P_imagen => 'https://weremote.net/wp-content/uploads/2022/08/mujer-sonriente-apunta-arriba.jpg'
     );
 END;
+
+
+
 
 
 

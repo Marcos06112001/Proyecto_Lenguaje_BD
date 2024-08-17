@@ -146,12 +146,11 @@ footer {
 </head>
 <body>
     <header>
-        <h1>Reclamaciones</h1>
-        <a href="index.php" class="return-btn">Menú</a>
+    <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Reclamaciones</a></h1>
     </header>
     <div class="container mt-5">
         <div class="reclamos-container p-4 bg-white shadow rounded">
-            <h2 class="fs-4 mb-4">Formulario de Reclamo</h2>
+            <center><h2 class="fs-4 mb-4">Formulario de Reclamo</h2></center>
             <form method="POST" action="procesar_reclamo.php">
     <div class="mb-3">
         <label for="name" class="form-label">Nombre del usuario</label>

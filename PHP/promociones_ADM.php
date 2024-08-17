@@ -148,14 +148,27 @@ tr:hover {
     cursor: pointer;
 }
 
- 
+.button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
 </style>
 </head>
 <body>
  
 <center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Promociones</a></h1><center>
 
-<center><h2>Promociones Existentes</h2><center>
+    <a href="agregar_promocion.php" class="button">Agregar promociones</a>
 <?php
 // Mostrar los datos en la tabla
 echo '<table border="1">';
