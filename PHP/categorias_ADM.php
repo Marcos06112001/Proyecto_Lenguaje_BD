@@ -168,8 +168,8 @@ $categorias = obtenerCategorias();
 <body>
     <div class="container">
         <header class="header">
-            <h1>Categorias</h1>
-            <a href="index.php" class="button">Menú</a>
+            <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Categorías</a></h1>
+            <a href="agregar_categoria.php" class="button">Agregar Categoria</a>
         </header>
         <main>
             <div class="categories-grid">

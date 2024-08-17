@@ -103,12 +103,11 @@ if ($id_evento !== null) {
 </head>
 <body>
     <div class="container">
-        <div class="header">Buscar Evento</div>
+    <center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Orden del día</a></h1><center>
         <div class="form-container">
             <form action="orden_del_dia.php" method="POST">
                 <input type="number" id="id_evento" name="id_evento" placeholder="Ingrese ID del Evento" required>
                 <button type="submit">Buscar Evento</button>
-                <a href="index.php" class="return-btn">Menú</a>
             </form>
         </div>
         <div class="result-container">

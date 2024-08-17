@@ -284,7 +284,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
                                 <div class="card-content">
                                     <h3><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Nombre del producto'); ?></h3>
                                     <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO'] ?? 'Descripción del producto'); ?></p>
-                                    <div class="price"><?php echo htmlspecialchars($producto['V_PRECIO'] ?? 'Precio no disponible'); ?></div>
+                                    <div class="price">$<?php echo htmlspecialchars($producto['V_PRECIO'] ?? 'Precio no disponible'); ?></div>
                                     <a href="carrito.php?id_producto=<?php echo htmlspecialchars($producto['V_ID_PRODUCTO']); ?>" class="buy-button">Comprar</a>
                                 </div>
                             </div>

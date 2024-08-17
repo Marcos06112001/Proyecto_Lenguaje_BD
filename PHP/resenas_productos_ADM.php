@@ -91,8 +91,8 @@ Desconectar($conexion);
 <body>
 
 <header>
-    <h1>Reseñas de Productos Electrónicos</h1>
-    <a href="index.php" class="return-btn">Menú</a>
+<center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Reseñas de los Productos</a></h1><center>
+
 </header>
 
 <div class="container">

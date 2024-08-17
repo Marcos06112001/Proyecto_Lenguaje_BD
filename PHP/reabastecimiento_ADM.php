@@ -82,9 +82,9 @@ try {
 </head>
 <body>
     <div class="container">
-        <h1>Detalles de Reabastecimiento</h1>
-        <a href="index.php" class="return-btn">Menú</a>
-        <h2>Detalles de Reabastecimiento Existentes</h2>
+    <center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Detalles de Reabastecimiento</a></h1><center>
+       
+    <center><h2>Detalles de Reabastecimiento Existentes</h2> <center>
         <?php
         // Mostrar los datos en la tabla
         echo '<table>';

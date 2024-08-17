@@ -113,8 +113,7 @@ try {
 </head>
 <body>
  
-<center><h1>Ventas Del Momento</h1><center>
-<a href="index.php" class="return-btn">Menú</a>
+<center> <h1><a href="index.php" style="text-decoration: none; color: #000000;">Ventas del Momento</a></h1><center>
 <!-- Tabla para mostrar promociones activas -->
 <center><h2>Ventas Existentes</h2><center>
 <?php

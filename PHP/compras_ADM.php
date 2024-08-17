@@ -107,8 +107,7 @@ Desconectar($conexion);
 <body>
 
 <header>
-    <h1>Compras Existentes</h1>
-    <a href="index.php" class="return-btn">Menú</a>
+<h1><a href="index.php" style="text-decoration: none; color: #000000;">Compras</a></h1>
 </header>
 
 <div class="container">

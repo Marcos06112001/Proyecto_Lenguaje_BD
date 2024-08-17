@@ -1040,3 +1040,100 @@ BEGIN
     COMMIT;
 END;
 /
+
+--CREADO POR Nicole Hidalgo 
+--FECHA 16/08/2024
+--procedimiento almacenado #30
+--Actualizar empleados
+CREATE OR REPLACE PROCEDURE FIDE_EMPLEADOS_ACTUALIZAR_SP (
+    P_id_empleado IN INT,
+    P_nombre_empleado IN VARCHAR2,
+    P_apellido_empleado IN VARCHAR2,
+    P_email IN VARCHAR2,
+    P_telefono IN VARCHAR2,
+    P_direccion IN VARCHAR2,
+    P_imagen IN VARCHAR2
+) AS
+BEGIN
+    -- Actualizar la información del empleado
+    UPDATE FIDE_EMPLEADOS_TB
+    SET V_nombre_empleado = P_nombre_empleado,
+        V_apellido_empleado = P_apellido_empleado,
+        V_email = P_email,
+        V_telefono = P_telefono,
+        V_direccion = P_direccion,
+        V_imagen = P_imagen
+    WHERE V_id_empleado = P_id_empleado;
+
+    -- Verificar si la actualización fue exitosa
+    IF SQL%ROWCOUNT = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('Error: El empleado con el ID especificado no existe.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Empleado actualizado correctamente: ID = ' || P_id_empleado);
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error al actualizar empleado: ' || SQLERRM);
+END;
+
+BEGIN
+    FIDE_EMPLEADOS_ACTUALIZAR_SP(11, 'Natali', 'Ramirez', 'natali.ramirez@nuevoemail.com', '789-012-3456', 'Avenida Central 123, Ciudad', 'https://cdn.pixabay.com/photo/2016/11/07/17/03/beautiful-women-1806280_1280.jpg');
+END;
+
+--CREADO POR Nicole Hidalgo 
+--FECHA 16/08/2024
+--procedimiento almacenado #31
+--Insertar nuevo empleado
+CREATE OR REPLACE PROCEDURE FIDE_EMPLEADOS_INSERTAR_SP (
+    P_id_estado IN INT,
+    P_nombre_empleado IN VARCHAR2,
+    P_apellido_empleado IN VARCHAR2,
+    P_email IN VARCHAR2,
+    P_telefono IN VARCHAR2,
+    P_direccion IN VARCHAR2,
+    P_imagen IN VARCHAR2
+)
+AS
+BEGIN
+    INSERT INTO FIDE_EMPLEADOS_TB (
+        V_id_empleado, 
+        V_id_estado, 
+        V_nombre_empleado, 
+        V_apellido_empleado, 
+        V_email, 
+        V_telefono, 
+        V_direccion, 
+        V_imagen
+    )
+    VALUES (
+        FIDE_EMPLEADOS_SEQ.NEXTVAL, 
+        P_id_estado,
+        P_nombre_empleado,
+        P_apellido_empleado,
+        P_email,
+        P_telefono,
+        P_direccion,
+        P_imagen
+    );
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        -- Manejar el error de valor duplicado aquí
+        RAISE_APPLICATION_ERROR(-20001, 'Valor duplicado detectado para V_id_empleado.');
+END;
+
+
+BEGIN
+    FIDE_EMPLEADOS_INSERTAR_SP(
+        P_id_estado => 1, 
+        P_nombre_empleado => 'Jasin', 
+        P_apellido_empleado => 'Chavarria', 
+        P_email => 'jasin.chavarria@example.com', 
+        P_telefono => '1232227890', 
+        P_direccion => 'Calle 1', 
+        P_imagen => 'https://weremote.net/wp-content/uploads/2022/08/mujer-sonriente-apunta-arriba.jpg'
+    );
+END;
+
+
+
+

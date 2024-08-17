@@ -83,8 +83,7 @@ try {
 </head>
 <body>
     <div class="container">
-        <h1>Reclamaciones Existentes</h1>
-        <a href="index.php" class="return-btn">Menú</a>
+    <center><h1><a href="index.php" style="text-decoration: none; color: #000000;">Reclamaciones Existentes</a></h1><center>
         <!-- Tabla para mostrar detalles de reabastecimiento -->
         <h2>Reclamaciones</h2>
         <?php

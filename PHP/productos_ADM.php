@@ -236,8 +236,8 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
 <body>
     <div class="container">
         <header class="header">
-            <h1>Productos</h1>
-            <a href="index.php" class="button">Menú</a>
+        <h1><a href="index.php" style="text-decoration: none; color:#f2f2f2;">Productos</a></h1>
+
         </header>
         <main>
             <br>

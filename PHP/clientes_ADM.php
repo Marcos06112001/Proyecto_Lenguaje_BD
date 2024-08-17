@@ -68,87 +68,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Clientes</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 1rem;
-        }
-        header {
-            background-color: #ffffff;
-            padding: 1rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            margin: 0;
-            color: #333;
-        }
-        .return-btn {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-        }
-        .product {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 2rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .product h3 {
-            margin: 0 0 0.5rem;
-            color: #333;
-        }
-        .product img {
-            max-width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid #3498db;
-            object-fit: cover;
-            margin-bottom: 1rem;
-        }
-        .edit-form {
-            margin-top: 20px;
-        }
-        .edit-form input[type="text"],
-        .edit-form input[type="email"],
-        .edit-form input[type="tel"],
-        .edit-form textarea {
-            padding: 10px;
-            width: calc(100% - 22px);
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .edit-form input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .edit-form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        padding: 1rem;
+    }
+    header {
+        background-color: #ffffff;
+        padding: 1rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+        margin: 0;
+        color: #333;
+    }
+    .return-btn {
+        display: inline-block;
+        margin-top: 0.5rem;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas si es necesario */
+        gap: 1rem; /* Espacio entre las tarjetas */
+    }
+    .product {
+        flex: 1 1 calc(25% - 1rem); /* Ajusta el tamaño de las tarjetas y el espacio entre ellas */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra todos los elementos en el contenedor */
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: box-shadow 0.3s ease-in-out; /* Efecto de transición en hover */
+    }
+    .product:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra más grande en hover */
+    }
+    .product h3 {
+        margin: 0 0 0.5rem;
+        color: #333;
+        text-align: center; /* Centra el texto dentro de la tarjeta */
+    }
+    .product img {
+        max-width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 5px solid #3498db;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease-in-out; /* Efecto de transición en hover */
+        display: block; /* Asegura que el margin-bottom se aplique correctamente */
+    }
+    .product img:hover {
+        transform: scale(1.05); /* Aumenta la imagen en hover */
+    }
+    .button-container {
+        display: flex;
+        justify-content: flex-end; 
+        margin: 20px 0; 
+    }
+    .add-product-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    .edit-form {
+        margin-top: 20px;
+    }
+    .edit-form input[type="text"],
+    .edit-form input[type="email"],
+    .edit-form input[type="tel"],
+    .edit-form textarea {
+        padding: 10px;
+        width: calc(100% - 22px);
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .edit-form input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .edit-form input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 </head>
 <body>
 
 <header>
-    <h1>Clientes</h1>
-    <a href="index.php" class="return-btn">Menú</a>
+    <h1><a href="index.php" style="text-decoration: none; color: #000000;">Clientes</a></h1>
 </header>
 
 <div class="container">

@@ -117,8 +117,7 @@ Desconectar($conexion);
 </head>
 <body>
     <header>
-        <h1>Perfil del Cliente</h1>
-        <a href="index.php" class="return-btn">Menú</a>
+    <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Perfil</a></h1>
     </header>
     <div id="perfil-container">
         <div class="profile-header">
