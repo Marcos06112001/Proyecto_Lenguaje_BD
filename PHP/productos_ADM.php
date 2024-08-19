@@ -254,19 +254,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
             
             <form action="productos.php" method="GET" class="category-form">
                 <div class="select-container">
-                    <select name="id_categoria" id="categoriaSelect" onchange="this.form.submit()">
-                        <option value="">Todas las categorías</option>
-                        <?php if (!empty($categorias)): ?>
-                            <?php foreach ($categorias as $categoria): ?>
-                                <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" 
-                                        <?php echo ($id_categoria == $categoria['V_ID_CATEGORIA']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <option value="">No se encontraron categorías</option>
-                        <?php endif; ?>
-                    </select>
+                  
                 </div>
             </form>
 
