@@ -1102,6 +1102,36 @@ BEGIN
 END;
 
 
+--CREADO POR Maria Celest Solano 
+--FECHA 16/08/2024
+--procedimiento almacenado #32
+--Modificar un cliente
+create or replace PROCEDURE FIDE_CLIENTES_ACTUALIZAR_SP (
+    P_id_cliente IN INT,
+    P_nombre_cliente IN VARCHAR2,
+    P_apellido_cliente IN VARCHAR2,
+    P_email IN VARCHAR2,
+    P_telefono IN VARCHAR2,
+    P_direccion IN CLOB,
+    P_imagen IN VARCHAR2,
+    P_rol IN VARCHAR2,
+    P_pass IN VARCHAR2
+) AS
+BEGIN
+    -- Actualizar la información del cliente
+    UPDATE FIDE_CLIENTES_TB
+    SET V_nombre_cliente = P_nombre_cliente,
+        V_apellido_cliente = P_apellido_cliente,
+        V_email = P_email,
+        V_telefono = P_telefono,
+        V_direccion = P_direccion,
+        V_imagen = P_imagen,
+        V_rol = P_rol,
+        V_pass = P_pass
+    WHERE V_id_cliente = P_id_cliente;
+
+    COMMIT; -- Asegúrate de hacer commit si es necesario
+END;
 
 
 
