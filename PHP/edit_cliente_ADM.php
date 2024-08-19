@@ -20,7 +20,7 @@ if ($id_cliente <= 0) {
 }
 
 // Obtener la información del cliente
-$query_cliente = 'SELECT * FROM FIDE_DETALLES_CLIENTES_V WHERE V_ID_CLIENTE = :id_cliente';
+$query_cliente = 'SELECT * FROM FIDE_DETALLES_CLIENTES_COMPLETA_V WHERE V_ID_CLIENTE = :id_cliente';
 $stmt_cliente = $conexion->prepare($query_cliente);
 $stmt_cliente->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
 
@@ -62,7 +62,6 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
         $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
         $stmt->execute();
-        echo "Cliente actualizado correctamente.";
     } catch (PDOException $e) {
         echo "Error al actualizar el cliente: " . $e->getMessage();
     }
@@ -71,6 +70,7 @@ function actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_cliente = $_POST['id_cliente'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $email = $_POST['email'];
@@ -78,8 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $direccion = $_POST['direccion'];
     $imagen = $_POST['imagen'];
     $rol = $_POST['rol'];
-    $pass = $_POST['pass'];
+    $pass = $_POST['pass']; // La contraseña puede ser texto plano aquí para pruebas
+
     actualizarCliente($id_cliente, $nombre, $apellido, $email, $telefono, $direccion, $imagen, $rol, $pass);
+
     // Redirigir de vuelta a la página de clientes después de actualizar
     header('Location: clientes_ADM.php');
     exit();
@@ -117,14 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: none;
             font-size: 0.9rem;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
+        .edit-form {
+            margin-top: 20px;
         }
         .edit-form input[type="text"],
         .edit-form input[type="email"],
         .edit-form input[type="tel"],
-        .edit-form textarea {
+        .edit-form textarea,
+        .edit-form input[type="password"] {
             padding: 10px;
             width: calc(100% - 22px);
             margin-bottom: 10px;
@@ -148,13 +150,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
-    <h1>Editar Cliente</h1>
-    <a href="clientes_ADM.php" class="return-btn">Volver</a>
+    <h1><a href="clientes_ADM.php" style="text-decoration: none; color: #000000;">Editar Cliente</a></h1>
 </header>
 
 <div class="container">
     <div class="edit-form">
         <form action="" method="POST">
+            <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($id_cliente); ?>">
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($cliente['V_NOMBRE_CLIENTE'] ?? ''); ?>" required>
             <label for="apellido">Apellido:</label>
@@ -170,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="rol">Rol:</label>
             <input type="text" name="rol" id="rol" value="<?php echo htmlspecialchars($cliente['V_ROL'] ?? ''); ?>" required>
             <label for="pass">Contraseña:</label>
-            <input type="text" name="pass" id="pass" value="<?php echo htmlspecialchars($cliente['V_PASS'] ?? ''); ?>" required>
+            <input type="text" name="pass" id="pass" value="<?php echo htmlspecialchars($cliente['V_PASS'] ?? ''); ?>" placeholder="Ingrese nueva contraseña">
             <input type="submit" value="Actualizar Cliente">
         </form>
     </div>
