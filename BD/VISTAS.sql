@@ -315,3 +315,18 @@ SELECT
   v_pass
 FROM 
   FIDE_CLIENTES_TB;
+
+--CREADO POR Maria Celeste Solano
+--FECHA 19/07/2024
+--Vista #18
+CREATE VIEW vista_detalle_producto AS
+SELECT 
+    V_id_producto,
+    V_nombre_producto,
+    V_descripcion_producto,
+    V_precio,
+    V_imagen,
+    V_id_categoria,
+    V_id_estado
+FROM 
+    FIDE_PRODUCTOS_TB;

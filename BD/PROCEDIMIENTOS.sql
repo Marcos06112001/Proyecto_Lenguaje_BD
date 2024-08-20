@@ -1243,6 +1243,28 @@ EXCEPTION
 END FIDE_FINALIZAR_COMPRA;
 
 
-
+--CREADO POR MARCOS VINICIO SOLIS MORALES
+--FECHA 19/08/2024
+--procedimiento almacenado #35
+CREATE OR REPLACE PROCEDURE FIDE_PRODUCTOS_ACTUALIZAR_SP (
+    P_id_producto IN INT,
+    P_id_categoria IN INT,
+    P_id_estado IN INT,
+    P_nombre_producto IN VARCHAR2,
+    P_descripcion_producto IN VARCHAR2,
+    P_precio IN NUMBER,
+    P_imagen IN VARCHAR2
+) AS
+BEGIN
+    -- Actualizar la información del producto
+    UPDATE FIDE_PRODUCTOS_TB
+    SET V_id_categoria = P_id_categoria,
+        V_id_estado = P_id_estado,
+        V_nombre_producto = P_nombre_producto,
+        V_descripcion_producto = P_descripcion_producto,
+        V_precio = P_precio,
+        V_imagen = P_imagen
+    WHERE V_id_producto = P_id_producto;
+END;
 
 
