@@ -1299,3 +1299,41 @@ BEGIN
     );
 END;
 
+--CREADO POR MARCOS SOLIS MORALES
+--FECHA 20/08/2024
+--procedimiento almacenado #37
+CREATE OR REPLACE PROCEDURE agregar_al_carrito(
+    p_id_cliente        IN INT,
+    p_id_producto       IN INT,
+    p_cantidad          IN INT,
+    p_id_estado         IN INT,
+    p_precio_unitario   IN NUMBER
+) 
+IS
+    v_subtotal NUMBER(10, 2);
+    v_id_carrito INT;
+BEGIN
+    -- Calcular el subtotal basado en la cantidad y el precio unitario
+    v_subtotal := p_cantidad * p_precio_unitario;
+    
+    -- Generar un nuevo ID de carrito (puedes personalizar esto según tu lógica de generación de IDs)
+    SELECT NVL(MAX(V_id_carrito), 0) + 1 INTO v_id_carrito FROM FIDE_CARRITO_TB;
+
+    -- Insertar el producto en el carrito
+    INSERT INTO FIDE_CARRITO_TB (
+        V_id_carrito, V_id_cliente, V_id_producto, V_id_estado, 
+        V_cantidad, V_precio_unitario, V_subtotal
+    ) 
+    VALUES (
+        v_id_carrito, p_id_cliente, p_id_producto, p_id_estado, 
+        p_cantidad, p_precio_unitario, v_subtotal
+    );
+    
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE_APPLICATION_ERROR(-20001, 'Error al agregar producto al carrito: ' || SQLERRM);
+END;
+/
+

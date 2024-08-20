@@ -2,7 +2,29 @@
 include '../DAL/conexion.php';
 session_start(); // Inicia la sesión para acceder a la variable $_SESSION
 
-// Función para llamar el procedimiento almacenado
+// Función para obtener detalles del producto
+function obtenerProducto($id_producto) {
+    $conexion = Conecta();
+    $sql = "SELECT V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN 
+            FROM FIDE_PRODUCTOS_TB 
+            WHERE V_ID_PRODUCTO = :id_producto";
+    
+    try {
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+        $stmt->execute();
+        $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener producto: " . $e->getMessage();
+        $producto = [];
+    }
+    
+    Desconectar($conexion);
+    
+    return $producto;
+}
+
+// Función para llamar el procedimiento almacenado para agregar producto al carrito
 function agregarProductoCarrito($id_cliente, $id_producto, $cantidad) {
     $conexion = Conecta();
 
@@ -26,6 +48,28 @@ function agregarProductoCarrito($id_cliente, $id_producto, $cantidad) {
     }
 }
 
+// Función para llamar el procedimiento almacenado para eliminar producto del carrito
+function eliminarProductoCarrito($id_carrito) {
+    $conexion = Conecta();
+
+    try {
+        // Prepara la llamada al procedimiento almacenado
+        $stmt = $conexion->prepare("BEGIN FIDE_ELIMINAR_DEL_CARRITO(:p_id_carrito); END;");
+        
+        // Bind de parámetros
+        $stmt->bindParam(':p_id_carrito', $id_carrito, PDO::PARAM_INT);
+        
+        // Ejecuta el procedimiento almacenado
+        $stmt->execute();
+        
+        return "Producto eliminado del carrito con éxito.";
+    } catch (PDOException $e) {
+        return "Error al eliminar producto del carrito: " . $e->getMessage();
+    } finally {
+        Desconectar($conexion);
+    }
+}
+
 // Verifica si se ha enviado el ID del producto y el ID del cliente está disponible en la sesión
 if (isset($_GET['id_producto']) && isset($_SESSION['id_cliente'])) {
     $id_producto = (int)$_GET['id_producto'];
@@ -33,6 +77,15 @@ if (isset($_GET['id_producto']) && isset($_SESSION['id_cliente'])) {
     $cantidad = 1; // Cantidad por defecto, puedes ajustarla según sea necesario
 
     $mensaje = agregarProductoCarrito($id_cliente, $id_producto, $cantidad);
+
+    // Obtiene la información del producto
+    $producto = obtenerProducto($id_producto);
+}
+
+// Verifica si se ha enviado el ID del carrito para eliminar
+if (isset($_GET['id_carrito'])) {
+    $id_carrito = (int)$_GET['id_carrito'];
+    $mensaje = eliminarProductoCarrito($id_carrito);
 }
 ?>
 <!DOCTYPE html>
@@ -81,6 +134,26 @@ if (isset($_GET['id_producto']) && isset($_SESSION['id_cliente'])) {
         a:hover {
             background-color: #45a049;
         }
+        .product-details {
+            text-align: center;
+        }
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product-details h2 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .product-details p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .product-details .price {
+            font-size: 22px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +162,18 @@ if (isset($_GET['id_producto']) && isset($_SESSION['id_cliente'])) {
         <?php if (isset($mensaje)): ?>
             <p><?php echo htmlspecialchars($mensaje); ?></p>
         <?php endif; ?>
+
+        <?php if (isset($producto) && !empty($producto)): ?>
+            <div class="product-details">
+                <img src="<?php echo htmlspecialchars($producto['V_IMAGEN']); ?>" alt="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO']); ?>">
+                <h2><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO']); ?></h2>
+                <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO']); ?></p>
+                <div class="price">$<?php echo number_format($producto['V_PRECIO'], 2); ?></div>
+            </div>
+        <?php else: ?>
+            <p>No se encontró el producto.</p>
+        <?php endif; ?>
+
         <p><a href="index.php">Volver al Inicio</a></p>
         <p><a href="finalizar_compra.php">Compra</a></p>
     </div>

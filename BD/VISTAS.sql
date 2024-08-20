@@ -330,3 +330,27 @@ SELECT
     V_id_estado
 FROM 
     FIDE_PRODUCTOS_TB;
+
+--CREADO POR Maria Celeste Solano
+--FECHA 20/07/2024
+--Vista #19
+CREATE OR REPLACE VIEW FIDE_VISTA_CARRITO AS
+SELECT 
+    c.V_id_carrito,
+    cl.V_nombre_cliente,
+    p.V_nombre_producto,
+    c.V_cantidad,
+    c.V_precio_unitario,
+    c.V_subtotal
+FROM 
+    FIDE_CARRITO_TB c
+JOIN 
+    FIDE_CLIENTES_TB cl ON c.V_id_cliente = cl.V_id_cliente
+JOIN 
+    FIDE_PRODUCTOS_TB p ON c.V_id_producto = p.V_id_producto
+WHERE 
+    c.V_id_estado = 1; -- Puedes cambiar el estado según sea necesario
+
+    
+    
+    
