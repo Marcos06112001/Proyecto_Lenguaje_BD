@@ -301,7 +301,7 @@ SELECT * FROM FIDE_DETALLES_EMPLEADOS_V;
 --CREADO POR Maria Celeste Solano
 --FECHA 19/07/2024
 --Vista #17
--- Esta vista muestra los detalles de los clientes con contraseña.
+--Vista muestra los detalles de los clientes con contraseña.
 CREATE OR REPLACE VIEW FIDE_DETALLES_CLIENTES_COMPLETA_V AS
 SELECT 
   v_id_cliente, 

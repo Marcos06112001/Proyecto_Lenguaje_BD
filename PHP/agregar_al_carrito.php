@@ -2,7 +2,7 @@
 include '../DAL/conexion.php';
 session_start(); // Inicia la sesión para acceder a la variable $_SESSION
 
-// Función para llamar al procedimiento almacenado
+// Función para llamar el procedimiento almacenado
 function agregarProductoCarrito($id_cliente, $id_producto, $cantidad) {
     $conexion = Conecta();
 

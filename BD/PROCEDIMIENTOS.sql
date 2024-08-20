@@ -1133,6 +1133,115 @@ BEGIN
     COMMIT; -- Asegúrate de hacer commit si es necesario
 END;
 
+--CREADO POR MARCOS VINICIO SOLIS MORALES
+--FECHA 19/08/2024
+--procedimiento almacenado #33
+--AGREGAR A CARRITO
+CREATE OR REPLACE PROCEDURE AGREGARALCARRITO (
+    p_id_cliente IN FIDE_CARRITO_TB.V_id_cliente%TYPE,
+    p_id_producto IN FIDE_CARRITO_TB.V_id_producto%TYPE,
+    p_cantidad IN FIDE_CARRITO_TB.V_cantidad%TYPE
+)
+AS
+    v_existencia NUMBER;
+    v_precio_unitario NUMBER(10, 2);
+BEGIN
+    -- Verifica si el producto ya existe en el carrito del cliente
+    SELECT COUNT(*)
+    INTO v_existencia
+    FROM FIDE_CARRITO_TB
+    WHERE V_id_cliente = p_id_cliente
+    AND V_id_producto = p_id_producto;
+
+    IF v_existencia > 0 THEN
+        -- Si existe, actualiza la cantidad
+        UPDATE FIDE_CARRITO_TB
+        SET V_cantidad = V_cantidad + p_cantidad,
+            V_subtotal = V_cantidad * V_precio_unitario
+        WHERE V_id_cliente = p_id_cliente
+        AND V_id_producto = p_id_producto;
+    ELSE
+        BEGIN
+            -- Obtén el precio unitario del producto
+            BEGIN
+                SELECT V_precio_unitario
+                INTO v_precio_unitario
+                FROM FIDE_PRODUCTOS_TB
+                WHERE V_id_producto = p_id_producto;
+
+                EXCEPTION
+                WHEN NO_DATA_FOUND THEN
+                    RAISE_APPLICATION_ERROR(-20001, 'Producto no encontrado en FIDE_PRODUCTOS_TB');
+            END;
+
+            -- Inserta un nuevo registro
+            INSERT INTO FIDE_CARRITO_TB (
+                V_id_carrito,
+                V_id_cliente,
+                V_id_producto,
+                V_id_estado,
+                V_cantidad,
+                V_precio_unitario,
+                V_subtotal
+            )
+            VALUES (
+                FIDE_CARRITO_TB_SEQ.NEXTVAL, -- Asegúrate de tener una secuencia para V_id_carrito
+                p_id_cliente,
+                p_id_producto,
+                1, -- Estado por defecto, ajusta si es necesario
+                p_cantidad,
+                v_precio_unitario,
+                p_cantidad * v_precio_unitario
+            );
+        END;
+    END IF;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+/
+
+--CREADO POR MARCOS VINICIO SOLIS MORALES
+--FECHA 19/08/2024
+--procedimiento almacenado #34
+--FINALIZAR COMPRA
+CREATE OR REPLACE PROCEDURE FIDE_FINALIZAR_COMPRA(
+    p_id_cliente IN NUMBER,
+    p_id_proveedor IN NUMBER,
+    p_detalles IN VARCHAR2
+) AS
+    v_total NUMBER(10, 2);
+    v_id_compra NUMBER;
+BEGIN
+    -- Calcular el total de la compra
+    SELECT SUM(V_subtotal) INTO v_total
+    FROM FIDE_CARRITO_TB
+    WHERE V_id_cliente = p_id_cliente;
+
+    -- Insertar la compra en la tabla FIDE_COMPRAS_TB
+    INSERT INTO FIDE_COMPRAS_TB (V_id_compra, V_id_proveedor, V_id_estado, V_detalles, V_fecha, V_total)
+    VALUES (
+        FIDE_COMPRAS_TB_SEQ.NEXTVAL, -- Suponiendo que existe una secuencia para generar ID de compra
+        p_id_proveedor,
+        1, -- Suponiendo que 1 es el ID del estado para compras completadas
+        p_detalles,
+        SYSDATE,
+        v_total
+    );
+
+    -- Limpiar el carrito después de realizar la compra
+    DELETE FROM FIDE_CARRITO_TB WHERE V_id_cliente = p_id_cliente;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END FIDE_FINALIZAR_COMPRA;
+
 
 
 
