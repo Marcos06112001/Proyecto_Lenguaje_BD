@@ -31,6 +31,25 @@ function obtenerProducto($id_producto) {
     return $producto;
 }
 
+function obtenerCategorias() {
+    $conexion = Conecta();
+    
+    $sql = "SELECT V_ID_CATEGORIA, V_NOMBRE_CATEGORIA FROM FIDE_CATEGORIAS_TB";
+    
+    try {
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute();
+        $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener categorías: " . $e->getMessage();
+        $categorias = [];
+    }
+    
+    Desconectar($conexion);
+    
+    return $categorias;
+}
+
 function actualizarProducto($id_producto, $nombre_producto, $descripcion_producto, $precio, $id_categoria, $id_estado, $imagen) {
     $conexion = Conecta();
     $sql = "BEGIN FIDE_PRODUCTOS_ACTUALIZAR_SP(:P_id_producto, :P_id_categoria, :P_id_estado, :P_nombre_producto, :P_descripcion_producto, :P_precio, :P_imagen); END;";
@@ -55,6 +74,7 @@ function actualizarProducto($id_producto, $nombre_producto, $descripcion_product
 }
 
 $producto = obtenerProducto($id_producto);
+$categorias = obtenerCategorias();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre_producto = isset($_POST['nombre_producto']) ? $_POST['nombre_producto'] : '';
@@ -63,29 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_categoria = isset($_POST['id_categoria']) ? (int)$_POST['id_categoria'] : 0;
     $id_estado = isset($_POST['id_estado']) ? (int)$_POST['id_estado'] : 0;
 
-    // Manejo de la subida de archivos
-    $imagen = '';
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $imagen = basename($_FILES['imagen']['name']);
-        $upload_dir = '../uploads/';
-        $upload_file = $upload_dir . $imagen;
+    $imagen = isset($_POST['imagen_url']) ? $_POST['imagen_url'] : $producto['V_IMAGEN'];
 
-        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $upload_file)) {
-            // Archivo subido exitosamente
-        } else {
-            $mensaje = "Error al subir la imagen.";
-        }
-    } else {
-        // Usar la imagen existente si no se subió un nuevo archivo
-        $imagen = $producto['V_IMAGEN'];
-    }
-
-    // Llamar a la función para actualizar el producto
     $mensaje = actualizarProducto($id_producto, $nombre_producto, $descripcion_producto, $precio, $id_categoria, $id_estado, $imagen);
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -94,136 +96,148 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Modificar Producto</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .header h1 {
-            font-size: 2rem;
-            color: #2c3e50;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
         }
 
         label {
-            font-size: 1rem;
-            color: #34495e;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: #333;
         }
 
         input[type="text"],
         textarea,
-        input[type="file"] {
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #bdc3c7;
-            border-radius: 6px;
-            background-color: #ecf0f1;
-            font-size: 1rem;
-            color: #2c3e50;
-        }
-
-        input[type="text"]:focus,
-        textarea:focus,
-        input[type="file"]:focus {
-            border-color: #3498db;
-            outline: none;
+            box-sizing: border-box;
         }
 
         textarea {
             resize: vertical;
-            min-height: 150px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
         }
 
         input[type="submit"] {
-            background-color: #3498db;
+            padding: 12px 20px;
+            background-color: #28a745;
             color: #fff;
             border: none;
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
             transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #2980b9;
+            background-color: #218838;
         }
 
         p {
-            text-align: center;
-            font-size: 1rem;
-            color: #e74c3c;
+            font-size: 16px;
+            color: #666;
         }
 
         p.success {
-            color: #27ae60;
+            color: #28a745;
+        }
+
+        p.error {
+            color: #dc3545;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
+            <a href="productos_ADM.php">Volver a Productos</a>
             <h1>Modificar Producto</h1>
         </header>
         <main>
             <?php if (isset($mensaje)): ?>
-                <p><?php echo htmlspecialchars($mensaje); ?></p>
+                <p class="<?php echo isset($mensaje) && strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>">
+                    <?php echo htmlspecialchars($mensaje); ?>
+                </p>
             <?php endif; ?>
 
             <?php if ($producto): ?>
-                <form action="modificar_producto_ADM.php?id_producto=<?php echo htmlspecialchars($producto['V_ID_PRODUCTO']); ?>" method="POST" enctype="multipart/form-data">
+                <form action="modificar_producto_ADM.php?id_producto=<?php echo htmlspecialchars($producto['V_ID_PRODUCTO']); ?>" method="POST">
                     <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto['V_ID_PRODUCTO']); ?>">
                     
                     <label for="nombre_producto">Nombre:</label>
                     <input type="text" id="nombre_producto" name="nombre_producto" value="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO']); ?>" required>
-                    
+
                     <label for="descripcion_producto">Descripción:</label>
-                    <textarea id="descripcion_producto" name="descripcion_producto" required><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO']); ?></textarea>
-                    
+                    <textarea id="descripcion_producto" name="descripcion_producto" rows="4" required><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO']); ?></textarea>
+
                     <label for="precio">Precio:</label>
                     <input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($producto['V_PRECIO']); ?>" required>
-                    
+
                     <label for="id_categoria">Categoría:</label>
-                    <input type="text" id="id_categoria" name="id_categoria" value="<?php echo htmlspecialchars($producto['V_ID_CATEGORIA']); ?>" required>
-                    
+                    <select id="id_categoria" name="id_categoria" required>
+                        <?php foreach ($categorias as $categoria): ?>
+                            <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" <?php echo $categoria['V_ID_CATEGORIA'] == $producto['V_ID_CATEGORIA'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
                     <label for="id_estado">Estado:</label>
-                    <input type="text" id="id_estado" name="id_estado" value="<?php echo htmlspecialchars($producto['V_ID_ESTADO']); ?>" required>
-                    
-                    <label for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" name="imagen">
-                    
-                    <input type="submit" value="Guardar cambios">
+                    <select id="id_estado" name="id_estado" required>
+                        <option value="1" <?php echo $producto['V_ID_ESTADO'] == 1 ? 'selected' : ''; ?>>Activo</option>
+                        <option value="2" <?php echo $producto['V_ID_ESTADO'] == 2 ? 'selected' : ''; ?>>Inactivo</option>
+                    </select>
+
+                    <label for="imagen_url">URL de la Imagen:</label>
+                    <input type="text" id="imagen_url" name="imagen_url" value="<?php echo htmlspecialchars($producto['V_IMAGEN']); ?>">
+
+                    <input type="submit" value="Actualizar Producto">
                 </form>
             <?php else: ?>
                 <p>Producto no encontrado.</p>

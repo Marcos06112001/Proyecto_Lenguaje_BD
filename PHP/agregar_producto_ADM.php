@@ -15,30 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre_producto = $_POST['nombre_producto'] ?? '';
     $descripcion_producto = $_POST['descripcion_producto'] ?? '';
     $precio = $_POST['precio'] ?? '';
-    $id_productos = $_POST['id_productos'] ?? '';
     $id_categoria = $_POST['id_categoria'] ?? '';
     $id_estado = $_POST['id_estado'] ?? '';
     $imagen = $_POST['imagen'] ?? '';
 
     // Validar datos
-    if (!empty($nombre_producto) && !empty($descripcion_producto) && !empty($precio) && !empty($id_productos) && !empty($id_categoria) && !empty($id_estado)) {
+    if (!empty($nombre_producto) && !empty($descripcion_producto) && !empty($precio) && !empty($id_categoria) && !empty($id_estado)) {
         $conexion = Conecta();
         
         // Imagen puede ser una URL proporcionada
         $imagen_path = !empty($imagen) ? $imagen : 'placeholder.jpg'; // Imagen por defecto
-        
-        $sql = "INSERT INTO FIDE_PRODUCTOS_TB (V_ID_PRODUCTOS,V_ID_CATEGORIA, V_ID_ESTADO, V_NOMBRE_PRODUCTO, V_DESCRIPCION_PRODUCTO, V_PRECIO, V_IMAGEN)
-                VALUES (:id_productos,:id_categoria, :id_estado, :nombre_producto, :descripcion_producto, :precio, :imagen)";
+
+        $sql = "BEGIN FIDE_AGREGAR_PRODUCTO_SP(:p_id_categoria, :p_id_estado, :p_nombre_producto, :p_descripcion_producto, :p_precio, :p_imagen); END;";
         
         try {
             $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':id_productos', $id_productos, PDO::PARAM_INT);
-            $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
-            $stmt->bindParam(':id_estado', $id_estado, PDO::PARAM_INT);
-            $stmt->bindParam(':nombre_producto', $nombre_producto);
-            $stmt->bindParam(':descripcion_producto', $descripcion_producto);
-            $stmt->bindParam(':precio', $precio);
-            $stmt->bindParam(':imagen', $imagen_path);
+            $stmt->bindParam(':p_id_categoria', $id_categoria, PDO::PARAM_INT);
+            $stmt->bindParam(':p_id_estado', $id_estado, PDO::PARAM_INT);
+            $stmt->bindParam(':p_nombre_producto', $nombre_producto, PDO::PARAM_STR);
+            $stmt->bindParam(':p_descripcion_producto', $descripcion_producto, PDO::PARAM_STR);
+            $stmt->bindParam(':p_precio', $precio, PDO::PARAM_STR);
+            $stmt->bindParam(':p_imagen', $imagen_path, PDO::PARAM_STR);
             
             $stmt->execute();
             echo "Producto agregado exitosamente.";
@@ -127,10 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container">
             <h1>Agregar Producto</h1>
             <form action="agregar_producto_ADM.php" method="POST">
-              <div class="form-group">
-                    <label for="nombre_producto">ID del Producto:</label>
-                    <input type="text" name="id_productos" id="id_productos" required>
-                </div>
                 <div class="form-group">
                     <label for="nombre_producto">Nombre del Producto:</label>
                     <input type="text" name="nombre_producto" id="nombre_producto" required>

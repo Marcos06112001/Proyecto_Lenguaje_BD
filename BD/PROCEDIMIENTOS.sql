@@ -1267,4 +1267,35 @@ BEGIN
     WHERE V_id_producto = P_id_producto;
 END;
 
+--CREADO POR MARIA CELESTE SOLANO
+--FECHA 19/08/2024
+--procedimiento almacenado #36
+CREATE OR REPLACE PROCEDURE FIDE_AGREGAR_PRODUCTO_SP (
+P_ID_PRODUCTO IN INT, 
+    p_id_categoria IN NUMBER,
+    p_id_estado IN NUMBER,
+    p_nombre_producto IN VARCHAR2,
+    p_descripcion_producto IN VARCHAR2,
+    p_precio IN NUMBER,
+    p_imagen IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO FIDE_PRODUCTOS_TB (
+        V_ID_PRODUCTO,  -- Corregido aquí
+        V_ID_CATEGORIA,
+        V_ID_ESTADO,
+        V_NOMBRE_PRODUCTO,
+        V_DESCRIPCION_PRODUCTO,
+        V_PRECIO,
+        V_IMAGEN
+    ) VALUES (
+        FIDE_PRODUCTOS_SEQ.NEXTVAL, -- ID autogenerado
+        p_id_categoria,
+        p_id_estado,
+        p_nombre_producto,
+        p_descripcion_producto,
+        p_precio,
+        p_imagen
+    );
+END;
 
