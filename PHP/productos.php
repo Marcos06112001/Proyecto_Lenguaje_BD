@@ -224,7 +224,6 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
             margin-bottom: 10px; 
         }
 
-        /*css del boton para que lo agregues al html y php */
         .buy-button {
             display: block;
             padding: 8px 12px; 
@@ -247,53 +246,57 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
         .buy-button:hover {
             background-color: #218838;
         }
+
+        .footer {
+            background-color: #04022d;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Productos</h1>
+        <a href="carrito.php" class="button">Ir al Carrito</a>
+    </div>
+    
     <div class="container">
-        <header class="header">
-        <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Productos</a></h1>
-        </header>
-        <main>
-            <form action="productos.php" method="GET" class="category-form">
+        <div class="category-form">
+            <form method="GET" action="productos.php">
                 <div class="select-container">
-                    <select name="id_categoria" id="categoriaSelect" onchange="this.form.submit()">
-                        <option value="">Todas las categorías</option>
-                        <?php if (!empty($categorias)): ?>
-                            <?php foreach ($categorias as $categoria): ?>
-                                <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" 
-                                        <?php echo ($id_categoria == $categoria['V_ID_CATEGORIA']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <option value="">No se encontraron categorías</option>
-                        <?php endif; ?>
+                    <select name="id_categoria" onchange="this.form.submit()">
+                        <option value="">Selecciona una categoría</option>
+                        <?php foreach ($categorias as $categoria): ?>
+                            <option value="<?php echo $categoria['V_ID_CATEGORIA']; ?>" <?php echo $categoria['V_ID_CATEGORIA'] == $id_categoria ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </form>
+        </div>
 
-            <section class="products-section">
-                <h2>Productos</h2>
-                <?php if (!empty($productos)): ?>
-                    <div class="products-grid">
-                        <?php foreach ($productos as $producto): ?>
-                            <div class="product-card">
-                                <img src="<?php echo htmlspecialchars($producto['V_IMAGEN'] ?? 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Imagen del producto'); ?>">
-                                <div class="card-content">
-                                    <h3><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO'] ?? 'Nombre del producto'); ?></h3>
-                                    <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO'] ?? 'Descripción del producto'); ?></p>
-                                    <div class="price">$<?php echo htmlspecialchars($producto['V_PRECIO'] ?? 'Precio no disponible'); ?></div>
-                                    <a href="carrito.php?id_producto=<?php echo htmlspecialchars($producto['V_ID_PRODUCTO']); ?>" class="buy-button">Comprar</a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
+        <div class="products-section">
+            <h2>Productos Disponibles</h2>
+            <div class="products-grid">
+                <?php foreach ($productos as $producto): ?>
+                    <div class="product-card">
+                        <img src="<?php echo htmlspecialchars($producto['V_IMAGEN']); ?>" alt="<?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO']); ?>">
+                        <div class="card-content">
+                            <h3><?php echo htmlspecialchars($producto['V_NOMBRE_PRODUCTO']); ?></h3>
+                            <p><?php echo htmlspecialchars($producto['V_DESCRIPCION_PRODUCTO']); ?></p>
+                            <div class="price">$<?php echo number_format($producto['V_PRECIO'], 2); ?></div>
+                            <a href="agregar_al_carrito.php?id_producto=<?php echo $producto['V_ID_PRODUCTO']; ?>" class="buy-button">Agregar al Carrito</a>
+                        </div>
                     </div>
-                <?php else: ?>
-                    <p>No se encontraron productos.</p>
-                <?php endif; ?>
-            </section>
-        </main>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Tu Empresa</p>
     </div>
 </body>
 </html>
