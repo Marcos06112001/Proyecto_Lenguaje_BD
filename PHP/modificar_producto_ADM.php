@@ -65,12 +65,14 @@ function actualizarProducto($id_producto, $nombre_producto, $descripcion_product
         $stmt->bindParam(':P_imagen', $imagen, PDO::PARAM_STR);
         $stmt->execute();
         $mensaje = "Producto actualizado con éxito.";
+        $success = true; // Indicar que la actualización fue exitosa
     } catch (PDOException $e) {
         $mensaje = "Error al actualizar el producto: " . $e->getMessage();
+        $success = false; // Indicar que hubo un error
     }
     Desconectar($conexion);
 
-    return $mensaje;
+    return ['mensaje' => $mensaje, 'success' => $success];
 }
 
 $producto = obtenerProducto($id_producto);
@@ -85,7 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $imagen = isset($_POST['imagen_url']) ? $_POST['imagen_url'] : $producto['V_IMAGEN'];
 
-    $mensaje = actualizarProducto($id_producto, $nombre_producto, $descripcion_producto, $precio, $id_categoria, $id_estado, $imagen);
+    $resultado = actualizarProducto($id_producto, $nombre_producto, $descripcion_producto, $precio, $id_categoria, $id_estado, $imagen);
+    $mensaje = $resultado['mensaje'];
+    
+    if ($resultado['success']) {
+        header('Location: productos_ADM.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -201,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </header>
         <main>
             <?php if (isset($mensaje)): ?>
-                <p class="<?php echo isset($mensaje) && strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>">
+                <p class="<?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>">
                     <?php echo htmlspecialchars($mensaje); ?>
                 </p>
             <?php endif; ?>
@@ -222,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="id_categoria">Categoría:</label>
                     <select id="id_categoria" name="id_categoria" required>
                         <?php foreach ($categorias as $categoria): ?>
-                            <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" <?php echo $categoria['V_ID_CATEGORIA'] == $producto['V_ID_CATEGORIA'] ? 'selected' : ''; ?>>
+                            <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" <?php echo $producto['V_ID_CATEGORIA'] == $categoria['V_ID_CATEGORIA'] ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
                             </option>
                         <?php endforeach; ?>
@@ -234,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="2" <?php echo $producto['V_ID_ESTADO'] == 2 ? 'selected' : ''; ?>>Inactivo</option>
                     </select>
 
-                    <label for="imagen_url">URL de la Imagen:</label>
+                    <label for="imagen_url">Imagen URL:</label>
                     <input type="text" id="imagen_url" name="imagen_url" value="<?php echo htmlspecialchars($producto['V_IMAGEN']); ?>">
 
                     <input type="submit" value="Actualizar Producto">

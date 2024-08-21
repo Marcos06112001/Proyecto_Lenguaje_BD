@@ -95,7 +95,7 @@ $productos = obtenerProductos();
                     <li><a href="promociones.php">Promociones</a></li> 
                     <li><a href="resenas_productos.php">Reseñas de Productos</a></li>
                     <li><a href="reclamaciones.php">Reclamaciones</a></li>
-                    <li><a href="agregar_al_carrito.php">Carrito</a></li>
+                    <li><a href="carrito.php">Carrito</a></li>
                 <?php endif; ?>
                
                 <li id="perfil-menu-item">

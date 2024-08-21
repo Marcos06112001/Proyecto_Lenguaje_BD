@@ -1133,11 +1133,11 @@ BEGIN
     COMMIT; -- Asegúrate de hacer commit si es necesario
 END;
 
---CREADO POR MARCOS VINICIO SOLIS MORALES
+--CREADO POR MARCOS VINICIO SOLIS MORALES *OJO*
 --FECHA 19/08/2024
---procedimiento almacenado #33
+--procedimiento almacenado #33 ++
 --AGREGAR A CARRITO
-CREATE OR REPLACE PROCEDURE AGREGARALCARRITO (
+CREATE OR REPLACE PROCEDURE FIDE_AGREGAR_A_CARRITO_SP (
     p_id_cliente IN FIDE_CARRITO_TB.V_id_cliente%TYPE,
     p_id_producto IN FIDE_CARRITO_TB.V_id_producto%TYPE,
     p_cantidad IN FIDE_CARRITO_TB.V_cantidad%TYPE
@@ -1154,46 +1154,44 @@ BEGIN
     AND V_id_producto = p_id_producto;
 
     IF v_existencia > 0 THEN
-        -- Si existe, actualiza la cantidad
+        -- Si existe, actualiza la cantidad y subtotal
         UPDATE FIDE_CARRITO_TB
         SET V_cantidad = V_cantidad + p_cantidad,
-            V_subtotal = V_cantidad * V_precio_unitario
+            V_subtotal = (V_cantidad + p_cantidad) * V_precio_unitario
         WHERE V_id_cliente = p_id_cliente
         AND V_id_producto = p_id_producto;
     ELSE
+        -- Obtén el precio unitario del producto
         BEGIN
-            -- Obtén el precio unitario del producto
-            BEGIN
-                SELECT V_precio_unitario
-                INTO v_precio_unitario
-                FROM FIDE_PRODUCTOS_TB
-                WHERE V_id_producto = p_id_producto;
-
-                EXCEPTION
-                WHEN NO_DATA_FOUND THEN
-                    RAISE_APPLICATION_ERROR(-20001, 'Producto no encontrado en FIDE_PRODUCTOS_TB');
-            END;
-
-            -- Inserta un nuevo registro
-            INSERT INTO FIDE_CARRITO_TB (
-                V_id_carrito,
-                V_id_cliente,
-                V_id_producto,
-                V_id_estado,
-                V_cantidad,
-                V_precio_unitario,
-                V_subtotal
-            )
-            VALUES (
-                FIDE_CARRITO_TB_SEQ.NEXTVAL, -- Asegúrate de tener una secuencia para V_id_carrito
-                p_id_cliente,
-                p_id_producto,
-                1, -- Estado por defecto, ajusta si es necesario
-                p_cantidad,
-                v_precio_unitario,
-                p_cantidad * v_precio_unitario
-            );
+            SELECT V_precio
+            INTO v_precio_unitario
+            FROM FIDE_PRODUCTOS_TB
+            WHERE V_id_producto = p_id_producto;
+            
+            EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                RAISE_APPLICATION_ERROR(-20001, 'Producto no encontrado en FIDE_PRODUCTOS_TB');
         END;
+
+        -- Inserta un nuevo registro en el carrito
+        INSERT INTO FIDE_CARRITO_TB (
+            V_id_carrito,
+            V_id_cliente,
+            V_id_producto,
+            V_id_estado,
+            V_cantidad,
+            V_precio_unitario,
+            V_subtotal
+        )
+        VALUES (
+            FIDE_CARRITO_TB_SEQ.NEXTVAL,
+            p_id_cliente,
+            p_id_producto,
+            1, 
+            p_cantidad,
+            v_precio_unitario,
+            p_cantidad * v_precio_unitario
+        );
     END IF;
 
     COMMIT;
@@ -1202,9 +1200,8 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
-/
 
---CREADO POR MARCOS VINICIO SOLIS MORALES
+--CREADO POR MARCOS VINICIO SOLIS MORALES y Nicole H
 --FECHA 19/08/2024
 --procedimiento almacenado #34
 --FINALIZAR COMPRA
@@ -1240,8 +1237,7 @@ EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
         RAISE;
-END FIDE_FINALIZAR_COMPRA;
-
+END;
 
 --CREADO POR MARCOS VINICIO SOLIS MORALES
 --FECHA 19/08/2024
