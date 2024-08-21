@@ -38,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':p_imagen', $imagen_path, PDO::PARAM_STR);
             
             $stmt->execute();
-            echo "Producto agregado exitosamente.";
+            
+            // Redirige a la página de productos después de la inserción
+            header("Location: productos_ADM.php");
+            exit;
         } catch (PDOException $e) {
             echo "Error al agregar producto: " . $e->getMessage();
         }

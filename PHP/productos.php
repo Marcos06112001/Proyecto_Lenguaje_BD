@@ -257,7 +257,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
 </head>
 <body>
     <div class="header">
-        <h1>Productos</h1>
+    <h1><a href="index.php" style="text-decoration: none; color: #f2f2f2;">Productos</a></h1>
         <a href="agregar_al_carrito.php" class="button">Ir al Carrito</a>
     </div>
     
