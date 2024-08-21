@@ -138,10 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php } ?>
             </form>
         </div>
-        <!-- Enlace para modificar datos -->
-        <div class="link-container">
-            <a href="modifica.php" class="btn btn-secondary">Modificar Datos</a>
-        </div>
+       
     </div>
 </body>
 </html>
