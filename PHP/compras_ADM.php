@@ -10,7 +10,7 @@ try {
 }
 
 // Preparar la consulta para la vista FIDE_PRODUCTOS_RESENAS_SI_ID_V
-$query_select_carrito = 'SELECT * FROM FIDE_PRODUCTOS_CARRITO_RESIVO_V';
+$query_select_carrito = 'SELECT * FROM FIDE_DETALLES_COMPRAS_V';
 $stmt_select_carrito = $conexion->prepare($query_select_carrito);
 
 try {
@@ -115,7 +115,7 @@ Desconectar($conexion);
     <?php
     // Mostrar los datos en la tabla
     echo '<table>';
-    echo '<tr><th>Nombre del usuario</th><th>Producto</th><th>Cantidad comprada</th><th>Precio</th><th>Total</th><th>Estado</th></tr>';
+    echo '<tr><th>Id de la compra</th><th>Nombre dek proveedor</th><th>Detalle</th><th>Fecha</th><th>Total</th><th>Estado</th></tr>';
  
     while ($row = $stmt_select_carrito->fetch(PDO::FETCH_ASSOC)) {
         echo '<tr>';

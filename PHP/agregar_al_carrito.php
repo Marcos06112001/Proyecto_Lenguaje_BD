@@ -30,7 +30,7 @@ function agregarProductoCarrito($id_cliente, $id_producto, $cantidad) {
 
     try {
         // Prepara la llamada al procedimiento almacenado
-        $stmt = $conexion->prepare("BEGIN AGREGARALCARRITO(:p_id_cliente, :p_id_producto, :p_cantidad); END;");
+        $stmt = $conexion->prepare("BEGIN FIDE_AGREGAR_A_CARRITO_SP(:p_id_cliente, :p_id_producto, :p_cantidad); END;");
         
         // Bind de parámetros
         $stmt->bindParam(':p_id_cliente', $id_cliente, PDO::PARAM_INT);

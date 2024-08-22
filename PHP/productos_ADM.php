@@ -1,8 +1,7 @@
 <?php
 include '../DAL/conexion.php';
-session_start(); // Inicia la sesión para acceder a la variable $_SESSION
+session_start(); 
 
-// Obtiene las categorías para el formulario de selección
 function obtenerCategorias() {
     $conexion = Conecta();
     
@@ -70,8 +69,182 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/productos.css">
     <style>
-        /* CSS aquí */
-    </style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        background-color: #04022d;
+        color: #fff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        position: relative;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 2rem;
+        text-align: center; 
+        flex: 1; 
+    }
+
+    .header .button {
+        position: absolute;
+        right: 20px;
+        top: 50%; 
+        transform: translateY(-50%); 
+    }
+
+    .button-container {
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745; /* Color verde */
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+
+    .category-form {
+        margin-bottom: 20px;
+    }
+
+    .select-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    select:focus {
+        border-color: #aaa;
+        outline: none;
+    }
+
+    .products-section {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .products-section h2 {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
+
+    .products-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: calc(25% - 20px); 
+        box-sizing: border-box;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .card-content {
+        padding: 10px;
+    }
+
+    .card-content h3 {
+        margin: 0 0 10px;
+        font-size: 1.2rem;
+    }
+
+    .card-content p {
+        margin: 0 0 10px;
+        font-size: 1rem;
+    }
+
+    .price {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .add-product-btn {
+        display: none; /* Por defecto, no visible */
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #28a745;
+        border-radius: 4px;
+        text-decoration: none;
+        position: fixed;
+        bottom: 20px; /* Posición en la parte inferior */
+        right: 20px;  /* Posición desde el borde derecho */
+        transition: background-color 0.3s;
+    }
+
+    .add-product-btn:hover {
+        background-color: #218838;
+    }
+
+    /* Estilos específicos para botones adicionales */
+    .btn-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .button-container {
+        margin-bottom: 20px;
+    }
+</style>
+
 </head>
 <body>
     <div class="container">
@@ -83,7 +256,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
             <div class="button-container">
                 <?php
                 if ($is_admin) {
-                    echo '<a href="agregar_producto_ADM.php" class="btn btn-success">Agregar Producto</a>';
+                    echo '<a href="agregar_producto_ADM.php" class="button" ">Agregar Producto</a>';
                 }
                 ?>
             </div>
@@ -91,14 +264,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
             
             <form action="productos.php" method="GET" class="category-form">
                 <div class="select-container">
-                    <select name="id_categoria" onchange="this.form.submit()">
-                        <option value="">Seleccione una categoría</option>
-                        <?php foreach ($categorias as $categoria): ?>
-                            <option value="<?php echo htmlspecialchars($categoria['V_ID_CATEGORIA']); ?>" <?php echo $id_categoria == $categoria['V_ID_CATEGORIA'] ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($categoria['V_NOMBRE_CATEGORIA']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                
                 </div>
             </form>
 
@@ -117,7 +283,7 @@ $is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'administrador';
                                 <?php
                                 if ($is_admin) {
                                     echo '<div class="button-container">';
-                                    echo '<a href="modificar_producto_ADM.php?id_producto=' . htmlspecialchars($producto['V_ID_PRODUCTO']) . '" class="btn btn-primary">Modificar producto</a>';
+                                    echo '<a href="modificar_producto_ADM.php?id_producto=' . htmlspecialchars($producto['V_ID_PRODUCTO']) . '" class="button" >Modificar producto</a>';
                                     echo '</div>';
                                 }
                                 ?>
