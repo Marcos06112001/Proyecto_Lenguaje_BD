@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="nombre_categoria" id="nombre_categoria" required>
             <input href="categorias.php" type="submit" value="Agregar Categoría">
         </form>
-        <a href="categorias.php" class="back-link">Volver a Categorías</a>
+        <a href="categorias_ADM.php" class="back-link">Volver a Categorías</a>
     </div>
 </body>
 </html>
