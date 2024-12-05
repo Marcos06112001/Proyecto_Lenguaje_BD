@@ -1,0 +1,108 @@
+/* perfil.css */
+
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilo del encabezado */
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.return-btn {
+    background-color: #0056b3;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.return-btn:hover {
+    background-color: #003d80;
+    transform: translateY(-2px);
+}
+
+/* Contenedor del perfil */
+#perfil-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.profile-img {
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 4px solid #007bff;
+}
+
+.profile-header h1 {
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+}
+
+.profile-header p {
+    color: #6c757d;
+    font-size: 1.3rem;
+}
+
+/* Detalles del perfil */
+.profile-info {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.profile-info p {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.profile-info strong {
+    font-weight: bold;
+    color: #343a40;
+}
